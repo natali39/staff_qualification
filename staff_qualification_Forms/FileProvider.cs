@@ -3,8 +3,20 @@ using System.Text;
 
 namespace staff_qualification_Forms
 {
-    public class LoadData
+    public class FileProvider
     {
+        public static bool IsExist(string path)
+        {
+            return File.Exists(path);
+        }
+
+        public static void Create(string path)
+        {
+            using (FileStream fileStream = File.Create(path))
+            {
+            }
+        }
+
         public static string ReadDataFromFile(string path)
         {
             using (var streamReader = new StreamReader(path, Encoding.Default))

@@ -5,9 +5,10 @@ namespace staff_qualification_Forms
 {
     public class Staff
     {
-        public string id;
-        public string name;
-        public string position;
+        public string id { get; private set; }
+        public string name { get; private set; }
+        public string position { get; private set; }
+        //public string Path = @"staff.txt";
 
         public List<string> positions = new List<string>
         {
@@ -49,13 +50,17 @@ namespace staff_qualification_Forms
 
         public static string[] GetStaffsData()
         {
-            var staffDataFromFile = LoadData.ReadDataFromFile(@"staff.txt");
+            if (!FileProvider.IsExist(FilePath.staffFile))
+            {
+                FileProvider.Create(FilePath.staffFile);
+            }
+            var staffDataFromFile = FileProvider.ReadDataFromFile(FilePath.staffFile);
             return staffDataFromFile.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         public static void PutStaffsData(string value)
         {
-            LoadData.WriteDataToFile(@"staff.txt", value, false);
+            FileProvider.WriteDataToFile(FilePath.staffFile, value, false);
         }
     }
 }

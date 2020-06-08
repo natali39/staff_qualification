@@ -33,12 +33,12 @@ namespace staff_qualification_Forms
                 staffs[index].id = idTextBox.Text;
                 staffs[index].name = nameTextBox.Text;
                 staffs[index].position = positionTextBox.Text;
-                LoadData.WriteDataToFile(@"staff.txt", Staff.GetStaffsFormated(staffs), false);
+                FileProvider.WriteDataToFile(@"staff.txt", Staff.GetStaffsFormated(staffs), false);
             }
             else
             {
                 var staffDataLines = $"{idTextBox.Text};{nameTextBox.Text};{positionTextBox.Text}{Environment.NewLine}";
-                LoadData.WriteDataToFile(@"staff.txt", staffDataLines, true);
+                FileProvider.WriteDataToFile(@"staff.txt", staffDataLines, true);
             }
             idTextBox.Text = String.Empty;
             idTextBox.Focus();

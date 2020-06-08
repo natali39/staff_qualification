@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace staff_qualification_Forms
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             SetFormProperties();
@@ -39,17 +39,17 @@ namespace staff_qualification_Forms
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.Visible = false;
 
-            AddButton.Enabled = false;
-            EditButton.Enabled = false;
-            DeleteButton.Enabled = false;
+            addButton.Enabled = false;
+            editButton.Enabled = false;
+            deleteButton.Enabled = false;
         }
 
         private void сотрудникиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowTable();
-            AddButton.Enabled = true;
-            EditButton.Enabled = true;
-            DeleteButton.Enabled = true;
+            addButton.Enabled = true;
+            editButton.Enabled = true;
+            deleteButton.Enabled = true;
             dataGridView1.Visible = true;
         }
 
