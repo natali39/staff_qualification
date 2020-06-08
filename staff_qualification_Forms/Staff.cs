@@ -5,10 +5,9 @@ namespace staff_qualification_Forms
 {
     public class Staff
     {
-        public string id { get; private set; }
-        public string name { get; private set; }
-        public string position { get; private set; }
-        //public string Path = @"staff.txt";
+        public string ID;
+        public string Name;
+        public string Position;
 
         public List<string> positions = new List<string>
         {
@@ -21,9 +20,9 @@ namespace staff_qualification_Forms
 
         public Staff(string id, string name, string position)
         {
-            this.id = id;
-            this.name = name;
-            this.position = position;
+            this.ID = id;
+            this.Name = name;
+            this.Position = position;
         }
 
         public static List<Staff> GetListStaffs(string [] staffDataLines)
@@ -43,24 +42,24 @@ namespace staff_qualification_Forms
             var staffsFormated = string.Empty;
             foreach (var staff in staffs)
             {
-                staffsFormated += $"{staff.id};{staff.name};{staff.position}{Environment.NewLine}";
+                staffsFormated += $"{staff.ID};{staff.Name};{staff.Position}{Environment.NewLine}";
             }
             return staffsFormated;
         }
 
         public static string[] GetStaffsData()
         {
-            if (!FileProvider.IsExist(FilePath.staffFile))
+            if (!FileProvider.IsExist(FilePaths.StaffPath))
             {
-                FileProvider.Create(FilePath.staffFile);
+                FileProvider.Create(FilePaths.StaffPath);
             }
-            var staffDataFromFile = FileProvider.ReadDataFromFile(FilePath.staffFile);
+            var staffDataFromFile = FileProvider.ReadDataFromFile(FilePaths.StaffPath);
             return staffDataFromFile.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         public static void PutStaffsData(string value)
         {
-            FileProvider.WriteDataToFile(FilePath.staffFile, value, false);
+            FileProvider.WriteDataToFile(FilePaths.StaffPath, value, false);
         }
     }
 }

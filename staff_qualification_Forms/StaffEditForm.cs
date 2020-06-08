@@ -19,27 +19,45 @@ namespace staff_qualification_Forms
         {
             this.staffs = staffs;
             this.index = index;
-            idTextBox.Text = staffs[index].id;
-            nameTextBox.Text = staffs[index].name;
-            positionTextBox.Text = staffs[index].position;
+            idTextBox.Text = staffs[index].ID;
+            nameTextBox.Text = staffs[index].Name;
+            positionTextBox.Text = staffs[index].Position;
             formMode = "edit";
-            this.Name = "Редактировать данные о сторуднике";
+            this.Text = "Редактировать данные о сторуднике";
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (formMode == "edit")
             {
-                staffs[index].id = idTextBox.Text;
-                staffs[index].name = nameTextBox.Text;
-                staffs[index].position = positionTextBox.Text;
-                FileProvider.WriteDataToFile(@"staff.txt", Staff.GetStaffsFormated(staffs), false);
+                staffs[index].ID = idTextBox.Text;
+                staffs[index].Name = nameTextBox.Text;
+                staffs[index].Position = positionTextBox.Text;
+                FileProvider.WriteDataToFile(FilePaths.StaffPath, Staff.GetStaffsFormated(staffs), false);
+                this.Close();
             }
             else
             {
-                var staffDataLines = $"{idTextBox.Text};{nameTextBox.Text};{positionTextBox.Text}{Environment.NewLine}";
-                FileProvider.WriteDataToFile(@"staff.txt", staffDataLines, true);
+                if (this.IsEmptyData())
+                {
+                    var result = MessageBox.Show("Поля не заполнены. Продолжить?", "Подтверждение операции", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
+                    {
+                        var staffDataLines = $"{idTextBox.Text};{nameTextBox.Text};{positionTextBox.Text}{Environment.NewLine}";
+                        FileProvider.WriteDataToFile(FilePaths.StaffPath, staffDataLines, true);
+                        ClearForm();
+                    }
+                }
             }
+        }
+
+        private bool IsEmptyData()
+        {
+            return idTextBox.Text == String.Empty && nameTextBox.Text == String.Empty && positionTextBox.Text == String.Empty;
+        }
+
+        private void ClearForm()
+        {
             idTextBox.Text = String.Empty;
             idTextBox.Focus();
             nameTextBox.Text = String.Empty;
