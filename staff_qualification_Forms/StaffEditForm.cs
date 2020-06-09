@@ -26,7 +26,7 @@ namespace staff_qualification_Forms
             this.Text = "Редактировать данные о сторуднике";
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void okButton_Click(object sender, EventArgs e)
         {
             if (formMode == "edit")
             {
@@ -38,15 +38,14 @@ namespace staff_qualification_Forms
             }
             else
             {
+                var result = DialogResult.None;
                 if (this.IsEmptyData())
+                    result = MessageBox.Show("Поля не заполнены. Продолжить?", "Подтверждение операции", MessageBoxButtons.YesNo);
+                if (!this.IsEmptyData() || result == DialogResult.Yes)
                 {
-                    var result = MessageBox.Show("Поля не заполнены. Продолжить?", "Подтверждение операции", MessageBoxButtons.YesNo);
-                    if (result == DialogResult.Yes)
-                    {
-                        var staffDataLines = $"{idTextBox.Text};{nameTextBox.Text};{positionTextBox.Text}{Environment.NewLine}";
-                        FileProvider.WriteDataToFile(FilePaths.StaffPath, staffDataLines, true);
-                        ClearForm();
-                    }
+                    var staffDataLines = $"{idTextBox.Text};{nameTextBox.Text};{positionTextBox.Text}{Environment.NewLine}";
+                    FileProvider.WriteDataToFile(FilePaths.StaffPath, staffDataLines, true);
+                    ClearForm();
                 }
             }
         }
