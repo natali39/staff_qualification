@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{40B89C88-BE76-4A0F-907E-82731E9957D2}</ProjectGuid>
+    <ProjectGuid>{2A9C983E-6335-4942-AA05-AAAC91D72FF2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>staff_qualification_Forms</RootNamespace>
-    <AssemblyName>staff_qualification_Forms</AssemblyName>
+    <RootNamespace>Projects</RootNamespace>
+    <AssemblyName>Projects</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -35,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,31 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FilePaths.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="ProjectsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="ProjectsForm.Designer.cs">
+      <DependentUpon>ProjectsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FileProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Staff.cs" />
-    <Compile Include="StaffEditForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StaffEditForm.Designer.cs">
-      <DependentUpon>StaffEditForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="StaffForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StaffForm.Designer.cs">
-      <DependentUpon>StaffForm.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="ProjectsForm.resx">
+      <DependentUpon>ProjectsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -82,13 +66,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="StaffEditForm.resx">
-      <DependentUpon>StaffEditForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="StaffForm.resx">
-      <DependentUpon>StaffForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="Properties\DataSources\Program.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

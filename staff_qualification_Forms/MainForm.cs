@@ -12,8 +12,14 @@ namespace staff_qualification_Forms
 
         private void сотрудникиToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var staffForm = new StaffForm();
-            staffForm.ShowDialog();
+            var staffsForm = new StaffsForm();
+            staffsForm.ShowDialog();
+        }
+
+        private void проектыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var projectsForm = new ProjectsForm();
+            projectsForm.ShowDialog();
         }
     }
 }

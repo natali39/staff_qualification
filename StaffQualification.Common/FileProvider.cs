@@ -17,7 +17,7 @@ namespace staff_qualification_Forms
             }
         }
 
-        public static string ReadDataFromFile(string path)
+        public static string Read(string path)
         {
             using (var streamReader = new StreamReader(path, Encoding.Default))
             {
@@ -25,7 +25,7 @@ namespace staff_qualification_Forms
             }
         }
 
-        public static void WriteDataToFile(string path, string data, bool append)
+        public static void Write(string path, string data, bool append)
         {
             using (var streamWriter = new StreamWriter(path, append, Encoding.UTF8))
             {
