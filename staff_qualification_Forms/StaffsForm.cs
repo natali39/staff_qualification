@@ -21,7 +21,6 @@ namespace staff_qualification_Forms
         {
             GetTable();
             staffDataGridView.DataSource = table;
-            //staffDataGridView.DataSource = staffs.ListStaffs;
             staffDataGridView.AllowUserToAddRows = false;
             staffDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }

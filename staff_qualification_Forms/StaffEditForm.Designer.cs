@@ -60,7 +60,7 @@
             this.saveButton.Location = new System.Drawing.Point(164, 263);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 3;
+            this.saveButton.TabIndex = 5;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -106,7 +106,7 @@
             this.firstNameTextBox.Location = new System.Drawing.Point(39, 155);
             this.firstNameTextBox.Name = "firstNameTextBox";
             this.firstNameTextBox.Size = new System.Drawing.Size(315, 20);
-            this.firstNameTextBox.TabIndex = 7;
+            this.firstNameTextBox.TabIndex = 2;
             // 
             // middleNameLabel
             // 
@@ -122,7 +122,7 @@
             this.middleNameTextBox.Location = new System.Drawing.Point(39, 211);
             this.middleNameTextBox.Name = "middleNameTextBox";
             this.middleNameTextBox.Size = new System.Drawing.Size(315, 20);
-            this.middleNameTextBox.TabIndex = 9;
+            this.middleNameTextBox.TabIndex = 3;
             // 
             // positionComboBox
             // 
@@ -130,7 +130,7 @@
             this.positionComboBox.Location = new System.Drawing.Point(164, 46);
             this.positionComboBox.Name = "positionComboBox";
             this.positionComboBox.Size = new System.Drawing.Size(190, 21);
-            this.positionComboBox.TabIndex = 11;
+            this.positionComboBox.TabIndex = 4;
             // 
             // StaffEditForm
             // 

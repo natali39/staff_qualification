@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Newtonsoft;
 
 namespace staff_qualification_Forms
@@ -11,9 +12,17 @@ namespace staff_qualification_Forms
 
     public enum PositionsEnum
     {
+        [Description("Швея")]
         Seamstress,
+
+        [Description("Контролёр")]
         Control,
+
+        [Description("Мастер")]
         Master,
+
+        [Description("Начальник производства")]
+        ProductoinManager,
     }
 
     public class Staff

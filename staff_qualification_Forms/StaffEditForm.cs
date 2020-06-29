@@ -33,7 +33,6 @@ namespace staff_qualification_Forms
             {
                 MessageBox.Show("Данные о сотруднике не заполнены!");
             }
-            
         }
 
         private bool IsEmptyData()
