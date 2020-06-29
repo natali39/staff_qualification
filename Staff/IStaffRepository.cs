@@ -1,11 +1,11 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 
 namespace staff_qualification_Forms
 {
-    interface IStaffRepository
+    public interface IStaffRepository
     {
-        DataTable GetAll();
-        void Update(DataTable table);
-        void Delete();
+        Staffs GetAll();
+        void Update(Staffs staffs);
     }
 }

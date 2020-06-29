@@ -7,17 +7,23 @@ using System.Threading.Tasks;
 
 namespace staff_qualification_Forms
 {
-    class StaffService
+    public class StaffService
     {
+        private readonly IStaffRepository repository;
 
-        public DataTable GetData(IStaffRepository repository)
+        public StaffService(IStaffRepository repository)
+        {
+            this.repository = repository;
+        }
+
+        public Staffs GetData()
         {
             return repository.GetAll();
         }
 
-        public void UpdateData(IStaffRepository repository, DataTable table)
+        public void UpdateData(Staffs staffs)
         {
-            repository.Update(table);
+            repository.Update(staffs);
         }
     }
 }
