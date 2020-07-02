@@ -39,13 +39,5 @@ namespace staff_qualification_Forms
         {
             return idTextBox.Text == String.Empty && lastNameTextBox.Text == String.Empty && positionComboBox.Text == String.Empty;
         }
-
-        private void ClearForm()
-        {
-            idTextBox.Text = String.Empty;
-            lastNameTextBox.Text = String.Empty;
-            positionComboBox.Text = String.Empty;
-            idTextBox.Focus();
-        }
     }
 }
