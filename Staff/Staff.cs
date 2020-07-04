@@ -5,12 +5,7 @@ using Newtonsoft;
 
 namespace staff_qualification_Forms
 {
-    public class Staffs
-    {
-        public List<Staff> ListStaffs { get; set; }
-    }
-
-    public enum PositionsEnum
+    public enum Positions
     {
         [Description("Швея")]
         Seamstress,
@@ -22,28 +17,45 @@ namespace staff_qualification_Forms
         Master,
 
         [Description("Начальник производства")]
-        ProductoinManager,
+        ProductionManager,
     }
 
     public class Staff
     {
-        public string ID { get; set; }
+        public int ID { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
-        public string Position { get; set; }
+        public Positions Position { get; set; }
+        public List<Staff> staffs { get; set; }
 
         public Staff()
         {
         }
 
-        public Staff(string id, string lastName, string firstName, string middleName, string position)
+        public Staff(int id, string lastName, string firstName, string middleName, Positions position)
         {
             this.ID = id;
             this.LastName = lastName;
             this.FirstName = firstName;
             this.MiddleName = middleName;
             this.Position = position;
+        }
+
+        public static int GetId(List<Staff> staffs)
+        {
+            var idArray = new int[staffs.Count];
+            foreach (var staff in staffs)
+            {
+                idArray[staffs.IndexOf(staff)] = staff.ID;
+            }
+            var idMax = 0;
+            for (int i = 0; i < idArray.Length; i++)
+            {
+                if (idArray[i] > idMax)
+                    idMax = idArray[i];
+            }
+            return idMax + 1;
         }
     }
 }

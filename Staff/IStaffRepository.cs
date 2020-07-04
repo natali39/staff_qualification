@@ -5,7 +5,7 @@ namespace staff_qualification_Forms
 {
     public interface IStaffRepository
     {
-        Staffs GetAll();
-        void Update(Staffs staffs);
+        List<Staff> GetAll();
+        void Update(List<Staff> staffs);
     }
 }

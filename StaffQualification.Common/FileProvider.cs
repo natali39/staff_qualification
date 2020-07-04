@@ -19,7 +19,7 @@ namespace staff_qualification_Forms
 
         public static string Read(string path)
         {
-            using (var streamReader = new StreamReader(path, Encoding.Default))
+            using (var streamReader = new StreamReader(path, Encoding.UTF8))
             {
                 return streamReader.ReadToEnd();
             }

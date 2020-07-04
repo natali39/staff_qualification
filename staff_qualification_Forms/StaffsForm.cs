@@ -9,7 +9,8 @@ namespace staff_qualification_Forms
     {
         DataTable table = new DataTable();
         StaffService service = new StaffService(new StaffFileRepository());
-        Staffs staffs = new Staffs();
+        List<Staff> staffs = new List<Staff>();
+        bool isChanged = false;
 
         public StaffsForm()
         {
@@ -34,32 +35,36 @@ namespace staff_qualification_Forms
 
         private void GetTableHeader()
         {
-            table.Columns.Add("Табельный номер");
+            var idColumn = new DataColumn("Табельный номер", typeof(int));
+            idColumn.ReadOnly = true;
+            table.Columns.Add(idColumn);
             table.Columns.Add("Фамилия");
             table.Columns.Add("Имя");
             table.Columns.Add("Отчество");
-            table.Columns.Add("Должность");
+            var positionColumn = new DataColumn("Должность", typeof(Positions));
+            positionColumn.ReadOnly = true;
+            table.Columns.Add(positionColumn);
         }
 
-        private void GetTableRows(Staffs staffs)
+        private void GetTableRows(List<Staff> staffs)
         {
             table.Rows.Clear();
-            if (staffs != null && staffs.ListStaffs != null)
-            foreach (var staff in staffs.ListStaffs)
-            {
-                table.Rows.Add(staff.ID, staff.LastName, staff.FirstName, staff.MiddleName, staff.Position);
-            }
+            if (staffs != null && staffs != null)
+                foreach (var staff in staffs)
+                {
+                    table.Rows.Add(staff.ID, staff.LastName, staff.FirstName, staff.MiddleName, staff.Position);
+                }
         }
 
         private void SaveTableChanges()
         {
             for (int i = 0; i < table.Rows.Count; i++)
             {
-                staffs.ListStaffs[i].ID = table.Rows[i].ItemArray[0].ToString();
-                staffs.ListStaffs[i].LastName = table.Rows[i].ItemArray[1].ToString();
-                staffs.ListStaffs[i].FirstName = table.Rows[i].ItemArray[2].ToString();
-                staffs.ListStaffs[i].MiddleName = table.Rows[i].ItemArray[3].ToString();
-                staffs.ListStaffs[i].Position = table.Rows[i].ItemArray[4].ToString();
+                staffs[i].ID = int.Parse(table.Rows[i].ItemArray[0].ToString());
+                staffs[i].LastName = table.Rows[i].ItemArray[1].ToString();
+                staffs[i].FirstName = table.Rows[i].ItemArray[2].ToString();
+                staffs[i].MiddleName = table.Rows[i].ItemArray[3].ToString();
+                staffs[i].Position = (Positions)table.Rows[i].ItemArray[4];
             }
         }
 
@@ -70,12 +75,17 @@ namespace staff_qualification_Forms
 
         private void addButton_Click(object sender, System.EventArgs e)
         {
+            if (staffs == null)
+            {
+                staffs = new List<Staff>();
+            }
             StaffEditForm staffEditForm = new StaffEditForm(staffs);
             staffEditForm.ShowDialog();
-            if (staffs.ListStaffs.Count > table.Rows.Count)
+            if (staffs.Count > table.Rows.Count)
             {
-                var staff = staffs.ListStaffs[staffs.ListStaffs.Count - 1];
+                var staff = staffs[staffs.Count - 1];
                 table.Rows.Add(staff.ID, staff.LastName, staff.FirstName, staff.MiddleName, staff.Position);
+                isChanged = true;
             }
         }
 
@@ -93,8 +103,9 @@ namespace staff_qualification_Forms
                 var result = MessageBox.Show("Удалить запись?", "Подтверждение операции", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    staffs.ListStaffs.RemoveAt(currentIndex);
+                    staffs.RemoveAt(currentIndex);
                     staffDataGridView.Rows.RemoveAt(currentIndex);
+                    isChanged = true;
                 }
             }
             catch
@@ -105,15 +116,53 @@ namespace staff_qualification_Forms
 
         private void StaffsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var result = MessageBox.Show("Сохранить изменения в списке сотрудников?", "Сотрудники", MessageBoxButtons.YesNoCancel);
-            if (result == DialogResult.Yes)
+            if (isChanged)
             {
-                SaveTableChanges();
-                UpdateStaffsData();
+                var result = MessageBox.Show("Сохранить изменения в списке сотрудников?", "Сотрудники", MessageBoxButtons.YesNoCancel);
+                if (result == DialogResult.Yes)
+                {
+                    SaveTableChanges();
+                    UpdateStaffsData();
+                }
+                if (result == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
             }
-            if (result == DialogResult.Cancel)
+        }
+
+        private void staffDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = e.RowIndex;
+            if (index >= 0)
             {
-                e.Cancel = true;
+                var staffEditForm = new StaffEditForm(staffs, index);
+                staffEditForm.ShowDialog();
+                GetTableRows(staffs);
+            }
+        }
+
+        private void staffDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            isChanged = true;
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < staffDataGridView.RowCount; i++)
+            {
+                staffDataGridView.Rows[i].Selected = false;
+                for (int j = 0; j < staffDataGridView.ColumnCount; j++)
+                {
+                    if (staffDataGridView.Rows[i].Cells[j].Value != null)
+                    {
+                        if (staffDataGridView.Rows[i].Cells[j].Value.ToString().Contains(searchTextBox.Text))
+                        {
+                            staffDataGridView.Rows[i].Selected = true;
+                            break;
+                        }
+                    }
+                }
             }
         }
     }

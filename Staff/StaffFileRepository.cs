@@ -8,13 +8,13 @@ namespace staff_qualification_Forms
 {
     public class StaffFileRepository : IStaffRepository
     {
-        public Staffs GetAll()
+        public List<Staff> GetAll()
         {
-            var staffs = JsonConvert.DeserializeObject<Staffs>(ReadFromFile());
+            var staffs = JsonConvert.DeserializeObject<List<Staff>>(ReadFromFile());
             return staffs;
         }
 
-        public void Update(Staffs staffs)
+        public void Update(List<Staff> staffs)
         {
             var jsonStaffs = JsonConvert.SerializeObject(staffs);
             WriteToFile(jsonStaffs);

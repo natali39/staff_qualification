@@ -16,12 +16,12 @@ namespace staff_qualification_Forms
             this.repository = repository;
         }
 
-        public Staffs GetData()
+        public List<Staff> GetData()
         {
             return repository.GetAll();
         }
 
-        public void UpdateData(Staffs staffs)
+        public void UpdateData(List<Staff> staffs)
         {
             repository.Update(staffs);
         }
