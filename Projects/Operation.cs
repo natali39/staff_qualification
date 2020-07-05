@@ -3,7 +3,12 @@
     public class Operation
     {
         int id;
-        public int Name { get; set; }
+        public string Name { get; set; }
         public Model Model { get; set; }
+
+        public Operation(string name)
+        {
+            this.Name = name;
+        }
     }
 }

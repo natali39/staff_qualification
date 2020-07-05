@@ -54,6 +54,12 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectEditForm.Designer.cs">
+      <DependentUpon>ProjectEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProjectsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +81,9 @@
     </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectEditForm.resx">
+      <DependentUpon>ProjectEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectsForm.resx">
       <DependentUpon>ProjectsForm.cs</DependentUpon>

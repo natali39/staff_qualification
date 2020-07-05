@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace staff_qualification_Forms
 {
@@ -8,26 +9,34 @@ namespace staff_qualification_Forms
         public string Name { get; set; }
         public List<Model> Models;
 
-        public Project(string name)
+        public Project()
         {
-            this.Name = name;
         }
 
-        public static List<Project> GetProjects()
+        public static List<Project> GetAll()
         {
-            List<Project> projects = new List<Project>();
-            projects.Add(new Project("Audi"));
-            projects.Add(new Project("VW"));
-            projects.Add(new Project("BMW"));
+            var projects = JsonConvert.DeserializeObject<List<Project>>(ReadFromFile());
             return projects;
         }
 
-        public List<Model> GetModels()
+        public static void Update(List<Project> projects)
         {
-            List<Model> models = new List<Model>();
-            models.Add(new Model("model1"));
-            models.Add(new Model("model2"));
-            return models;
+            var jsonProjects = JsonConvert.SerializeObject(projects);
+            WriteToFile(jsonProjects);
+        }
+
+        private static string ReadFromFile()
+        {
+            if (!FileProvider.IsExist(FilePaths.projectPath))
+            {
+                FileProvider.Create(FilePaths.projectPath);
+            }
+            return FileProvider.Read(FilePaths.projectPath);
+        }
+
+        private static void WriteToFile(string value)
+        {
+            FileProvider.Write(FilePaths.projectPath, value, false);
         }
     }
 }

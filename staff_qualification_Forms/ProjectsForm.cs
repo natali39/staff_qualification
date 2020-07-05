@@ -1,81 +1,134 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace staff_qualification_Forms
 {
     public partial class ProjectsForm : Form
     {
-        List<Project> projects = new List<Project>();
+        List<Project> projects;
+        Project project;
+        Model model;
+        bool isChanged = false;
         
         public ProjectsForm()
         {
             InitializeComponent();
+            projects = Project.GetAll(); 
+            if (projects == null)
+                projects = new List<Project>();
             FillTreeView();
         }
-        
+
         private void FillTreeView()
         {
             projectsTreeView.BeginUpdate();
             projectsTreeView.Nodes.Clear();
-
-            foreach (var project in projects)
+            if (projects != null)
             {
-                projectsTreeView.Nodes.Add(project.Name);
-
-                try
+                foreach (var project in projects)
                 {
-                    foreach (var model in project.Models)
-                    {
-                        var modelNode = new TreeNode(model.Name);
-                        projectsTreeView.Nodes[projects.IndexOf(project)].Nodes.Add(modelNode);
-                    }
-                }
-                catch (Exception ex) {  }
-            }
-            projectsTreeView.EndUpdate();
-        }
+                    var projectNode = new TreeNode(project.Name);
+                    projectNode.Tag = project;
+                    projectsTreeView.Nodes.Add(projectNode);
 
-        private void addModelButton_Click(object sender, EventArgs e)
-        {
-            foreach (var project in projects)
-            {
-                try
-                {
-                    if (projectsTreeView.SelectedNode.Text == project.Name)
+                    try
                     {
-                        if (project.Models == null)
+                        foreach (var model in project.Models)
                         {
-                            project.Models = new List<Model>();
+                            var modelNode = new TreeNode(model.Name);
+                            modelNode.Tag = model;
+                            projectsTreeView.Nodes[projects.IndexOf(project)].Nodes.Add(modelNode);
                         }
-                        Model model = new Model(addModelNameTextBox.Text);
-                        project.Models.Add(model);
                     }
+                    catch (Exception ex) { }
                 }
-                catch (Exception ex) { }
+                projectsTreeView.EndUpdate();
             }
-            FillTreeView();
         }
 
-        private void addProjectButton_Click(object sender, EventArgs e)
+        private void проектToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (addProjectTextBox.Text != string.Empty)
+            AddProject();
+        }
+
+        private void addProjectButton_Click_1(object sender, EventArgs e)
+        {
+            AddProject();
+        }
+
+        private void AddProject()
+        {
+            project = new Project();
+            var projectEditForm = new ProjectEditForm(project);
+            projectEditForm.ShowDialog();
+            if (projectEditForm.project != null)
             {
-                var project = new Project(addProjectTextBox.Text);
-                projects.Add(project);
+                projects.Add(projectEditForm.project);
+                FillTreeView();
+            }
+        }
+
+        private void ProjectsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var result = MessageBox.Show("Сохранить изменения?", "Проекты", MessageBoxButtons.YesNoCancel);
+            if (result == DialogResult.Yes)
+            {
+                Project.Update(projects);
+            }
+            if (result == DialogResult.Cancel)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void deleteProjectButton_Click(object sender, EventArgs e)
+        {
+            if (projectsTreeView.SelectedNode.Level == 0)
+            {
+                project = (Project)projectsTreeView.SelectedNode.Tag;
+                projects.Remove(project);
+            }
+            else if (projectsTreeView.SelectedNode.Level == 1)
+            {
+                model = (Model)projectsTreeView.SelectedNode.Tag;
+                project = (Project)projectsTreeView.SelectedNode.Parent.Tag;
+                project.Models.Remove(model);
             }
             FillTreeView();
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void projectsTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            FillTreeView();
+            if (projectsTreeView.SelectedNode.Level == 0)
+            {
+                project = (Project)projectsTreeView.SelectedNode.Tag;
+                var projectEditForm = new ProjectEditForm(project);
+                projectEditForm.ShowDialog();
+                FillTreeView();
+            }
+        }
+
+        private void projectsTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (projectsTreeView.SelectedNode.Level == 1)
+            {
+                model = (Model)projectsTreeView.SelectedNode.Tag;
+                modelNameLabel.Text = model.Name;
+                GetListOperations(model);
+            }
+        }
+
+        private void GetListOperations(Model model)
+        {
+            operationsListBox.Items.Clear();
+            if (model.Operations != null)
+            {
+                foreach (var operation in model.Operations)
+                {
+                    operationsListBox.Items.Add(operation.Name);
+                }
+            }
         }
     }
 }

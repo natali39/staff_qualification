@@ -6,8 +6,7 @@ namespace staff_qualification_Forms
     {
         int id;
         public string Name { get; set; }
-        public Project Project { get; set; }
-        public List<Operation> operations;
+        public List<Operation> Operations;
 
         public Model(string name)
         {
