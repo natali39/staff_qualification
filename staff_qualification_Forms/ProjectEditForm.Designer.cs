@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.addProjectTextBox = new System.Windows.Forms.TextBox();
-            this.addProjectButton = new System.Windows.Forms.Button();
+            this.saveProjectButton = new System.Windows.Forms.Button();
             this.projectNameLabel = new System.Windows.Forms.Label();
             this.addModelButton = new System.Windows.Forms.Button();
             this.addModelNameTextBox = new System.Windows.Forms.TextBox();
@@ -50,15 +50,15 @@
             this.addProjectTextBox.Size = new System.Drawing.Size(221, 20);
             this.addProjectTextBox.TabIndex = 12;
             // 
-            // addProjectButton
+            // saveProjectButton
             // 
-            this.addProjectButton.Location = new System.Drawing.Point(444, 33);
-            this.addProjectButton.Name = "addProjectButton";
-            this.addProjectButton.Size = new System.Drawing.Size(95, 23);
-            this.addProjectButton.TabIndex = 11;
-            this.addProjectButton.Text = "Сохранить";
-            this.addProjectButton.UseVisualStyleBackColor = true;
-            this.addProjectButton.Click += new System.EventHandler(this.addProjectButton_Click);
+            this.saveProjectButton.Location = new System.Drawing.Point(444, 33);
+            this.saveProjectButton.Name = "saveProjectButton";
+            this.saveProjectButton.Size = new System.Drawing.Size(95, 23);
+            this.saveProjectButton.TabIndex = 11;
+            this.saveProjectButton.Text = "Сохранить";
+            this.saveProjectButton.UseVisualStyleBackColor = true;
+            this.saveProjectButton.Click += new System.EventHandler(this.saveProjectButton_Click);
             // 
             // projectNameLabel
             // 
@@ -174,7 +174,7 @@
             this.Controls.Add(this.addModelNameTextBox);
             this.Controls.Add(this.projectNameLabel);
             this.Controls.Add(this.addProjectTextBox);
-            this.Controls.Add(this.addProjectButton);
+            this.Controls.Add(this.saveProjectButton);
             this.Name = "ProjectEditForm";
             this.Text = "ProjectEditForm";
             this.ResumeLayout(false);
@@ -185,7 +185,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox addProjectTextBox;
-        private System.Windows.Forms.Button addProjectButton;
+        private System.Windows.Forms.Button saveProjectButton;
         private System.Windows.Forms.Label projectNameLabel;
         private System.Windows.Forms.Button addModelButton;
         private System.Windows.Forms.TextBox addModelNameTextBox;

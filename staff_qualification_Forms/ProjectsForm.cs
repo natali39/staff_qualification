@@ -84,18 +84,21 @@ namespace staff_qualification_Forms
 
         private void deleteProjectButton_Click(object sender, EventArgs e)
         {
-            if (projectsTreeView.SelectedNode.Level == 0)
+            if (projectsTreeView.SelectedNode != null)
             {
-                project = (Project)projectsTreeView.SelectedNode.Tag;
-                projects.Remove(project);
+                if (projectsTreeView.SelectedNode.Level == 0)
+                {
+                    project = (Project)projectsTreeView.SelectedNode.Tag;
+                    projects.Remove(project);
+                }
+                else if (projectsTreeView.SelectedNode.Level == 1)
+                {
+                    model = (Model)projectsTreeView.SelectedNode.Tag;
+                    project = (Project)projectsTreeView.SelectedNode.Parent.Tag;
+                    project.Models.Remove(model);
+                }
+                FillTreeView();
             }
-            else if (projectsTreeView.SelectedNode.Level == 1)
-            {
-                model = (Model)projectsTreeView.SelectedNode.Tag;
-                project = (Project)projectsTreeView.SelectedNode.Parent.Tag;
-                project.Models.Remove(model);
-            }
-            FillTreeView();
         }
 
         private void projectsTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -122,12 +125,9 @@ namespace staff_qualification_Forms
         private void GetListOperations(Model model)
         {
             operationsListBox.Items.Clear();
-            if (model.Operations != null)
+            foreach (var operation in model.Operations)
             {
-                foreach (var operation in model.Operations)
-                {
-                    operationsListBox.Items.Add(operation.Name);
-                }
+                operationsListBox.Items.Add(operation.Name);
             }
         }
     }

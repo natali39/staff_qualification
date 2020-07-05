@@ -11,6 +11,7 @@ namespace staff_qualification_Forms
         public Model(string name)
         {
             this.Name = name;
+            Operations = new List<Operation>();
         }
     }
 }

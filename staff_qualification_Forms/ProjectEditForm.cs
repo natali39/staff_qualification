@@ -19,12 +19,9 @@ namespace staff_qualification_Forms
 
         private void FillModelListBox()
         {
-            if (project.Models != null)
+            foreach (var model in project.Models)
             {
-                foreach (var model in project.Models)
-                {
-                    modelListBox.Items.Add(model.Name);
-                }
+                modelListBox.Items.Add(model.Name);
             }
         }
 
@@ -34,7 +31,7 @@ namespace staff_qualification_Forms
             FillModelListBox();
         }
 
-        private void addProjectButton_Click(object sender, EventArgs e)
+        private void saveProjectButton_Click(object sender, EventArgs e)
         {
             if (addProjectTextBox.Text != String.Empty)
             {
@@ -57,10 +54,6 @@ namespace staff_qualification_Forms
 
         private void addModelButton_Click(object sender, EventArgs e)
         {
-            if (project.Models == null)
-            {
-                project.Models = new List<Model>();
-            }
             if (addModelNameTextBox.Text != String.Empty)
             {
                 project.Models.Add(new Model(addModelNameTextBox.Text));
@@ -85,20 +78,19 @@ namespace staff_qualification_Forms
 
         private void addOperationButton_Click(object sender, EventArgs e)
         {
-            model = project.Models[modelListBox.SelectedIndex];
-            if (model.Operations == null)
+            if (model != null)
             {
-                model.Operations = new List<Operation>();
-            }
-            if (addOperationTextBox.Text != String.Empty)
-            {
-                model.Operations.Add(new Operation(addOperationTextBox.Text));
-                RefreshOperationsListBox();
-                addOperationTextBox.Text = String.Empty;
-            }
-            else
-            {
-                MessageBox.Show("Нужно ввести название модели!");
+                model = project.Models[modelListBox.SelectedIndex];
+                if (addOperationTextBox.Text != String.Empty)
+                {
+                    model.Operations.Add(new Operation(addOperationTextBox.Text));
+                    RefreshOperationsListBox();
+                    addOperationTextBox.Text = String.Empty;
+                }
+                else
+                {
+                    MessageBox.Show("Нужно ввести название операции!");
+                }
             }
         }
 
@@ -116,12 +108,9 @@ namespace staff_qualification_Forms
 
         private void FillOperationsListBox()
         {
-            if (model.Operations != null)
+            foreach (var operation in model.Operations)
             {
-                foreach (var operation in model.Operations)
-                {
-                    operationsListBox.Items.Add(operation.Name);
-                }
+                operationsListBox.Items.Add(operation.Name);
             }
         }
 

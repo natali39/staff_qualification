@@ -11,6 +11,7 @@ namespace staff_qualification_Forms
 
         public Project()
         {
+            Models = new List<Model>();
         }
 
         public static List<Project> GetAll()
