@@ -26,7 +26,7 @@ namespace staff_qualification_Forms
 
         private void GetFormProperties()
         {
-            idTextBox.Text = Staff.GetId(staffs).ToString();
+            idTextBox.Text = Staff.GetNextId(staffs).ToString();
             positionComboBox.DataSource = Enum.GetValues(typeof(Positions));
             positionComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             idTextBox.ReadOnly = true;

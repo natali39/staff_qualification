@@ -30,7 +30,7 @@ namespace staff_qualification_Forms
         {
             staffs = service.GetData();
             GetTableHeader();
-            GetTableRows(staffs);
+            AddTableRows(staffs);
         }
 
         private void GetTableHeader()
@@ -46,10 +46,10 @@ namespace staff_qualification_Forms
             table.Columns.Add(positionColumn);
         }
 
-        private void GetTableRows(List<Staff> staffs)
+        private void AddTableRows(List<Staff> staffs)
         {
             table.Rows.Clear();
-            if (staffs != null && staffs != null)
+            if (staffs != null)
                 foreach (var staff in staffs)
                 {
                     table.Rows.Add(staff.ID, staff.LastName, staff.FirstName, staff.MiddleName, staff.Position);
@@ -138,7 +138,7 @@ namespace staff_qualification_Forms
             {
                 var staffEditForm = new StaffEditForm(staffs, index);
                 staffEditForm.ShowDialog();
-                GetTableRows(staffs);
+                AddTableRows(staffs);
             }
         }
 

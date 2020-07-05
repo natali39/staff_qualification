@@ -42,7 +42,7 @@ namespace staff_qualification_Forms
             this.Position = position;
         }
 
-        public static int GetId(List<Staff> staffs)
+        public static int GetNextId(List<Staff> staffs)
         {
             var idArray = new int[staffs.Count];
             foreach (var staff in staffs)
