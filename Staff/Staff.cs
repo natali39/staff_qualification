@@ -57,5 +57,18 @@ namespace staff_qualification_Forms
             }
             return idMax + 1;
         }
+
+        public static List<Staff> SearchLastName(List<Staff> staffs, string userInputValue)
+        {
+            var foundListStaff = new List<Staff>();
+            foreach(var staff in staffs)
+            {
+                if (staff.LastName.ToLower().Contains(userInputValue.ToLower()))
+                {
+                    foundListStaff.Add(staff);
+                }
+            }
+            return foundListStaff;
+        }
     }
 }

@@ -1,32 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace staff_qualification_Forms
 {
     public partial class StaffEditForm : Form
     {
-        List<Staff> staffs;
-        private int index;
-        private bool editMode = false;
+        public Staff staff;
 
-        public StaffEditForm(List<Staff> staffs)
+        public StaffEditForm()
         {
-            this.staffs = staffs;
             InitializeComponent();
             GetFormProperties();
         }
 
-        public StaffEditForm(List<Staff> staffs, int index) : this(staffs)
+        public StaffEditForm(int id) : this()
         {
-            this.index = index;
+            this.staff = new Staff();
+            idTextBox.Text = id.ToString();
+        }
+
+        public StaffEditForm(Staff staff) : this()
+        {
+            this.staff = staff;
             FillFormControls();
-            editMode = true;
         }
 
         private void GetFormProperties()
         {
-            idTextBox.Text = Staff.GetNextId(staffs).ToString();
             positionComboBox.DataSource = Enum.GetValues(typeof(Positions));
             positionComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             idTextBox.ReadOnly = true;
@@ -34,7 +34,6 @@ namespace staff_qualification_Forms
 
         private void FillFormControls()
         {
-            var staff = staffs[index];
             idTextBox.Text = staff.ID.ToString();
             lastNameTextBox.Text = staff.LastName;
             firstNameTextBox.Text = staff.FirstName;
@@ -46,26 +45,11 @@ namespace staff_qualification_Forms
         {
             if (!IsEmptyData())
             {
-                if (editMode == true)
-                {
-                    var staff = staffs[index];
-                    staff.LastName = lastNameTextBox.Text;
-                    staff.FirstName = firstNameTextBox.Text;
-                    staff.MiddleName = middleNameTextBox.Text;
-                    staff.Position = (Positions)Enum.Parse(typeof(Positions), positionComboBox.SelectedValue.ToString());
-                }
-                if (editMode == false)
-                {
-                    var staff = new Staff
-                    {
-                        ID = int.Parse(idTextBox.Text),
-                        LastName = lastNameTextBox.Text,
-                        FirstName = firstNameTextBox.Text,
-                        MiddleName = middleNameTextBox.Text,
-                        Position = (Positions)Enum.Parse(typeof(Positions), positionComboBox.SelectedValue.ToString())
-                    };
-                    staffs.Add(staff);
-                }
+                staff.ID = int.Parse(idTextBox.Text);
+                staff.LastName = lastNameTextBox.Text;
+                staff.FirstName = firstNameTextBox.Text;
+                staff.MiddleName = middleNameTextBox.Text;
+                staff.Position = (Positions)Enum.Parse(typeof(Positions), positionComboBox.SelectedValue.ToString());
                 this.Close();
             }
             else
@@ -77,14 +61,6 @@ namespace staff_qualification_Forms
         private bool IsEmptyData()
         {
             return idTextBox.Text == String.Empty || lastNameTextBox.Text == String.Empty || firstNameTextBox.Text == String.Empty || positionComboBox.Text == String.Empty;
-        }
-
-        private void ClearForm()
-        {
-            idTextBox.Text = String.Empty;
-            lastNameTextBox.Text = String.Empty;
-            positionComboBox.Text = String.Empty;
-            idTextBox.Focus();
         }
     }
 }

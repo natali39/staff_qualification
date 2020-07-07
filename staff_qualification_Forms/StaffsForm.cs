@@ -36,14 +36,20 @@ namespace staff_qualification_Forms
         private void GetTableHeader()
         {
             var idColumn = new DataColumn("Табельный номер", typeof(int));
-            idColumn.ReadOnly = true;
             table.Columns.Add(idColumn);
-            table.Columns.Add("Фамилия");
-            table.Columns.Add("Имя");
-            table.Columns.Add("Отчество");
+            var lastNameColumn = new DataColumn("Фамилия", typeof(string));
+            table.Columns.Add(lastNameColumn);
+            var firstNameColumn = new DataColumn("Имя", typeof(string));
+            table.Columns.Add(firstNameColumn);
+            var middlNameColumn = new DataColumn("Отчество", typeof(string));
+            table.Columns.Add(middlNameColumn);
             var positionColumn = new DataColumn("Должность", typeof(Positions));
-            positionColumn.ReadOnly = true;
             table.Columns.Add(positionColumn);
+
+            foreach (DataColumn column in table.Columns)
+            {
+                column.ReadOnly = true;
+            }
         }
 
         private void AddTableRows(List<Staff> staffs)
@@ -54,18 +60,6 @@ namespace staff_qualification_Forms
                 {
                     table.Rows.Add(staff.ID, staff.LastName, staff.FirstName, staff.MiddleName, staff.Position);
                 }
-        }
-
-        private void SaveTableChanges()
-        {
-            for (int i = 0; i < table.Rows.Count; i++)
-            {
-                staffs[i].ID = int.Parse(table.Rows[i].ItemArray[0].ToString());
-                staffs[i].LastName = table.Rows[i].ItemArray[1].ToString();
-                staffs[i].FirstName = table.Rows[i].ItemArray[2].ToString();
-                staffs[i].MiddleName = table.Rows[i].ItemArray[3].ToString();
-                staffs[i].Position = (Positions)table.Rows[i].ItemArray[4];
-            }
         }
 
         private void UpdateStaffsData()
@@ -79,19 +73,16 @@ namespace staff_qualification_Forms
             {
                 staffs = new List<Staff>();
             }
-            StaffEditForm staffEditForm = new StaffEditForm(staffs);
+            int id = Staff.GetNextId(staffs);
+            StaffEditForm staffEditForm = new StaffEditForm(id);
             staffEditForm.ShowDialog();
-            if (staffs.Count > table.Rows.Count)
-            {
-                var staff = staffs[staffs.Count - 1];
-                table.Rows.Add(staff.ID, staff.LastName, staff.FirstName, staff.MiddleName, staff.Position);
-                isChanged = true;
-            }
+            staffs.Add(staffEditForm.staff);
+            AddTableRows(staffs);
+            UpdateStaffsData();
         }
 
         private void saveButton_Click(object sender, System.EventArgs e)
         {
-            SaveTableChanges();
             UpdateStaffsData();
         }
 
@@ -121,7 +112,6 @@ namespace staff_qualification_Forms
                 var result = MessageBox.Show("Сохранить изменения в списке сотрудников?", "Сотрудники", MessageBoxButtons.YesNoCancel);
                 if (result == DialogResult.Yes)
                 {
-                    SaveTableChanges();
                     UpdateStaffsData();
                 }
                 if (result == DialogResult.Cancel)
@@ -136,34 +126,22 @@ namespace staff_qualification_Forms
             int index = e.RowIndex;
             if (index >= 0)
             {
-                var staffEditForm = new StaffEditForm(staffs, index);
+                var staffEditForm = new StaffEditForm(staffs[index]);
                 staffEditForm.ShowDialog();
                 AddTableRows(staffs);
+                UpdateStaffsData();
             }
-        }
-
-        private void staffDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            isChanged = true;
         }
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < staffDataGridView.RowCount; i++)
-            {
-                staffDataGridView.Rows[i].Selected = false;
-                for (int j = 0; j < staffDataGridView.ColumnCount; j++)
-                {
-                    if (staffDataGridView.Rows[i].Cells[j].Value != null)
-                    {
-                        if (staffDataGridView.Rows[i].Cells[j].Value.ToString().Contains(searchTextBox.Text))
-                        {
-                            staffDataGridView.Rows[i].Selected = true;
-                            break;
-                        }
-                    }
-                }
-            }
+            AddTableRows(Staff.SearchLastName(staffs, searchTextBox.Text));
+        }
+
+        private void resetSearchButton_Click(object sender, EventArgs e)
+        {
+            searchTextBox.Text = String.Empty;
+            AddTableRows(staffs);
         }
     }
 }

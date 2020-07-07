@@ -34,6 +34,7 @@
             this.staffDataGridView = new System.Windows.Forms.DataGridView();
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.searchButton = new System.Windows.Forms.Button();
+            this.resetSearchButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.staffDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,18 +80,17 @@
             this.staffDataGridView.Size = new System.Drawing.Size(856, 369);
             this.staffDataGridView.TabIndex = 9;
             this.staffDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.staffDataGridView_CellDoubleClick);
-            this.staffDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.staffDataGridView_CellValueChanged);
             // 
             // searchTextBox
             // 
-            this.searchTextBox.Location = new System.Drawing.Point(485, 15);
+            this.searchTextBox.Location = new System.Drawing.Point(408, 15);
             this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.Size = new System.Drawing.Size(277, 20);
             this.searchTextBox.TabIndex = 10;
             // 
             // searchButton
             // 
-            this.searchButton.Location = new System.Drawing.Point(768, 12);
+            this.searchButton.Location = new System.Drawing.Point(691, 12);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(75, 25);
             this.searchButton.TabIndex = 11;
@@ -98,11 +98,22 @@
             this.searchButton.UseVisualStyleBackColor = true;
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
+            // resetSearchButton
+            // 
+            this.resetSearchButton.Location = new System.Drawing.Point(772, 12);
+            this.resetSearchButton.Name = "resetSearchButton";
+            this.resetSearchButton.Size = new System.Drawing.Size(76, 25);
+            this.resetSearchButton.TabIndex = 12;
+            this.resetSearchButton.Text = "Сбросить";
+            this.resetSearchButton.UseVisualStyleBackColor = true;
+            this.resetSearchButton.Click += new System.EventHandler(this.resetSearchButton_Click);
+            // 
             // StaffsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(855, 422);
+            this.Controls.Add(this.resetSearchButton);
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.addButton);
@@ -125,5 +136,6 @@
         private System.Windows.Forms.DataGridView staffDataGridView;
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.Button searchButton;
+        private System.Windows.Forms.Button resetSearchButton;
     }
 }
