@@ -152,6 +152,7 @@
             this.Name = "StaffEditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Добавить сотрудника";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StaffEditForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

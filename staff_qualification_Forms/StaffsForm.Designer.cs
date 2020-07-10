@@ -33,14 +33,13 @@
             this.addButton = new System.Windows.Forms.Button();
             this.staffDataGridView = new System.Windows.Forms.DataGridView();
             this.searchTextBox = new System.Windows.Forms.TextBox();
-            this.searchButton = new System.Windows.Forms.Button();
-            this.resetSearchButton = new System.Windows.Forms.Button();
+            this.lastNameSearchLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.staffDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(92, 12);
+            this.deleteButton.Location = new System.Drawing.Point(86, 12);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(74, 25);
             this.deleteButton.TabIndex = 8;
@@ -50,7 +49,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(172, 12);
+            this.saveButton.Location = new System.Drawing.Point(166, 12);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(74, 25);
             this.saveButton.TabIndex = 7;
@@ -60,7 +59,7 @@
             // 
             // addButton
             // 
-            this.addButton.Location = new System.Drawing.Point(12, 12);
+            this.addButton.Location = new System.Drawing.Point(6, 12);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(74, 25);
             this.addButton.TabIndex = 6;
@@ -83,38 +82,27 @@
             // 
             // searchTextBox
             // 
-            this.searchTextBox.Location = new System.Drawing.Point(408, 15);
+            this.searchTextBox.Location = new System.Drawing.Point(629, 15);
             this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(277, 20);
+            this.searchTextBox.Size = new System.Drawing.Size(217, 20);
             this.searchTextBox.TabIndex = 10;
+            this.searchTextBox.TextChanged += new System.EventHandler(this.searchTextBox_TextChanged);
             // 
-            // searchButton
+            // lastNameSearchLabel
             // 
-            this.searchButton.Location = new System.Drawing.Point(691, 12);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(75, 25);
-            this.searchButton.TabIndex = 11;
-            this.searchButton.Text = "Найти";
-            this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
-            // 
-            // resetSearchButton
-            // 
-            this.resetSearchButton.Location = new System.Drawing.Point(772, 12);
-            this.resetSearchButton.Name = "resetSearchButton";
-            this.resetSearchButton.Size = new System.Drawing.Size(76, 25);
-            this.resetSearchButton.TabIndex = 12;
-            this.resetSearchButton.Text = "Сбросить";
-            this.resetSearchButton.UseVisualStyleBackColor = true;
-            this.resetSearchButton.Click += new System.EventHandler(this.resetSearchButton_Click);
+            this.lastNameSearchLabel.AutoSize = true;
+            this.lastNameSearchLabel.Location = new System.Drawing.Point(423, 18);
+            this.lastNameSearchLabel.Name = "lastNameSearchLabel";
+            this.lastNameSearchLabel.Size = new System.Drawing.Size(208, 13);
+            this.lastNameSearchLabel.TabIndex = 13;
+            this.lastNameSearchLabel.Text = "Начните вводить фамилию сотрудника:";
             // 
             // StaffsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(855, 422);
-            this.Controls.Add(this.resetSearchButton);
-            this.Controls.Add(this.searchButton);
+            this.Controls.Add(this.lastNameSearchLabel);
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.deleteButton);
@@ -135,7 +123,6 @@
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.DataGridView staffDataGridView;
         private System.Windows.Forms.TextBox searchTextBox;
-        private System.Windows.Forms.Button searchButton;
-        private System.Windows.Forms.Button resetSearchButton;
+        private System.Windows.Forms.Label lastNameSearchLabel;
     }
 }

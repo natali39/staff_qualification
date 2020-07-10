@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace staff_qualification_Forms
@@ -30,20 +31,21 @@ namespace staff_qualification_Forms
         {
             staffs = service.GetData();
             GetTableHeader();
-            AddTableRows(staffs);
+            UpdateTableRows(staffs);
         }
 
         private void GetTableHeader()
         {
             var idColumn = new DataColumn("Табельный номер", typeof(int));
-            table.Columns.Add(idColumn);
             var lastNameColumn = new DataColumn("Фамилия", typeof(string));
-            table.Columns.Add(lastNameColumn);
             var firstNameColumn = new DataColumn("Имя", typeof(string));
-            table.Columns.Add(firstNameColumn);
             var middlNameColumn = new DataColumn("Отчество", typeof(string));
+            var positionColumn = new DataColumn("Должность", typeof(string));
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(lastNameColumn);
+            table.Columns.Add(firstNameColumn);
             table.Columns.Add(middlNameColumn);
-            var positionColumn = new DataColumn("Должность", typeof(Positions));
             table.Columns.Add(positionColumn);
 
             foreach (DataColumn column in table.Columns)
@@ -52,13 +54,14 @@ namespace staff_qualification_Forms
             }
         }
 
-        private void AddTableRows(List<Staff> staffs)
+        private void UpdateTableRows(List<Staff> staffs)
         {
             table.Rows.Clear();
             if (staffs != null)
                 foreach (var staff in staffs)
                 {
-                    table.Rows.Add(staff.ID, staff.LastName, staff.FirstName, staff.MiddleName, staff.Position);
+                    var positionDisplayName = Staff.GetPositionDisplayName(staff.Position);
+                    table.Rows.Add(staff.ID, staff.LastName, staff.FirstName, staff.MiddleName, positionDisplayName);
                 }
         }
 
@@ -76,9 +79,12 @@ namespace staff_qualification_Forms
             int id = Staff.GetNextId(staffs);
             StaffEditForm staffEditForm = new StaffEditForm(id);
             staffEditForm.ShowDialog();
-            staffs.Add(staffEditForm.staff);
-            AddTableRows(staffs);
-            UpdateStaffsData();
+            if (staffEditForm.staff != null)
+            {
+                staffs.Add(staffEditForm.staff);
+                UpdateTableRows(staffs);
+                UpdateStaffsData();
+            }
         }
 
         private void saveButton_Click(object sender, System.EventArgs e)
@@ -90,13 +96,12 @@ namespace staff_qualification_Forms
         {
             try
             {
-                var currentIndex = staffDataGridView.CurrentRow.Index;
-                var result = MessageBox.Show("Удалить запись?", "Подтверждение операции", MessageBoxButtons.YesNo);
+                var result = MessageBox.Show("Удалить выделенные строки?", "Подтверждение операции", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    staffs.RemoveAt(currentIndex);
-                    staffDataGridView.Rows.RemoveAt(currentIndex);
-                    isChanged = true;
+                    DeleteSelectedRows();
+                    UpdateTableRows(staffs);
+                    UpdateStaffsData();
                 }
             }
             catch
@@ -128,20 +133,29 @@ namespace staff_qualification_Forms
             {
                 var staffEditForm = new StaffEditForm(staffs[index]);
                 staffEditForm.ShowDialog();
-                AddTableRows(staffs);
+                UpdateTableRows(staffs);
                 UpdateStaffsData();
             }
         }
 
-        private void searchButton_Click(object sender, EventArgs e)
+        private void DeleteSelectedRows()
         {
-            AddTableRows(Staff.SearchLastName(staffs, searchTextBox.Text));
+            var listSelectedIndex = new List<int>();
+            foreach (DataGridViewRow row in staffDataGridView.SelectedRows)
+            {
+                listSelectedIndex.Add(row.Index);
+            }
+            var sortedListIndex = listSelectedIndex.OrderByDescending(index => index);
+            foreach (var index in sortedListIndex)
+            {
+                staffs.RemoveAt(index);
+                staffDataGridView.Rows[index - 1].Selected = true;
+            }
         }
 
-        private void resetSearchButton_Click(object sender, EventArgs e)
+        private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
-            searchTextBox.Text = String.Empty;
-            AddTableRows(staffs);
+            UpdateTableRows(Staff.SearchLastName(staffs, searchTextBox.Text));
         }
     }
 }

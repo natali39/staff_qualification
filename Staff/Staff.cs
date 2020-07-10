@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 using Newtonsoft;
 
 namespace staff_qualification_Forms
@@ -8,16 +10,16 @@ namespace staff_qualification_Forms
     public enum Positions
     {
         [Description("Швея")]
-        Seamstress,
+        Seamstress = 0,
 
         [Description("Контролёр")]
-        Control,
+        Control = 1,
 
         [Description("Мастер")]
-        Master,
+        Master = 2,
 
         [Description("Начальник производства")]
-        ProductionManager,
+        ProductionManager = 3,
     }
 
     public class Staff
@@ -69,6 +71,51 @@ namespace staff_qualification_Forms
                 }
             }
             return foundListStaff;
+        }
+
+        public static object GetPositionsDescription()
+        {
+            return Enum.GetValues(typeof(Positions))
+                .Cast<Enum>()
+                .Select(value => new
+                {
+                    (Attribute.GetCustomAttribute(value.GetType().GetField(value.ToString()),
+                    typeof(DescriptionAttribute)) as DescriptionAttribute).Description,
+                    value
+                })
+                .OrderBy(item => item.value)
+                .ToList();
+        }
+
+        public static string GetDescription(Enum position)
+        {
+            Type type = position.GetType();
+
+            MemberInfo[] memInfo = type.GetMember(position.ToString());
+            if (memInfo != null && memInfo.Length > 0)
+            {
+                object[] attrs = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+                if (attrs != null && attrs.Length > 0)
+                    return ((DescriptionAttribute)attrs[0]).Description;
+            }
+
+            return position.ToString();
+        }
+
+        public static string GetPositionDisplayName(Positions position)
+        {
+            switch ((int)position)
+            {
+                case 0:
+                    return "швея";
+                case 1:
+                    return "контролер";
+                case 2:
+                    return "мастер";
+                case 3:
+                    return "начальник производства";
+            }
+            return string.Empty;
         }
     }
 }

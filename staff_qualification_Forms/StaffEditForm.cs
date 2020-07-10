@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace staff_qualification_Forms
@@ -6,6 +9,7 @@ namespace staff_qualification_Forms
     public partial class StaffEditForm : Form
     {
         public Staff staff;
+        private bool isSaved;
 
         public StaffEditForm()
         {
@@ -15,7 +19,6 @@ namespace staff_qualification_Forms
 
         public StaffEditForm(int id) : this()
         {
-            this.staff = new Staff();
             idTextBox.Text = id.ToString();
         }
 
@@ -27,7 +30,9 @@ namespace staff_qualification_Forms
 
         private void GetFormProperties()
         {
-            positionComboBox.DataSource = Enum.GetValues(typeof(Positions));
+            positionComboBox.DataSource = Staff.GetPositionsDescription();
+            positionComboBox.DisplayMember = "Description";
+            positionComboBox.ValueMember = "Value";
             positionComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             idTextBox.ReadOnly = true;
         }
@@ -38,18 +43,16 @@ namespace staff_qualification_Forms
             lastNameTextBox.Text = staff.LastName;
             firstNameTextBox.Text = staff.FirstName;
             middleNameTextBox.Text = staff.MiddleName;
-            positionComboBox.Text = staff.Position.ToString();
+            positionComboBox.Text = Staff.GetDescription(staff.Position);
+            //positionComboBox.Text = Staff.GetPositionDisplayName(staff.Position).ToString();
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
             if (!IsEmptyData())
             {
-                staff.ID = int.Parse(idTextBox.Text);
-                staff.LastName = lastNameTextBox.Text;
-                staff.FirstName = firstNameTextBox.Text;
-                staff.MiddleName = middleNameTextBox.Text;
-                staff.Position = (Positions)Enum.Parse(typeof(Positions), positionComboBox.SelectedValue.ToString());
+                SaveStaff();
+                isSaved = true;
                 this.Close();
             }
             else
@@ -58,9 +61,46 @@ namespace staff_qualification_Forms
             }
         }
 
+        private void StaffEditForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!isSaved)
+            {
+                var result = MessageBox.Show("Сохранить данные о сотруднике?", "Сотрудник", MessageBoxButtons.YesNoCancel);
+                if (result == DialogResult.Yes)
+                {
+                    if (!IsEmptyData())
+                    {
+                        SaveStaff();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Данные о сотруднике не заполнены!");
+                        e.Cancel = true;
+                    }
+                }
+                if (result == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+
         private bool IsEmptyData()
         {
             return idTextBox.Text == String.Empty || lastNameTextBox.Text == String.Empty || firstNameTextBox.Text == String.Empty || positionComboBox.Text == String.Empty;
+        }
+
+        private void SaveStaff()
+        {
+            if (staff == null)
+            {
+                this.staff = new Staff();
+            }
+            staff.ID = int.Parse(idTextBox.Text);
+            staff.LastName = lastNameTextBox.Text;
+            staff.FirstName = firstNameTextBox.Text;
+            staff.MiddleName = middleNameTextBox.Text;
+            staff.Position = (Positions)Enum.Parse(typeof(Positions), positionComboBox.SelectedValue.ToString());
         }
     }
 }
