@@ -10,6 +10,7 @@ namespace staff_qualification_Forms
     {
         public Staff staff;
         private bool isSaved;
+        private bool isChanged;
 
         public StaffEditForm()
         {
@@ -26,6 +27,7 @@ namespace staff_qualification_Forms
         {
             this.staff = staff;
             FillFormControls();
+            isChanged = false;
         }
 
         private void GetFormProperties()
@@ -65,22 +67,25 @@ namespace staff_qualification_Forms
         {
             if (!isSaved)
             {
-                var result = MessageBox.Show("Сохранить данные о сотруднике?", "Сотрудник", MessageBoxButtons.YesNoCancel);
-                if (result == DialogResult.Yes)
+                if (isChanged)
                 {
-                    if (!IsEmptyData())
+                    var result = MessageBox.Show("Сохранить данные о сотруднике?", "Сотрудник", MessageBoxButtons.YesNoCancel);
+                    if (result == DialogResult.Yes)
                     {
-                        SaveStaff();
+                        if (!IsEmptyData())
+                        {
+                            SaveStaff();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Данные о сотруднике не заполнены!");
+                            e.Cancel = true;
+                        }
                     }
-                    else
+                    if (result == DialogResult.Cancel)
                     {
-                        MessageBox.Show("Данные о сотруднике не заполнены!");
                         e.Cancel = true;
                     }
-                }
-                if (result == DialogResult.Cancel)
-                {
-                    e.Cancel = true;
                 }
             }
         }
@@ -101,6 +106,26 @@ namespace staff_qualification_Forms
             staff.FirstName = firstNameTextBox.Text;
             staff.MiddleName = middleNameTextBox.Text;
             staff.Position = (Positions)Enum.Parse(typeof(Positions), positionComboBox.SelectedValue.ToString());
+        }
+
+        private void positionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            isChanged = true;
+        }
+
+        private void lastNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            isChanged = true;
+        }
+
+        private void firstNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            isChanged = true;
+        }
+
+        private void middleNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            isChanged = true;
         }
     }
 }

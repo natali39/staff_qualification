@@ -54,6 +54,7 @@
             this.lastNameTextBox.Name = "lastNameTextBox";
             this.lastNameTextBox.Size = new System.Drawing.Size(315, 20);
             this.lastNameTextBox.TabIndex = 1;
+            this.lastNameTextBox.TextChanged += new System.EventHandler(this.lastNameTextBox_TextChanged);
             // 
             // saveButton
             // 
@@ -107,6 +108,7 @@
             this.firstNameTextBox.Name = "firstNameTextBox";
             this.firstNameTextBox.Size = new System.Drawing.Size(315, 20);
             this.firstNameTextBox.TabIndex = 2;
+            this.firstNameTextBox.TextChanged += new System.EventHandler(this.firstNameTextBox_TextChanged);
             // 
             // middleNameLabel
             // 
@@ -123,6 +125,7 @@
             this.middleNameTextBox.Name = "middleNameTextBox";
             this.middleNameTextBox.Size = new System.Drawing.Size(315, 20);
             this.middleNameTextBox.TabIndex = 3;
+            this.middleNameTextBox.TextChanged += new System.EventHandler(this.middleNameTextBox_TextChanged);
             // 
             // positionComboBox
             // 
@@ -131,6 +134,7 @@
             this.positionComboBox.Name = "positionComboBox";
             this.positionComboBox.Size = new System.Drawing.Size(190, 21);
             this.positionComboBox.TabIndex = 4;
+            this.positionComboBox.SelectedIndexChanged += new System.EventHandler(this.positionComboBox_SelectedIndexChanged);
             // 
             // StaffEditForm
             // 
