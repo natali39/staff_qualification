@@ -10,11 +10,17 @@ using System.Windows.Forms;
 
 namespace staff_qualification_Forms
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
+        }
+
+        private void новоеОбучениеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrainingForm trainingForm = new TrainingForm();
+            trainingForm.Show();
         }
     }
 }
