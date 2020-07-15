@@ -52,9 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IProjectRepository.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="Project.cs" />
+    <Compile Include="ProjectFileRepository.cs" />
+    <Compile Include="ProjectService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

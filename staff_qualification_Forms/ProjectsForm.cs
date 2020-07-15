@@ -6,6 +6,7 @@ namespace staff_qualification_Forms
 {
     public partial class ProjectsForm : Form
     {
+        ProjectService service = new ProjectService(new ProjectFileRepository());
         List<Project> projects;
         Project project;
         Model model;
@@ -14,7 +15,7 @@ namespace staff_qualification_Forms
         public ProjectsForm()
         {
             InitializeComponent();
-            projects = Project.GetAll(); 
+            projects = service.GetData(); 
             if (projects == null)
                 projects = new List<Project>();
             FillTreeView();
@@ -74,7 +75,7 @@ namespace staff_qualification_Forms
             var result = MessageBox.Show("Сохранить изменения?", "Проекты", MessageBoxButtons.YesNoCancel);
             if (result == DialogResult.Yes)
             {
-                Project.Update(projects);
+                service.UpdateData(projects);
             }
             if (result == DialogResult.Cancel)
             {

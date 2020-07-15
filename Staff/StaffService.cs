@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace staff_qualification_Forms
+﻿namespace staff_qualification_Forms
 {
     public class StaffService
     {

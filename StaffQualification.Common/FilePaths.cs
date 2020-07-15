@@ -2,7 +2,7 @@
 {
     public class FilePaths
     {
-        public const string StaffPath = @"staff.txt";
-        public const string projectPath = @"project.json";
+        public const string StaffPath = @"staff.json";
+        public const string ProjectPath = @"project.json";
     }
 }
