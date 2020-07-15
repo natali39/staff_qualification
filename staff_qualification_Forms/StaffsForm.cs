@@ -60,7 +60,7 @@ namespace staff_qualification_Forms
             if (staffs != null)
                 foreach (var staff in staffs)
                 {
-                    var positionDisplayName = Staff.GetPositionDisplayName(staff.Position);
+                    var positionDisplayName = DisplayPositions.GetPositionDisplayName(staff.Position);
                     table.Rows.Add(staff.ID, staff.LastName, staff.FirstName, staff.MiddleName, positionDisplayName);
                 }
         }

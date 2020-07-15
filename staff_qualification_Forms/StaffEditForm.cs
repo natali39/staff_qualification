@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace staff_qualification_Forms
@@ -32,9 +30,9 @@ namespace staff_qualification_Forms
 
         private void GetFormProperties()
         {
-            positionComboBox.DataSource = Staff.GetPositionsDescription();
+            positionComboBox.DataSource = DisplayPositions.GetListDisplayPositions();
             positionComboBox.DisplayMember = "Description";
-            positionComboBox.ValueMember = "Value";
+            positionComboBox.ValueMember = "Position";
             positionComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             idTextBox.ReadOnly = true;
         }
@@ -45,8 +43,7 @@ namespace staff_qualification_Forms
             lastNameTextBox.Text = staff.LastName;
             firstNameTextBox.Text = staff.FirstName;
             middleNameTextBox.Text = staff.MiddleName;
-            positionComboBox.Text = Staff.GetDescription(staff.Position);
-            //positionComboBox.Text = Staff.GetPositionDisplayName(staff.Position).ToString();
+            positionComboBox.Text = DisplayPositions.GetPositionDisplayName(staff.Position).ToString();
         }
 
         private void saveButton_Click(object sender, EventArgs e)
