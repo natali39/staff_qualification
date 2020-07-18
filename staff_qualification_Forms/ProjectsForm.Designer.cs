@@ -33,12 +33,6 @@ namespace staff_qualification_Forms
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.новыйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.проектToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.модельToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.проектToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.модельToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.projectsTreeView = new System.Windows.Forms.TreeView();
             this.operationsListBox = new System.Windows.Forms.ListBox();
             this.operationsLabel = new System.Windows.Forms.Label();
@@ -52,6 +46,7 @@ namespace staff_qualification_Forms
             this.addModelNameTextBox = new System.Windows.Forms.TextBox();
             this.addModelButton = new System.Windows.Forms.Button();
             this.listModelLabel = new System.Windows.Forms.Label();
+            this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.modelDetailsGroupBox.SuspendLayout();
             this.projectDetailsGroupBox.SuspendLayout();
@@ -70,53 +65,10 @@ namespace staff_qualification_Forms
             // файлToolStripMenuItem
             // 
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.новыйToolStripMenuItem,
-            this.удалитьToolStripMenuItem});
+            this.выходToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
-            // 
-            // новыйToolStripMenuItem
-            // 
-            this.новыйToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.проектToolStripMenuItem,
-            this.модельToolStripMenuItem});
-            this.новыйToolStripMenuItem.Name = "новыйToolStripMenuItem";
-            this.новыйToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
-            this.новыйToolStripMenuItem.Text = "Новый";
-            // 
-            // проектToolStripMenuItem
-            // 
-            this.проектToolStripMenuItem.Name = "проектToolStripMenuItem";
-            this.проектToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.проектToolStripMenuItem.Text = "Проект";
-            // 
-            // модельToolStripMenuItem
-            // 
-            this.модельToolStripMenuItem.Name = "модельToolStripMenuItem";
-            this.модельToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.модельToolStripMenuItem.Text = "Модель";
-            // 
-            // удалитьToolStripMenuItem
-            // 
-            this.удалитьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.проектToolStripMenuItem1,
-            this.модельToolStripMenuItem1});
-            this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
-            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
-            this.удалитьToolStripMenuItem.Text = "Удалить";
-            // 
-            // проектToolStripMenuItem1
-            // 
-            this.проектToolStripMenuItem1.Name = "проектToolStripMenuItem1";
-            this.проектToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
-            this.проектToolStripMenuItem1.Text = "Проект";
-            // 
-            // модельToolStripMenuItem1
-            // 
-            this.модельToolStripMenuItem1.Name = "модельToolStripMenuItem1";
-            this.модельToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
-            this.модельToolStripMenuItem1.Text = "Модель";
             // 
             // projectsTreeView
             // 
@@ -255,6 +207,13 @@ namespace staff_qualification_Forms
             this.listModelLabel.TabIndex = 0;
             this.listModelLabel.Text = "Список моделей:";
             // 
+            // выходToolStripMenuItem
+            // 
+            this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.выходToolStripMenuItem.Text = "Выход";
+            this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
+            // 
             // ProjectsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -284,9 +243,6 @@ namespace staff_qualification_Forms
         #endregion
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem новыйToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem проектToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem модельToolStripMenuItem;
         private System.Windows.Forms.TreeView projectsTreeView;
         private System.Windows.Forms.ListBox operationsListBox;
         private System.Windows.Forms.Label operationsLabel;
@@ -300,9 +256,7 @@ namespace staff_qualification_Forms
         private TextBox addOperationTextBox;
         private Button deleteOperationButton;
         private Button addOperationButton;
-        private ToolStripMenuItem удалитьToolStripMenuItem;
-        private ToolStripMenuItem проектToolStripMenuItem1;
-        private ToolStripMenuItem модельToolStripMenuItem1;
+        private ToolStripMenuItem выходToolStripMenuItem;
     }
 }
 

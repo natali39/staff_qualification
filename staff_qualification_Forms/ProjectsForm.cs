@@ -275,8 +275,9 @@ namespace staff_qualification_Forms
             }
         }
 
-        private void проектToolStripMenuItem_Click(object sender, EventArgs e)
+        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Close();
         }
     }
 }
