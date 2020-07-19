@@ -27,16 +27,16 @@ namespace staff_qualification_Forms
 
         public static string GetPositionDisplayName(Positions position)
         {
-            switch ((int)position)
+            switch (position)
             {
-                case 0:
-                    return "швея";
-                case 1:
-                    return "контролер";
-                case 2:
-                    return "мастер";
-                case 3:
-                    return "начальник производства";
+                case Positions.Seamstress:
+                    return "Швея";
+                case Positions.Control:
+                    return "Контролер";
+                case Positions.Master:
+                    return "Мастер";
+                case Positions.ProductionManager:
+                    return "Начальник производства";
             }
             return string.Empty;
         }

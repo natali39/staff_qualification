@@ -62,28 +62,26 @@ namespace staff_qualification_Forms
 
         private void StaffEditForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!isSaved)
+            if (isSaved)
+                return;
+            if (!isChanged)
+                return;
+            var result = MessageBox.Show("Сохранить данные о сотруднике?", "Сотрудник", MessageBoxButtons.YesNoCancel);
+            if (result == DialogResult.Yes)
             {
-                if (isChanged)
+                if (!IsEmptyData())
                 {
-                    var result = MessageBox.Show("Сохранить данные о сотруднике?", "Сотрудник", MessageBoxButtons.YesNoCancel);
-                    if (result == DialogResult.Yes)
-                    {
-                        if (!IsEmptyData())
-                        {
-                            SaveStaff();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Данные о сотруднике не заполнены!");
-                            e.Cancel = true;
-                        }
-                    }
-                    if (result == DialogResult.Cancel)
-                    {
-                        e.Cancel = true;
-                    }
+                    SaveStaff();
                 }
+                else
+                {
+                    MessageBox.Show("Данные о сотруднике не заполнены!");
+                    e.Cancel = true;
+                }
+            }
+            if (result == DialogResult.Cancel)
+            {
+                e.Cancel = true;
             }
         }
 
