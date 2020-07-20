@@ -236,7 +236,7 @@ namespace staff_qualification_Forms
 
         private void addOperationButton_Click(object sender, EventArgs e)
         {
-            if (model != null)
+            if (model != null && modelDetailsGroupBox.Text != String.Empty)
             {
                 if (addOperationTextBox.Text != String.Empty)
                 {
@@ -271,7 +271,7 @@ namespace staff_qualification_Forms
             }
             else
             {
-                MessageBox.Show("Выберите операцию!");
+                MessageBox.Show("Операция не выбрана!");
             }
         }
 
