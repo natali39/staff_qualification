@@ -33,6 +33,7 @@ namespace staff_qualification_Forms
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.projectsTreeView = new System.Windows.Forms.TreeView();
             this.operationsListBox = new System.Windows.Forms.ListBox();
             this.operationsLabel = new System.Windows.Forms.Label();
@@ -43,10 +44,10 @@ namespace staff_qualification_Forms
             this.deleteOperationButton = new System.Windows.Forms.Button();
             this.addOperationButton = new System.Windows.Forms.Button();
             this.projectDetailsGroupBox = new System.Windows.Forms.GroupBox();
-            this.addModelNameTextBox = new System.Windows.Forms.TextBox();
             this.addModelButton = new System.Windows.Forms.Button();
             this.listModelLabel = new System.Windows.Forms.Label();
-            this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addModelNameTextBox = new System.Windows.Forms.TextBox();
+            this.modelNamePanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.modelDetailsGroupBox.SuspendLayout();
             this.projectDetailsGroupBox.SuspendLayout();
@@ -58,7 +59,7 @@ namespace staff_qualification_Forms
             this.файлToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(592, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(596, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -69,6 +70,13 @@ namespace staff_qualification_Forms
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
+            // 
+            // выходToolStripMenuItem
+            // 
+            this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.выходToolStripMenuItem.Text = "Выход";
+            this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
             // 
             // projectsTreeView
             // 
@@ -167,6 +175,7 @@ namespace staff_qualification_Forms
             // 
             // projectDetailsGroupBox
             // 
+            this.projectDetailsGroupBox.Controls.Add(this.modelNamePanel);
             this.projectDetailsGroupBox.Controls.Add(this.addModelNameTextBox);
             this.projectDetailsGroupBox.Controls.Add(this.addModelButton);
             this.projectDetailsGroupBox.Controls.Add(this.listModelLabel);
@@ -177,19 +186,12 @@ namespace staff_qualification_Forms
             this.projectDetailsGroupBox.TabIndex = 5;
             this.projectDetailsGroupBox.TabStop = false;
             this.projectDetailsGroupBox.Text = "Проект";
-            // 
-            // addModelNameTextBox
-            // 
-            this.addModelNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.addModelNameTextBox.Location = new System.Drawing.Point(11, 188);
-            this.addModelNameTextBox.Name = "addModelNameTextBox";
-            this.addModelNameTextBox.Size = new System.Drawing.Size(286, 20);
-            this.addModelNameTextBox.TabIndex = 3;
+            this.projectDetailsGroupBox.Visible = false;
             // 
             // addModelButton
             // 
             this.addModelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.addModelButton.Location = new System.Drawing.Point(305, 186);
+            this.addModelButton.Location = new System.Drawing.Point(276, 186);
             this.addModelButton.Name = "addModelButton";
             this.addModelButton.Size = new System.Drawing.Size(20, 20);
             this.addModelButton.TabIndex = 1;
@@ -207,18 +209,28 @@ namespace staff_qualification_Forms
             this.listModelLabel.TabIndex = 0;
             this.listModelLabel.Text = "Список моделей:";
             // 
-            // выходToolStripMenuItem
+            // addModelNameTextBox
             // 
-            this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.выходToolStripMenuItem.Text = "Выход";
-            this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
+            this.addModelNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.addModelNameTextBox.Location = new System.Drawing.Point(11, 188);
+            this.addModelNameTextBox.Name = "addModelNameTextBox";
+            this.addModelNameTextBox.Size = new System.Drawing.Size(254, 20);
+            this.addModelNameTextBox.TabIndex = 3;
+            // 
+            // ModelNamePanel
+            // 
+            this.modelNamePanel.AutoScroll = true;
+            this.modelNamePanel.Location = new System.Drawing.Point(6, 43);
+            this.modelNamePanel.Name = "ModelNamePanel";
+            this.modelNamePanel.Size = new System.Drawing.Size(330, 130);
+            this.modelNamePanel.TabIndex = 4;
+            this.modelNamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.modelNamePanel_MouseClick);
             // 
             // ProjectsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(592, 490);
+            this.ClientSize = new System.Drawing.Size(596, 490);
             this.Controls.Add(this.projectDetailsGroupBox);
             this.Controls.Add(this.modelDetailsGroupBox);
             this.Controls.Add(this.deleteProjectButton);
@@ -251,12 +263,13 @@ namespace staff_qualification_Forms
         private GroupBox modelDetailsGroupBox;
         private GroupBox projectDetailsGroupBox;
         private Button addModelButton;
-        private TextBox addModelNameTextBox;
         private Label listModelLabel;
         private TextBox addOperationTextBox;
         private Button deleteOperationButton;
         private Button addOperationButton;
         private ToolStripMenuItem выходToolStripMenuItem;
+        private Panel modelNamePanel;
+        private TextBox addModelNameTextBox;
     }
 }
 

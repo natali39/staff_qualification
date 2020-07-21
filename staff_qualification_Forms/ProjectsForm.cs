@@ -45,6 +45,18 @@ namespace staff_qualification_Forms
             projectsTreeView.EndUpdate();
         }
 
+        private void FindAndSelectModelNode(TreeNodeCollection nodes, string name)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.Text == name)
+                {
+                    projectsTreeView.SelectedNode = node;
+                }
+                FindAndSelectModelNode(node.Nodes, name);
+            }
+        }
+
         private void projectsTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (projectsTreeView.SelectedNode.Level == 0)
@@ -95,6 +107,7 @@ namespace staff_qualification_Forms
 
         private void FillProjectDetailsGroupBox()
         {
+            projectDetailsGroupBox.Visible = true;
             projectDetailsGroupBox.Text = $"Проект: {project.Name}";
             DisposeModelsLinkLabels();
             DisposeModelsDeleteButtons();
@@ -110,6 +123,7 @@ namespace staff_qualification_Forms
 
         private void ClearModelDetailsGroupBox()
         {
+            modelDetailsGroupBox.Visible = false;
             modelDetailsGroupBox.Text = String.Empty;
             operationsListBox.Items.Clear();
         }
@@ -126,14 +140,15 @@ namespace staff_qualification_Forms
                 var linkLabel = new LinkLabel()
                 {
                     Name = "modelLabel" + i.ToString(),
-                    Location = new Point(10, i * 22 + 50),
+                    Location = new Point(5, i * 22 + 5),
                     Text = $"{project.Models[i].Name}",
                     Tag = project.Models[i]
                 };
+                linkLabel.AutoSize = true;
                 CreateModelDeleteButton(i);
                 linkLabel.Click += new EventHandler(modelLinkedLabel_Click);
                 modelsLinkLabels.Add(linkLabel);
-                projectDetailsGroupBox.Controls.Add(linkLabel);
+                modelNamePanel.Controls.Add(linkLabel);
             }
         }
 
@@ -153,15 +168,15 @@ namespace staff_qualification_Forms
             var deleteButton = new Button()
             {
                 Name = "modelDeleteButton" + i.ToString(),
-                Location = new Point(305, i * 21 + 50),
+                Location = new Point(270, i * 21 + 3),
                 Width = 20,
                 Height = 20,
                 Text = "-",
                 Tag = project.Models[i]
             };
-            deleteButton.Click += new EventHandler(deleModelButton_Click);
+            deleteButton.Click += new EventHandler(deleteModelButton_Click);
             modelsDeleteButtons.Add(deleteButton);
-            projectDetailsGroupBox.Controls.Add(deleteButton);
+            modelNamePanel.Controls.Add(deleteButton);
         }
 
         private void DisposeModelsDeleteButtons()
@@ -180,6 +195,7 @@ namespace staff_qualification_Forms
             var modelLinkedLabel = (LinkLabel)sender;
             model = (Model)modelLinkedLabel.Tag;
             FillModelDetailsGroupBox(model);
+            FindAndSelectModelNode(projectsTreeView.Nodes, model.Name);
         }
 
         private void addModelButton_Click(object sender, EventArgs e)
@@ -188,10 +204,21 @@ namespace staff_qualification_Forms
             {
                 if (addModelNameTextBox.Text != String.Empty)
                 {
-                    project.Models.Add(new Model(addModelNameTextBox.Text));
+                    foreach (var model in project.Models)
+                    {
+                        if (addModelNameTextBox.Text == model.Name)
+                        {
+                            MessageBox.Show("Такая модель уже существует! Введите другое название!");
+                            addModelNameTextBox.Focus();
+                            return;
+                        }
+                    }
+                    model = new Model(addModelNameTextBox.Text);
+                    project.Models.Add(model);
                     FillTreeView();
                     DisposeModelsLinkLabels();
                     CreateModelsLinkLabels(project.Models);
+                    FillModelDetailsGroupBox(model);
                     addModelNameTextBox.Text = String.Empty;
                     service.UpdateData(projects);
                 }
@@ -206,7 +233,7 @@ namespace staff_qualification_Forms
             }
         }
 
-        private void deleModelButton_Click(object sender, EventArgs e)
+        private void deleteModelButton_Click(object sender, EventArgs e)
         {
             var modelDeleteButton = (Button)sender;
             model = (Model)modelDeleteButton.Tag;
@@ -240,6 +267,15 @@ namespace staff_qualification_Forms
             {
                 if (addOperationTextBox.Text != String.Empty)
                 {
+                    foreach (var operation in model.Operations)
+                    {
+                        if (addOperationTextBox.Text == operation.Name)
+                        {
+                            MessageBox.Show("Такая операция уже существует! Введите другое название!");
+                            addOperationTextBox.Focus();
+                            return;
+                        }
+                    }
                     model.Operations.Add(new Operation(addOperationTextBox.Text));
                     GetListOperations(model);
                     addOperationTextBox.Text = String.Empty;
@@ -278,6 +314,11 @@ namespace staff_qualification_Forms
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void modelNamePanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            modelNamePanel.Focus();
         }
     }
 }
