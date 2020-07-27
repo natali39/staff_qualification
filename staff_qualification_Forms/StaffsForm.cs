@@ -12,11 +12,22 @@ namespace staff_qualification_Forms
         StaffService service = new StaffService(new StaffFileRepository());
         List<Staff> staffs = new List<Staff>();
         bool isChanged = false;
+        string mode = "edit";
+        public Staff Staff;
 
         public StaffsForm()
         {
             InitializeComponent();
             SetFormProperties();
+        }
+
+        public StaffsForm(string mode) : this()
+        {
+            this.mode = mode;
+            this.Staff = new Staff();
+            addButton.Visible = false;
+            deleteButton.Visible = false;
+            saveButton.Visible = false;
         }
 
         public void SetFormProperties()
@@ -131,10 +142,18 @@ namespace staff_qualification_Forms
             int index = e.RowIndex;
             if (index >= 0)
             {
-                var staffEditForm = new StaffEditForm(staffs[index]);
-                staffEditForm.ShowDialog();
-                UpdateTableRows(staffs);
-                UpdateStaffsData();
+                if (mode == "select")
+                {
+                    Staff = staffs[index];
+                    Close();
+                }
+                else
+                {
+                    var staffEditForm = new StaffEditForm(staffs[index]);
+                    staffEditForm.ShowDialog();
+                    UpdateTableRows(staffs);
+                    UpdateStaffsData();
+                }
             }
         }
 

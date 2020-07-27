@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ViewTrainingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewTrainingsForm.Designer.cs">
+      <DependentUpon>ViewTrainingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +73,12 @@
       <DependentUpon>ProjectsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelfCheckForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelfCheckForm.Designer.cs">
+      <DependentUpon>SelfCheckForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="StaffEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,6 +91,15 @@
     <Compile Include="StaffsForm.Designer.cs">
       <DependentUpon>StaffsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TrainingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainingForm.Designer.cs">
+      <DependentUpon>TrainingForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ViewTrainingsForm.resx">
+      <DependentUpon>ViewTrainingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -97,11 +118,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SelfCheckForm.resx">
+      <DependentUpon>SelfCheckForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StaffEditForm.resx">
       <DependentUpon>StaffEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StaffsForm.resx">
       <DependentUpon>StaffsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrainingForm.resx">
+      <DependentUpon>TrainingForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\DataSources\Program.datasource" />
     <None Include="Properties\Settings.settings">
@@ -122,6 +149,10 @@
       <Project>{2a9c983e-6335-4942-aa05-aaac91d72ff2}</Project>
       <Name>Projects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SelfChecks\SelfChecks.csproj">
+      <Project>{cd2757b2-8e1e-4672-8def-805a96f9422b}</Project>
+      <Name>SelfChecks</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StaffQualification.Common\StaffQualification.Common.csproj">
       <Project>{30abfb43-9f0d-4f9c-aa44-357b40dff417}</Project>
       <Name>StaffQualification.Common</Name>
@@ -129,6 +160,10 @@
     <ProjectReference Include="..\Staff\Staffs.csproj">
       <Project>{02f49682-b00d-44dc-bad4-7e8acd91cc07}</Project>
       <Name>Staffs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Training\Trainings.csproj">
+      <Project>{cd9c67f7-9338-4a96-93d9-665e04efeebf}</Project>
+      <Name>Trainings</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

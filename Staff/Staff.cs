@@ -17,11 +17,11 @@ namespace staff_qualification_Forms
 
         public Staff(int id, string lastName, string firstName, string middleName, Positions position)
         {
-            this.ID = id;
-            this.LastName = lastName;
-            this.FirstName = firstName;
-            this.MiddleName = middleName;
-            this.Position = position;
+            ID = id;
+            LastName = lastName;
+            FirstName = firstName;
+            MiddleName = middleName;
+            Position = position;
         }
 
         public static int GetNextId(List<Staff> staffs)
@@ -51,6 +51,11 @@ namespace staff_qualification_Forms
                 }
             }
             return foundListStaff;
+        }
+
+        public string GetStaffFullName()
+        {
+            return $"{LastName} {FirstName} {MiddleName}";
         }
     }
 }

@@ -4,7 +4,6 @@
     {
         int id;
         public string Name { get; set; }
-        public Model Model { get; set; }
 
         public Operation(string name)
         {
