@@ -78,7 +78,9 @@
             this.staffDataGridView.Name = "staffDataGridView";
             this.staffDataGridView.Size = new System.Drawing.Size(856, 369);
             this.staffDataGridView.TabIndex = 9;
+            this.staffDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.staffDataGridView_CellClick);
             this.staffDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.staffDataGridView_CellDoubleClick);
+            this.staffDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.staffDataGridView_KeyDown);
             // 
             // searchTextBox
             // 

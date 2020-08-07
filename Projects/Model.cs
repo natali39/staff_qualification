@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace staff_qualification_Forms
 {
-    public class Model
+    public class Model : Id
     {
-        int id;
         public string Name { get; set; }
         public List<Operation> Operations;
 
-        public Model(string name)
+        public Model()
         {
-            this.Name = name;
             Operations = new List<Operation>();
         }
     }

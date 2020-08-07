@@ -41,14 +41,17 @@
             this.новыйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.просмотрToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.projectComboBox = new System.Windows.Forms.ComboBox();
-            this.modelComboBox = new System.Windows.Forms.ComboBox();
-            this.operationComboBox = new System.Windows.Forms.ComboBox();
-            this.staffComboBox = new System.Windows.Forms.ComboBox();
             this.outputDataGridView = new System.Windows.Forms.DataGridView();
             this.projecstLabel = new System.Windows.Forms.Label();
             this.modelsLabel = new System.Windows.Forms.Label();
-            this.operationsLabel = new System.Windows.Forms.Label();
-            this.staffsLabel = new System.Windows.Forms.Label();
+            this.QualificationLabel = new System.Windows.Forms.Label();
+            this.noTrainingCheckBox = new System.Windows.Forms.CheckBox();
+            this.endTrainingCheckBox = new System.Windows.Forms.CheckBox();
+            this.onTrainingCheckBox = new System.Windows.Forms.CheckBox();
+            this.selfChekCheckBox = new System.Windows.Forms.CheckBox();
+            this.modelsPanel = new System.Windows.Forms.Panel();
+            this.reportButton = new System.Windows.Forms.Button();
+            this.selectAllModelsCheckBox = new System.Windows.Forms.CheckBox();
             this.listSectionMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.outputDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -124,7 +127,7 @@
             this.посмотретьВсеToolStripMenuItem.Name = "посмотретьВсеToolStripMenuItem";
             this.посмотретьВсеToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.посмотретьВсеToolStripMenuItem.Text = "Посмотреть все";
-            this.посмотретьВсеToolStripMenuItem.Click += new System.EventHandler(this.посмотретьВсеToolStripMenuItem_Click);
+            this.посмотретьВсеToolStripMenuItem.Click += new System.EventHandler(this.посмотретьВсеОбученияToolStripMenuItem_Click);
             // 
             // самоконтрольToolStripMenuItem
             // 
@@ -132,7 +135,7 @@
             this.новыйToolStripMenuItem,
             this.просмотрToolStripMenuItem});
             this.самоконтрольToolStripMenuItem.Name = "самоконтрольToolStripMenuItem";
-            this.самоконтрольToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.самоконтрольToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.самоконтрольToolStripMenuItem.Text = "Самоконтроль";
             // 
             // новыйToolStripMenuItem
@@ -147,6 +150,7 @@
             this.просмотрToolStripMenuItem.Name = "просмотрToolStripMenuItem";
             this.просмотрToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.просмотрToolStripMenuItem.Text = "Посмотреть все";
+            this.просмотрToolStripMenuItem.Click += new System.EventHandler(this.просмотрToolStripMenuItem_Click);
             // 
             // projectComboBox
             // 
@@ -157,40 +161,17 @@
             this.projectComboBox.TabIndex = 3;
             this.projectComboBox.SelectedIndexChanged += new System.EventHandler(this.projectComboBox_SelectedIndexChanged);
             // 
-            // modelComboBox
-            // 
-            this.modelComboBox.FormattingEnabled = true;
-            this.modelComboBox.Location = new System.Drawing.Point(328, 44);
-            this.modelComboBox.Name = "modelComboBox";
-            this.modelComboBox.Size = new System.Drawing.Size(218, 21);
-            this.modelComboBox.TabIndex = 4;
-            this.modelComboBox.SelectedIndexChanged += new System.EventHandler(this.modelComboBox_SelectedIndexChanged);
-            // 
-            // operationComboBox
-            // 
-            this.operationComboBox.FormattingEnabled = true;
-            this.operationComboBox.Location = new System.Drawing.Point(637, 44);
-            this.operationComboBox.Name = "operationComboBox";
-            this.operationComboBox.Size = new System.Drawing.Size(219, 21);
-            this.operationComboBox.TabIndex = 5;
-            this.operationComboBox.SelectedIndexChanged += new System.EventHandler(this.operationComboBox_SelectedIndexChanged);
-            // 
-            // staffComboBox
-            // 
-            this.staffComboBox.FormattingEnabled = true;
-            this.staffComboBox.Location = new System.Drawing.Point(82, 94);
-            this.staffComboBox.Name = "staffComboBox";
-            this.staffComboBox.Size = new System.Drawing.Size(331, 21);
-            this.staffComboBox.TabIndex = 6;
-            this.staffComboBox.SelectedIndexChanged += new System.EventHandler(this.staffComboBox_SelectedIndexChanged);
-            this.staffComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.StaffComboBoxFormat);
-            // 
             // outputDataGridView
             // 
+            this.outputDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.outputDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.outputDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.outputDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.outputDataGridView.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.outputDataGridView.Location = new System.Drawing.Point(0, 183);
+            this.outputDataGridView.Location = new System.Drawing.Point(0, 368);
             this.outputDataGridView.Name = "outputDataGridView";
+            this.outputDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.outputDataGridView.Size = new System.Drawing.Size(868, 264);
             this.outputDataGridView.TabIndex = 7;
             // 
@@ -206,43 +187,108 @@
             // modelsLabel
             // 
             this.modelsLabel.AutoSize = true;
-            this.modelsLabel.Location = new System.Drawing.Point(267, 47);
+            this.modelsLabel.Location = new System.Drawing.Point(7, 81);
             this.modelsLabel.Name = "modelsLabel";
             this.modelsLabel.Size = new System.Drawing.Size(49, 13);
             this.modelsLabel.TabIndex = 9;
             this.modelsLabel.Text = "Модели:";
             // 
-            // operationsLabel
+            // QualificationLabel
             // 
-            this.operationsLabel.AutoSize = true;
-            this.operationsLabel.Location = new System.Drawing.Point(571, 47);
-            this.operationsLabel.Name = "operationsLabel";
-            this.operationsLabel.Size = new System.Drawing.Size(60, 13);
-            this.operationsLabel.TabIndex = 10;
-            this.operationsLabel.Text = "Операции:";
+            this.QualificationLabel.AutoSize = true;
+            this.QualificationLabel.Location = new System.Drawing.Point(7, 326);
+            this.QualificationLabel.Name = "QualificationLabel";
+            this.QualificationLabel.Size = new System.Drawing.Size(85, 13);
+            this.QualificationLabel.TabIndex = 12;
+            this.QualificationLabel.Text = "Квалификация:";
             // 
-            // staffsLabel
+            // noTrainingCheckBox
             // 
-            this.staffsLabel.AutoSize = true;
-            this.staffsLabel.Location = new System.Drawing.Point(7, 97);
-            this.staffsLabel.Name = "staffsLabel";
-            this.staffsLabel.Size = new System.Drawing.Size(69, 13);
-            this.staffsLabel.TabIndex = 11;
-            this.staffsLabel.Text = "Сотрудники:";
+            this.noTrainingCheckBox.AutoSize = true;
+            this.noTrainingCheckBox.Location = new System.Drawing.Point(463, 326);
+            this.noTrainingCheckBox.Name = "noTrainingCheckBox";
+            this.noTrainingCheckBox.Size = new System.Drawing.Size(89, 17);
+            this.noTrainingCheckBox.TabIndex = 13;
+            this.noTrainingCheckBox.Text = "Не обучался";
+            this.noTrainingCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // endTrainingCheckBox
+            // 
+            this.endTrainingCheckBox.AutoSize = true;
+            this.endTrainingCheckBox.Location = new System.Drawing.Point(111, 326);
+            this.endTrainingCheckBox.Name = "endTrainingCheckBox";
+            this.endTrainingCheckBox.Size = new System.Drawing.Size(115, 17);
+            this.endTrainingCheckBox.TabIndex = 14;
+            this.endTrainingCheckBox.Text = "Прошел обучение";
+            this.endTrainingCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // onTrainingCheckBox
+            // 
+            this.onTrainingCheckBox.AutoSize = true;
+            this.onTrainingCheckBox.Location = new System.Drawing.Point(357, 326);
+            this.onTrainingCheckBox.Name = "onTrainingCheckBox";
+            this.onTrainingCheckBox.Size = new System.Drawing.Size(89, 17);
+            this.onTrainingCheckBox.TabIndex = 15;
+            this.onTrainingCheckBox.Text = "На обучении";
+            this.onTrainingCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // selfChekCheckBox
+            // 
+            this.selfChekCheckBox.AutoSize = true;
+            this.selfChekCheckBox.Location = new System.Drawing.Point(242, 326);
+            this.selfChekCheckBox.Name = "selfChekCheckBox";
+            this.selfChekCheckBox.Size = new System.Drawing.Size(100, 17);
+            this.selfChekCheckBox.TabIndex = 16;
+            this.selfChekCheckBox.Text = "Самоконтроль";
+            this.selfChekCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // modelsPanel
+            // 
+            this.modelsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.modelsPanel.AutoScroll = true;
+            this.modelsPanel.Location = new System.Drawing.Point(0, 100);
+            this.modelsPanel.Name = "modelsPanel";
+            this.modelsPanel.Size = new System.Drawing.Size(868, 201);
+            this.modelsPanel.TabIndex = 20;
+            // 
+            // reportButton
+            // 
+            this.reportButton.Location = new System.Drawing.Point(680, 322);
+            this.reportButton.Name = "reportButton";
+            this.reportButton.Size = new System.Drawing.Size(145, 23);
+            this.reportButton.TabIndex = 21;
+            this.reportButton.Text = "Показать результат";
+            this.reportButton.UseVisualStyleBackColor = true;
+            this.reportButton.Click += new System.EventHandler(this.reportButton_Click);
+            // 
+            // selectAllModelsCheckBox
+            // 
+            this.selectAllModelsCheckBox.AutoSize = true;
+            this.selectAllModelsCheckBox.Location = new System.Drawing.Point(82, 80);
+            this.selectAllModelsCheckBox.Name = "selectAllModelsCheckBox";
+            this.selectAllModelsCheckBox.Size = new System.Drawing.Size(91, 17);
+            this.selectAllModelsCheckBox.TabIndex = 22;
+            this.selectAllModelsCheckBox.Text = "Выбрать все";
+            this.selectAllModelsCheckBox.UseVisualStyleBackColor = true;
+            this.selectAllModelsCheckBox.CheckedChanged += new System.EventHandler(this.selectAllModelsCheckBox_CheckedChanged);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(868, 447);
-            this.Controls.Add(this.staffsLabel);
-            this.Controls.Add(this.operationsLabel);
+            this.ClientSize = new System.Drawing.Size(868, 632);
+            this.Controls.Add(this.selectAllModelsCheckBox);
+            this.Controls.Add(this.reportButton);
+            this.Controls.Add(this.modelsPanel);
+            this.Controls.Add(this.selfChekCheckBox);
+            this.Controls.Add(this.onTrainingCheckBox);
+            this.Controls.Add(this.endTrainingCheckBox);
+            this.Controls.Add(this.noTrainingCheckBox);
+            this.Controls.Add(this.QualificationLabel);
             this.Controls.Add(this.modelsLabel);
             this.Controls.Add(this.projecstLabel);
             this.Controls.Add(this.outputDataGridView);
-            this.Controls.Add(this.staffComboBox);
-            this.Controls.Add(this.operationComboBox);
-            this.Controls.Add(this.modelComboBox);
             this.Controls.Add(this.projectComboBox);
             this.Controls.Add(this.listSectionMenuStrip1);
             this.Name = "MainForm";
@@ -266,9 +312,6 @@
         private System.Windows.Forms.ToolStripMenuItem обучениеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem самоконтрольToolStripMenuItem;
         private System.Windows.Forms.ComboBox projectComboBox;
-        private System.Windows.Forms.ComboBox modelComboBox;
-        private System.Windows.Forms.ComboBox operationComboBox;
-        private System.Windows.Forms.ComboBox staffComboBox;
         private System.Windows.Forms.ToolStripMenuItem новоеОбучениеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem посмотретьВсеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem новыйToolStripMenuItem;
@@ -276,8 +319,14 @@
         private System.Windows.Forms.DataGridView outputDataGridView;
         private System.Windows.Forms.Label projecstLabel;
         private System.Windows.Forms.Label modelsLabel;
-        private System.Windows.Forms.Label operationsLabel;
-        private System.Windows.Forms.Label staffsLabel;
+        private System.Windows.Forms.Label QualificationLabel;
+        private System.Windows.Forms.CheckBox noTrainingCheckBox;
+        private System.Windows.Forms.CheckBox endTrainingCheckBox;
+        private System.Windows.Forms.CheckBox onTrainingCheckBox;
+        private System.Windows.Forms.CheckBox selfChekCheckBox;
+        private System.Windows.Forms.Panel modelsPanel;
+        private System.Windows.Forms.Button reportButton;
+        private System.Windows.Forms.CheckBox selectAllModelsCheckBox;
     }
 }
 

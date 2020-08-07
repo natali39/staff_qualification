@@ -5,13 +5,14 @@ using System.Windows.Forms;
 
 namespace staff_qualification_Forms
 {
-    public partial class ViewTrainingsForm : Form
+    public partial class ViewSelfCheksForm : Form
     {
         private TrainingService trainingService = new TrainingService(new TrainingFileRepository());
         private ProjectService projectService = new ProjectService(new ProjectFileRepository());
         private StaffService staffService = new StaffService(new StaffFileRepository());
+        private SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
 
-        public Training Training;
+        private List<SelfCheck> selfChecks = new List<SelfCheck>();
         private List<Training> trainings = new List<Training>();
         private List<Project> projects = new List<Project>();
         private List<Staff> staffs = new List<Staff>();
@@ -19,13 +20,13 @@ namespace staff_qualification_Forms
         private DataTable table = new DataTable();
         private BindingSource bindingSource = new BindingSource();
 
-        public ViewTrainingsForm()
+        public ViewSelfCheksForm()
         {
             InitializeComponent();
             GetListData();
             SetDataGridViewProperties();
-            GetTableColumns();
-            FillTrainingsDataGridView();
+            GetTableHeader();
+            FillSelfChecksDataGridView();
         }
 
         private void GetListData()
@@ -33,33 +34,38 @@ namespace staff_qualification_Forms
             trainings = trainingService.GetData();
             projects = projectService.GetData();
             staffs = staffService.GetData();
+            selfChecks = selfCheckService.GetData();
         }
 
         private void SetDataGridViewProperties()
         {
-            trainingsDataGridView.Dock = DockStyle.Fill;
-            trainingsDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells);
-            trainingsDataGridView.AllowUserToAddRows = false;
-            trainingsDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            selfChecksDataGridView.Dock = DockStyle.Fill;
+            selfChecksDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells);
+            selfChecksDataGridView.AllowUserToAddRows = false;
+            selfChecksDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
-        private void GetTableColumns()
+        private void GetTableHeader()
         {
             var staffColumn = new DataColumn("Сотрудник", typeof(string));
             var projectColumn = new DataColumn("Проект", typeof(string));
             var modelColumn = new DataColumn("Модель", typeof(string));
             var operationColumn = new DataColumn("Операция", typeof(string));
             var trainerColumn = new DataColumn("Инструктор", typeof(string));
-            var startTrainingDate = new DataColumn("Дата начала", typeof(DateTime));
-            var endTrainingDate = new DataColumn("Дата окончания", typeof(DateTime));
+            var responsiblePersonColumn = new DataColumn("Ответственный", typeof(string));
+            var startTrainingDate = new DataColumn("Дата начала обучения", typeof(DateTime));
+            var endTrainingDate = new DataColumn("Дата окончания обучения", typeof(DateTime));
+            var selfCheckDate = new DataColumn("Дата присвоения самоконтроля", typeof(DateTime));
 
             table.Columns.Add(staffColumn);
             table.Columns.Add(projectColumn);
             table.Columns.Add(modelColumn);
             table.Columns.Add(operationColumn);
             table.Columns.Add(trainerColumn);
+            table.Columns.Add(responsiblePersonColumn);
             table.Columns.Add(startTrainingDate);
             table.Columns.Add(endTrainingDate);
+            table.Columns.Add(selfCheckDate);
 
             foreach (DataColumn column in table.Columns)
             {
@@ -67,17 +73,20 @@ namespace staff_qualification_Forms
             }
         }
 
-        private void FillTrainingsDataGridView()
+        private void FillSelfChecksDataGridView()
         {
-            if (trainings == null)
+            if (selfChecks == null)
                 return;
-            foreach (var training in trainings)
+
+            foreach (var selfCheck in selfChecks)
             {
-                var currentStaff = Staff.GetStaffByID(training.StaffID, staffs);
-                var currentTrainer = Staff.GetStaffByID(training.TrainerID, staffs);
-                var currentProject = IdHelper.GetEntityByID(projects, training.ProjectID);
-                var currentModel = IdHelper.GetEntityByID(currentProject.Models, training.ModelID);
-                var currentOperation = IdHelper.GetEntityByID(currentModel.Operations, training.OperationID);
+                var currentTraining = IdHelper.GetEntityByID(trainings, selfCheck.TrainingID);
+                var currentStaff = Staff.GetStaffByID(currentTraining.StaffID, staffs);
+                var currentTrainer = Staff.GetStaffByID(currentTraining.TrainerID, staffs);
+                var currentResponsiblePerson = Staff.GetStaffByID(selfCheck.ResponsiblePersonID, staffs);
+                var currentProject = IdHelper.GetEntityByID(projects, currentTraining.ProjectID);
+                var currentModel = IdHelper.GetEntityByID(currentProject.Models, currentTraining.ModelID);
+                var currentOperation = IdHelper.GetEntityByID(currentModel.Operations, currentTraining.OperationID);
 
                 table.Rows.Add
                     (currentStaff.GetStaffFullName(),
@@ -85,23 +94,14 @@ namespace staff_qualification_Forms
                     currentModel.Name,
                     currentOperation.Name,
                     currentTrainer.GetStaffFullName(),
-                    training.StartDate,
-                    training.EndDate);
+                    currentResponsiblePerson.GetStaffFullName(),
+                    currentTraining.StartDate,
+                    currentTraining.EndDate,
+                    selfCheck.Date);
             }
 
             bindingSource.DataSource = table;
-            trainingsDataGridView.DataSource = bindingSource;
-
-        }
-
-        private void trainingsDataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            var index = e.RowIndex;
-            if (index >= 0)
-            {
-                Training = trainings[index];
-                Close();
-            }
+            selfChecksDataGridView.DataSource = bindingSource;
         }
     }
 }

@@ -1,13 +1,7 @@
 ﻿namespace staff_qualification_Forms
 {
-    public class Operation
+    public class Operation : Id
     {
-        int id;
         public string Name { get; set; }
-
-        public Operation(string name)
-        {
-            this.Name = name;
-        }
     }
 }

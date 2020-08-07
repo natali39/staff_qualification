@@ -44,10 +44,10 @@ namespace staff_qualification_Forms
             this.deleteOperationButton = new System.Windows.Forms.Button();
             this.addOperationButton = new System.Windows.Forms.Button();
             this.projectDetailsGroupBox = new System.Windows.Forms.GroupBox();
+            this.modelNamePanel = new System.Windows.Forms.Panel();
+            this.addModelNameTextBox = new System.Windows.Forms.TextBox();
             this.addModelButton = new System.Windows.Forms.Button();
             this.listModelLabel = new System.Windows.Forms.Label();
-            this.addModelNameTextBox = new System.Windows.Forms.TextBox();
-            this.modelNamePanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.modelDetailsGroupBox.SuspendLayout();
             this.projectDetailsGroupBox.SuspendLayout();
@@ -188,6 +188,23 @@ namespace staff_qualification_Forms
             this.projectDetailsGroupBox.Text = "Проект";
             this.projectDetailsGroupBox.Visible = false;
             // 
+            // modelNamePanel
+            // 
+            this.modelNamePanel.AutoScroll = true;
+            this.modelNamePanel.Location = new System.Drawing.Point(6, 43);
+            this.modelNamePanel.Name = "modelNamePanel";
+            this.modelNamePanel.Size = new System.Drawing.Size(330, 130);
+            this.modelNamePanel.TabIndex = 4;
+            this.modelNamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.modelNamePanel_MouseClick);
+            // 
+            // addModelNameTextBox
+            // 
+            this.addModelNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.addModelNameTextBox.Location = new System.Drawing.Point(11, 188);
+            this.addModelNameTextBox.Name = "addModelNameTextBox";
+            this.addModelNameTextBox.Size = new System.Drawing.Size(254, 20);
+            this.addModelNameTextBox.TabIndex = 3;
+            // 
             // addModelButton
             // 
             this.addModelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -209,23 +226,6 @@ namespace staff_qualification_Forms
             this.listModelLabel.TabIndex = 0;
             this.listModelLabel.Text = "Список моделей:";
             // 
-            // addModelNameTextBox
-            // 
-            this.addModelNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.addModelNameTextBox.Location = new System.Drawing.Point(11, 188);
-            this.addModelNameTextBox.Name = "addModelNameTextBox";
-            this.addModelNameTextBox.Size = new System.Drawing.Size(254, 20);
-            this.addModelNameTextBox.TabIndex = 3;
-            // 
-            // ModelNamePanel
-            // 
-            this.modelNamePanel.AutoScroll = true;
-            this.modelNamePanel.Location = new System.Drawing.Point(6, 43);
-            this.modelNamePanel.Name = "ModelNamePanel";
-            this.modelNamePanel.Size = new System.Drawing.Size(330, 130);
-            this.modelNamePanel.TabIndex = 4;
-            this.modelNamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.modelNamePanel_MouseClick);
-            // 
             // ProjectsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -241,6 +241,7 @@ namespace staff_qualification_Forms
             this.Name = "ProjectsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Проекты";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProjectsForm_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.modelDetailsGroupBox.ResumeLayout(false);

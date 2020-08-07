@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace staff_qualification_Forms
 {
@@ -7,12 +6,15 @@ namespace staff_qualification_Forms
     {
         public List<Project> GetAll()
         {
-            return JsonConvert.DeserializeObject<List<Project>>(ReadFromFile());
+            var projects = JsonHelper.Deserialize<List<Project>>(ReadFromFile());
+            if (projects == null)
+                projects = new List<Project>();
+            return projects;
         }
             
         public void Update(List<Project> projects)
         {
-            var jsonProjects = JsonConvert.SerializeObject(projects);
+            var jsonProjects = JsonHelper.Serialize<List<Project>>(projects);
             WriteToFile(jsonProjects);
         }
 

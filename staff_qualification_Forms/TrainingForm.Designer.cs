@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.trainingIdLabel = new System.Windows.Forms.Label();
-            this.trainingIdTextBox = new System.Windows.Forms.TextBox();
             this.staffNameTextBox = new System.Windows.Forms.TextBox();
             this.staffNameLabel = new System.Windows.Forms.Label();
             this.projectLabel = new System.Windows.Forms.Label();
@@ -50,25 +48,9 @@
             this.operationComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // trainingIdLabel
-            // 
-            this.trainingIdLabel.AutoSize = true;
-            this.trainingIdLabel.Location = new System.Drawing.Point(23, 28);
-            this.trainingIdLabel.Name = "trainingIdLabel";
-            this.trainingIdLabel.Size = new System.Drawing.Size(101, 13);
-            this.trainingIdLabel.TabIndex = 0;
-            this.trainingIdLabel.Text = "Номер документа:";
-            // 
-            // trainingIdTextBox
-            // 
-            this.trainingIdTextBox.Location = new System.Drawing.Point(142, 28);
-            this.trainingIdTextBox.Name = "trainingIdTextBox";
-            this.trainingIdTextBox.Size = new System.Drawing.Size(100, 20);
-            this.trainingIdTextBox.TabIndex = 1;
-            // 
             // staffNameTextBox
             // 
-            this.staffNameTextBox.Location = new System.Drawing.Point(142, 65);
+            this.staffNameTextBox.Location = new System.Drawing.Point(142, 41);
             this.staffNameTextBox.Name = "staffNameTextBox";
             this.staffNameTextBox.Size = new System.Drawing.Size(295, 20);
             this.staffNameTextBox.TabIndex = 3;
@@ -76,7 +58,7 @@
             // staffNameLabel
             // 
             this.staffNameLabel.AutoSize = true;
-            this.staffNameLabel.Location = new System.Drawing.Point(23, 69);
+            this.staffNameLabel.Location = new System.Drawing.Point(23, 45);
             this.staffNameLabel.Name = "staffNameLabel";
             this.staffNameLabel.Size = new System.Drawing.Size(63, 13);
             this.staffNameLabel.TabIndex = 2;
@@ -85,7 +67,7 @@
             // projectLabel
             // 
             this.projectLabel.AutoSize = true;
-            this.projectLabel.Location = new System.Drawing.Point(23, 157);
+            this.projectLabel.Location = new System.Drawing.Point(23, 133);
             this.projectLabel.Name = "projectLabel";
             this.projectLabel.Size = new System.Drawing.Size(47, 13);
             this.projectLabel.TabIndex = 4;
@@ -94,7 +76,7 @@
             // modelLabel
             // 
             this.modelLabel.AutoSize = true;
-            this.modelLabel.Location = new System.Drawing.Point(23, 199);
+            this.modelLabel.Location = new System.Drawing.Point(23, 175);
             this.modelLabel.Name = "modelLabel";
             this.modelLabel.Size = new System.Drawing.Size(49, 13);
             this.modelLabel.TabIndex = 6;
@@ -102,7 +84,7 @@
             // 
             // trainerTextBox
             // 
-            this.trainerTextBox.Location = new System.Drawing.Point(142, 108);
+            this.trainerTextBox.Location = new System.Drawing.Point(142, 84);
             this.trainerTextBox.Name = "trainerTextBox";
             this.trainerTextBox.Size = new System.Drawing.Size(295, 20);
             this.trainerTextBox.TabIndex = 9;
@@ -110,7 +92,7 @@
             // trainerLabel
             // 
             this.trainerLabel.AutoSize = true;
-            this.trainerLabel.Location = new System.Drawing.Point(23, 112);
+            this.trainerLabel.Location = new System.Drawing.Point(23, 88);
             this.trainerLabel.Name = "trainerLabel";
             this.trainerLabel.Size = new System.Drawing.Size(69, 13);
             this.trainerLabel.TabIndex = 8;
@@ -118,7 +100,7 @@
             // 
             // startTrainingDateTimePicker
             // 
-            this.startTrainingDateTimePicker.Location = new System.Drawing.Point(26, 311);
+            this.startTrainingDateTimePicker.Location = new System.Drawing.Point(26, 287);
             this.startTrainingDateTimePicker.Name = "startTrainingDateTimePicker";
             this.startTrainingDateTimePicker.Size = new System.Drawing.Size(165, 20);
             this.startTrainingDateTimePicker.TabIndex = 10;
@@ -127,7 +109,7 @@
             // startTrainingLabel
             // 
             this.startTrainingLabel.AutoSize = true;
-            this.startTrainingLabel.Location = new System.Drawing.Point(23, 285);
+            this.startTrainingLabel.Location = new System.Drawing.Point(23, 261);
             this.startTrainingLabel.Name = "startTrainingLabel";
             this.startTrainingLabel.Size = new System.Drawing.Size(96, 13);
             this.startTrainingLabel.TabIndex = 11;
@@ -136,7 +118,7 @@
             // endTrainingLabel
             // 
             this.endTrainingLabel.AutoSize = true;
-            this.endTrainingLabel.Location = new System.Drawing.Point(270, 285);
+            this.endTrainingLabel.Location = new System.Drawing.Point(270, 261);
             this.endTrainingLabel.Name = "endTrainingLabel";
             this.endTrainingLabel.Size = new System.Drawing.Size(114, 13);
             this.endTrainingLabel.TabIndex = 13;
@@ -144,7 +126,7 @@
             // 
             // endTrainingDateTimePicker
             // 
-            this.endTrainingDateTimePicker.Location = new System.Drawing.Point(273, 311);
+            this.endTrainingDateTimePicker.Location = new System.Drawing.Point(273, 287);
             this.endTrainingDateTimePicker.Name = "endTrainingDateTimePicker";
             this.endTrainingDateTimePicker.Size = new System.Drawing.Size(165, 20);
             this.endTrainingDateTimePicker.TabIndex = 12;
@@ -171,7 +153,7 @@
             // 
             // selectStaffButton
             // 
-            this.selectStaffButton.Location = new System.Drawing.Point(444, 64);
+            this.selectStaffButton.Location = new System.Drawing.Point(444, 40);
             this.selectStaffButton.Name = "selectStaffButton";
             this.selectStaffButton.Size = new System.Drawing.Size(25, 21);
             this.selectStaffButton.TabIndex = 16;
@@ -181,7 +163,7 @@
             // 
             // selectTrainerButton
             // 
-            this.selectTrainerButton.Location = new System.Drawing.Point(444, 107);
+            this.selectTrainerButton.Location = new System.Drawing.Point(444, 83);
             this.selectTrainerButton.Name = "selectTrainerButton";
             this.selectTrainerButton.Size = new System.Drawing.Size(25, 21);
             this.selectTrainerButton.TabIndex = 19;
@@ -192,7 +174,7 @@
             // operationLabel
             // 
             this.operationLabel.AutoSize = true;
-            this.operationLabel.Location = new System.Drawing.Point(24, 242);
+            this.operationLabel.Location = new System.Drawing.Point(24, 218);
             this.operationLabel.Name = "operationLabel";
             this.operationLabel.Size = new System.Drawing.Size(60, 13);
             this.operationLabel.TabIndex = 20;
@@ -201,7 +183,7 @@
             // projectComboBox
             // 
             this.projectComboBox.FormattingEnabled = true;
-            this.projectComboBox.Location = new System.Drawing.Point(142, 151);
+            this.projectComboBox.Location = new System.Drawing.Point(142, 127);
             this.projectComboBox.Name = "projectComboBox";
             this.projectComboBox.Size = new System.Drawing.Size(295, 21);
             this.projectComboBox.TabIndex = 23;
@@ -210,7 +192,7 @@
             // modelComboBox
             // 
             this.modelComboBox.FormattingEnabled = true;
-            this.modelComboBox.Location = new System.Drawing.Point(142, 195);
+            this.modelComboBox.Location = new System.Drawing.Point(142, 171);
             this.modelComboBox.Name = "modelComboBox";
             this.modelComboBox.Size = new System.Drawing.Size(295, 21);
             this.modelComboBox.TabIndex = 24;
@@ -219,13 +201,13 @@
             // operationComboBox
             // 
             this.operationComboBox.FormattingEnabled = true;
-            this.operationComboBox.Location = new System.Drawing.Point(142, 239);
+            this.operationComboBox.Location = new System.Drawing.Point(142, 215);
             this.operationComboBox.Name = "operationComboBox";
             this.operationComboBox.Size = new System.Drawing.Size(295, 21);
             this.operationComboBox.TabIndex = 25;
             this.operationComboBox.SelectedIndexChanged += new System.EventHandler(this.operationComboBox_SelectedIndexChanged);
             // 
-            // NewTrainingForm
+            // TrainingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -248,9 +230,7 @@
             this.Controls.Add(this.projectLabel);
             this.Controls.Add(this.staffNameTextBox);
             this.Controls.Add(this.staffNameLabel);
-            this.Controls.Add(this.trainingIdTextBox);
-            this.Controls.Add(this.trainingIdLabel);
-            this.Name = "NewTrainingForm";
+            this.Name = "TrainingForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Новое обучение";
             this.ResumeLayout(false);
@@ -259,9 +239,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label trainingIdLabel;
-        private System.Windows.Forms.TextBox trainingIdTextBox;
         private System.Windows.Forms.TextBox staffNameTextBox;
         private System.Windows.Forms.Label staffNameLabel;
         private System.Windows.Forms.Label projectLabel;

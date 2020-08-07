@@ -7,13 +7,15 @@ namespace staff_qualification_Forms
     {
         public List<Staff> GetAll()
         {
-            var staffs = JsonConvert.DeserializeObject<List<Staff>>(ReadFromFile());
+            var staffs = JsonHelper.Deserialize<List<Staff>>(ReadFromFile());
+            if (staffs == null)
+                staffs = new List<Staff>();
             return staffs;
         }
 
         public void Update(List<Staff> staffs)
         {
-            var jsonStaffs = JsonConvert.SerializeObject(staffs);
+            var jsonStaffs = JsonHelper.Serialize<List<Staff>>(staffs);
             WriteToFile(jsonStaffs);
         }
 

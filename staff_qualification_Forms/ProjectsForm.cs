@@ -18,9 +18,6 @@ namespace staff_qualification_Forms
         {
             InitializeComponent();
             projects = service.GetData(); 
-
-            if (projects == null)
-                projects = new List<Project>();
             FillTreeView();
             projectsTreeView.SelectedNode = null;
         }
@@ -81,6 +78,7 @@ namespace staff_qualification_Forms
             if (inputNameForm.Name != null)
             {
                 project = new Project();
+                IdHelper.TryUpdateId(project);
                 project.Name = inputNameForm.Name;
                 projects.Add(project);
                 var projectNode = new TreeNode(project.Name);
@@ -141,7 +139,7 @@ namespace staff_qualification_Forms
                 {
                     Name = "modelLabel" + i.ToString(),
                     Location = new Point(5, i * 22 + 5),
-                    Text = $"{project.Models[i].Name}",
+                    Text = project.Models[i].Name,
                     Tag = project.Models[i]
                 };
                 linkLabel.AutoSize = true;
@@ -200,37 +198,35 @@ namespace staff_qualification_Forms
 
         private void addModelButton_Click(object sender, EventArgs e)
         {
-            if (project != null)
-            {
-                if (addModelNameTextBox.Text != String.Empty)
-                {
-                    foreach (var model in project.Models)
-                    {
-                        if (addModelNameTextBox.Text == model.Name)
-                        {
-                            MessageBox.Show("Такая модель уже существует! Введите другое название!");
-                            addModelNameTextBox.Focus();
-                            return;
-                        }
-                    }
-                    model = new Model(addModelNameTextBox.Text);
-                    project.Models.Add(model);
-                    FillTreeView();
-                    DisposeModelsLinkLabels();
-                    CreateModelsLinkLabels(project.Models);
-                    FillModelDetailsGroupBox(model);
-                    addModelNameTextBox.Text = String.Empty;
-                    service.UpdateData(projects);
-                }
-                else
-                {
-                    MessageBox.Show("Нужно ввести название модели!");
-                }
-            }
-            else
+            if (project == null)
             {
                 MessageBox.Show("Проект не выбран! Сначала выберите проект!");
+                return;
             }
+            if (addModelNameTextBox.Text == String.Empty)
+            {
+                MessageBox.Show("Нужно ввести название модели!");
+                return;
+            }
+            foreach (var model in project.Models)
+            {
+                if (addModelNameTextBox.Text == model.Name)
+                {
+                    MessageBox.Show("Такая модель уже существует! Введите другое название!");
+                    addModelNameTextBox.Focus();
+                    return;
+                }
+            }
+            model = new Model();
+            IdHelper.TryUpdateId(model);
+            model.Name = addModelNameTextBox.Text;
+            project.Models.Add(model);
+            FillTreeView();
+            DisposeModelsLinkLabels();
+            CreateModelsLinkLabels(project.Models);
+            FillModelDetailsGroupBox(model);
+            addModelNameTextBox.Text = String.Empty;
+            service.UpdateData(projects);
         }
 
         private void deleteModelButton_Click(object sender, EventArgs e)
@@ -263,33 +259,32 @@ namespace staff_qualification_Forms
 
         private void addOperationButton_Click(object sender, EventArgs e)
         {
-            if (model != null && modelDetailsGroupBox.Text != String.Empty)
-            {
-                if (addOperationTextBox.Text != String.Empty)
-                {
-                    foreach (var operation in model.Operations)
-                    {
-                        if (addOperationTextBox.Text == operation.Name)
-                        {
-                            MessageBox.Show("Такая операция уже существует! Введите другое название!");
-                            addOperationTextBox.Focus();
-                            return;
-                        }
-                    }
-                    model.Operations.Add(new Operation(addOperationTextBox.Text));
-                    GetListOperations(model);
-                    addOperationTextBox.Text = String.Empty;
-                    service.UpdateData(projects);
-                }
-                else
-                {
-                    MessageBox.Show("Нужно ввести название операции!");
-                }
-            }
-            else
+            if (model == null && modelDetailsGroupBox.Text == String.Empty)
             {
                 MessageBox.Show("Модель не выбрана!");
+                return;
             }
+            if (addOperationTextBox.Text == String.Empty)
+            {
+                MessageBox.Show("Нужно ввести название операции!");
+                return;
+            }
+            foreach (var operation in model.Operations)
+            {
+                if (addOperationTextBox.Text == operation.Name)
+                {
+                    MessageBox.Show("Такая операция уже существует! Введите другое название!");
+                    addOperationTextBox.Focus();
+                    return;
+                }
+            }
+            var newOperation = new Operation();
+            newOperation.Name = addOperationTextBox.Text;
+            IdHelper.TryUpdateId(newOperation);
+            model.Operations.Add(newOperation);
+            GetListOperations(model);
+            addOperationTextBox.Text = String.Empty;
+            service.UpdateData(projects);
         }
 
         private void deleteOperationButton_Click(object sender, EventArgs e)
@@ -319,6 +314,28 @@ namespace staff_qualification_Forms
         private void modelNamePanel_MouseClick(object sender, MouseEventArgs e)
         {
             modelNamePanel.Focus();
+        }
+
+        private void ProjectsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            foreach (var project in projects)
+            {
+                if (project.Models.Count == 0)
+                {
+                    MessageBox.Show($"Проект должен содержать хотя бы одну модель! Добавьте модели в {project.Name}.");
+                    e.Cancel = true;
+                    return;
+                }
+                foreach (var model in project.Models)
+                {
+                    if (model.Operations.Count == 0)
+                    {
+                        MessageBox.Show($"Модель должна содержать хотя бы одну операция! Добавьте операции в {model.Name}.");
+                        e.Cancel = true;
+                        return;
+                    }
+                }
+            }
         }
     }
 }
