@@ -16,11 +16,6 @@ namespace staff_qualification_Forms
             return repository.GetAll();
         }
 
-        //public void AddData(Training training)
-        //{
-        //    repository.Add(training);
-        //}
-
         public void UpdateData(List<Training> trainings)
         {
             repository.Update(trainings);

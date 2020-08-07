@@ -12,10 +12,6 @@ namespace staff_qualification_Forms
             return trainings;
         }
 
-        public void Add(Training training)
-        {
-        }
-
         public void Update(List<Training> trainings)
         {
             var jsonTraining = JsonHelper.Serialize<List<Training>>(trainings);
