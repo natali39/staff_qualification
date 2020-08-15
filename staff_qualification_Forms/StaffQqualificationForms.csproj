@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ViewQualificationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewQualificationForm.Designer.cs">
+      <DependentUpon>ViewQualificationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewSelfCheksForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +109,9 @@
     <Compile Include="TrainingForm.Designer.cs">
       <DependentUpon>TrainingForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ViewQualificationForm.resx">
+      <DependentUpon>ViewQualificationForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ViewSelfCheksForm.resx">
       <DependentUpon>ViewSelfCheksForm.cs</DependentUpon>
     </EmbeddedResource>

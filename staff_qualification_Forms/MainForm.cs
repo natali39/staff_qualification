@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace staff_qualification_Forms
@@ -22,15 +23,21 @@ namespace staff_qualification_Forms
         List<Training> trainings;
         List<SelfCheck> selfChecks;
 
+        List<Training> endTraining;
+        List<Training> onTraining;
+        List<Training> isSelfCheck;
+
         Project project;
 
         DataTable table = new DataTable();
-        List<Result> output;
 
         public MainForm()
         {
             InitializeComponent();
             GetListData();
+            List<CheckBox> modelsCheckBoxes = new List<CheckBox>();
+            List<CheckBox> modelsSelectAllCheckBoxes = new List<CheckBox>();
+            List<CheckedListBox> operationsCheckedListBoxes = new List<CheckedListBox>();
             SetFormProperties();
         }
 
@@ -46,12 +53,10 @@ namespace staff_qualification_Forms
         {
             outputDataGridView.AllowUserToAddRows = false;
             outputDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            outputDataGridView.DataSource = output;
 
             GetTableHeader();
 
             selectAllModelsCheckBox.Visible = false;
-            noTrainingCheckBox.Visible = false; //потому что еще не сделала для него обработку
 
             projectComboBox.DataSource = projects;
             projectComboBox.DisplayMember = "Name";
@@ -146,7 +151,7 @@ namespace staff_qualification_Forms
                 var modelCheckBox = new CheckBox()
                 {
                     Name = "modelCheckBox" + i.ToString(),
-                    Location = new Point(10 + i * 210, 5),
+                    Location = new Point(12 + i * 210, 5),
                     Text = models[i].Name,
                     Tag = models[i],
                     AutoSize = true
@@ -177,7 +182,7 @@ namespace staff_qualification_Forms
             var operationCheckedListBox = new CheckedListBox()
             {
                 Name = "operationCheckedListBox" + i.ToString(),
-                Location = new Point(10 + i * 210, 25),
+                Location = new Point(12 + i * 210, 25),
                 Width = 190,
                 Height = 150,
                 DataSource = operations,
@@ -203,16 +208,15 @@ namespace staff_qualification_Forms
 
         private void DisposeModelsCheckBoxes()
         {
-            if (modelsCheckBoxes != null)
+            if (modelsCheckBoxes == null)
+                return;
+            foreach (var checkBox in modelsCheckBoxes)
             {
-                foreach (var checkBox in modelsCheckBoxes)
-                {
-                    checkBox.Dispose();
-                }
-                foreach (var checkBox in modelsSelectAllCheckBoxes)
-                {
-                    checkBox.Dispose();
-                }
+                checkBox.Dispose();
+            }
+            foreach (var checkBox in modelsSelectAllCheckBoxes)
+            {
+                checkBox.Dispose();
             }
         }
 
@@ -299,90 +303,123 @@ namespace staff_qualification_Forms
         {
             var selectedOperations = new List<Operation>();
 
-            foreach (var checkBox in modelsCheckBoxes)
+            if (modelsCheckBoxes != null)
             {
-                if (checkBox.Checked == true)
+                foreach (var checkBox in modelsCheckBoxes)
                 {
-                    int index = modelsCheckBoxes.IndexOf(checkBox);
-                    var currentCheckedListBox = operationsCheckedListBoxes[index];
-                    foreach (var item in currentCheckedListBox.CheckedItems)
+                    if (checkBox.Checked == true)
                     {
-                        selectedOperations.Add((Operation)item);
+                        int index = modelsCheckBoxes.IndexOf(checkBox);
+                        var currentCheckedListBox = operationsCheckedListBoxes[index];
+                        foreach (var item in currentCheckedListBox.CheckedItems)
+                        {
+                            selectedOperations.Add((Operation)item);
+                        }
                     }
                 }
             }
             return selectedOperations;
         }
 
-        private void reportButton_Click(object sender, EventArgs e)
+        private void viewOutputButton_Click(object sender, EventArgs e)
         {
-            output = new List<Result>();
+            GetListData();
             var selectedOperations = GetSelectedOperations();
-
             if (selectedOperations == null || selectedOperations.Count == 0)
             {
                 MessageBox.Show("Ни одна операция не выбрана!");
                 return;
             }
 
-            foreach (var operation in selectedOperations)
-            {
-                CheckingForTraining(operation);
-                CheckingForSelfCheck(operation);
-            }
+            GetSelectedTrainings(selectedOperations);
+            var output = GetOutputData();
             FillDataGridView(output);
         }
 
-        private void CheckingForTraining(Operation operation)
+        private void GetSelectedTrainings(List<Operation> selectedOperations)
+        {
+            endTraining = new List<Training>();
+            onTraining = new List<Training>();
+            isSelfCheck = new List<Training>();
+
+            foreach (var operation in selectedOperations)
+            {
+                if (onTrainingCheckBox.Checked == true)
+                    GetOnTrainingList(operation);
+                if (endTrainingCheckBox.Checked == true)
+                    GetEndTrainingList(operation);
+                if (IsSelfChekCheckBox.Checked == true)
+                    GetIsSelfCheckList(operation);
+            }
+        }
+
+        private void GetOnTrainingList(Operation operation)
         {
             foreach (var training in trainings)
             {
-                if (training.OperationID == operation.ID)
-                {
-                    if (endTrainingCheckBox.Checked == true && training.EndDate <= DateTime.Now)
-                    {
-                        AddResultToOutput(training, operation);
-                    }
-                    if (onTrainingCheckBox.Checked == true && training.EndDate > DateTime.Now)
-                    {
-                        AddResultToOutput(training, operation);
-                    }
-                }
+                if (training.OperationID == operation.ID && training.EndDate.Date >= DateTime.Now.Date)
+                    onTraining.Add(training);
             }
         }
-
-        private void AddResultToOutput(Training training, Operation operation)
+        
+        private void GetEndTrainingList(Operation operation)
         {
-            var result = new Result();
-            var model = IdHelper.GetEntityByID(project.Models, training.ModelID);
-            result.ModelName = model.Name;
-            result.OperationName = operation.Name;
-            result.StartTrainingDate = training.StartDate;
-            result.EndTrainingDate = training.EndDate;
-            result.StaffID = training.StaffID;
-            var staff = Staff.GetStaffByID(training.StaffID, staffs);
-            result.StaffFullName = staff.GetStaffFullName();
-            
-            foreach (var selfCheck in selfChecks)
+            foreach (var training in trainings)
             {
-                if (selfCheck.TrainingID == training.ID)
-                {
-                    result.SelfCheckDate = selfCheck.Date;
-                }
+                if (training.OperationID == operation.ID && training.EndDate.Date < DateTime.Now.Date)
+                    endTraining.Add(training);
             }
-            output.Add(result);
         }
 
-        private void CheckingForSelfCheck(Operation operation)
+        private void GetIsSelfCheckList(Operation operation)
         {
             foreach (var selfCheck in selfChecks)
             {
                 var training = IdHelper.GetEntityByID(trainings, selfCheck.TrainingID);
                 if (training.OperationID == operation.ID)
-                {
-                    AddResultToOutput(training, operation);
-                }
+                    isSelfCheck.Add(training);
             }
+        }
+
+        private List<Training> GetTotalTrainingList()
+        {
+            var totalTraining = new List<Training>();
+            totalTraining.AddRange(onTraining.Union(endTraining).Union(isSelfCheck));
+            return totalTraining;
+        }
+
+        private List<Result> GetOutputData()
+        {
+            var outputData = new List<Result>();
+            var totalTrainings = GetTotalTrainingList();
+            foreach (var training in totalTrainings)
+            {
+                var result = new Result();
+                var model = IdHelper.GetEntityByID(project.Models, training.ModelID);
+                result.ModelName = model.Name;
+                var operation = IdHelper.GetEntityByID(model.Operations, training.OperationID);
+                result.OperationName = operation.Name;
+                result.StartTrainingDate = training.StartDate.ToString("d");
+                result.EndTrainingDate = training.EndDate.ToString("d");
+                result.StaffID = training.StaffID;
+                var staff = Staff.GetStaffByID(training.StaffID, staffs);
+                result.StaffFullName = staff.GetStaffFullName();
+
+                foreach (var selfCheck in selfChecks)
+                {
+                    if (selfCheck.TrainingID == training.ID)
+                    {
+                        result.SelfCheckDate = selfCheck.Date.ToString("d");
+                        break;
+                    }
+                    else
+                    {
+                        result.SelfCheckDate = "-";
+                    }
+                }
+                outputData.Add(result);
+            }
+            return outputData;
         }
 
         private void FillDataGridView(List<Result> output)

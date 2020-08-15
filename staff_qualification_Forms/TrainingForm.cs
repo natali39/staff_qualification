@@ -88,10 +88,26 @@ namespace staff_qualification_Forms
                 MessageBox.Show("Сроки обучения введены неверно!");
                 return;
             }
+
+            CheckForUnique();
+
             IdHelper.TryUpdateId(training);
             trainings.Add(training);
             trainingService.UpdateData(trainings);
             Close();
+        }
+
+        private void CheckForUnique()
+        {
+            foreach (var existingTraining in trainings)
+            {
+                if (training.OperationID == existingTraining.OperationID
+                    && training.StaffID == existingTraining.StaffID)
+                {
+                    MessageBox.Show("Такое обучение уже существует! Проверьте корректность введенных данных.");
+                    return;
+                }
+            }
         }
 
         private bool IsEmpty()
@@ -114,7 +130,7 @@ namespace staff_qualification_Forms
             var selectedStaff = new Staff();
             StaffsForm staffsForm = new StaffsForm("select");
             staffsForm.ShowDialog();
-            selectedStaff = staffsForm.staff;
+            selectedStaff = staffsForm.SelectedStaff;
             return selectedStaff;
         }
 

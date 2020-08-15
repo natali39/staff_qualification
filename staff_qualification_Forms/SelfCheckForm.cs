@@ -46,7 +46,7 @@ namespace staff_qualification_Forms
         {
             StaffsForm staffsForm = new StaffsForm("select");
             staffsForm.ShowDialog();
-            var responsiblePerson = staffsForm.staff;
+            var responsiblePerson = staffsForm.SelectedStaff;
             selfCheck.ResponsiblePersonID = responsiblePerson.ID;
             responsiblePersonTextBox.Text = responsiblePerson.GetStaffFullName();
         }
@@ -71,6 +71,19 @@ namespace staff_qualification_Forms
             selfChecks.Add(selfCheck);
             selfCheckService.UpdateData(selfChecks);
             Close();
+        }
+
+        private void CheckForUnique()
+        {
+            foreach (var existingSelfCheck in selfChecks)
+            {
+                if (selfCheck.TrainingID == existingSelfCheck.TrainingID)
+                {
+                    MessageBox.Show("Такой самоконтроль уже существует! Проверьте корректность введенных данных.");
+                    return;
+                }
+            }
+
         }
 
         private bool IncorrectDate()

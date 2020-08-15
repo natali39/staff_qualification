@@ -80,7 +80,7 @@
             this.staffDataGridView.TabIndex = 9;
             this.staffDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.staffDataGridView_CellClick);
             this.staffDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.staffDataGridView_CellDoubleClick);
-            this.staffDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.staffDataGridView_KeyDown);
+            this.staffDataGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.staffDataGridView_UserDeletingRow);
             // 
             // searchTextBox
             // 

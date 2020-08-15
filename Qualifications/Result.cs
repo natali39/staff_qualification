@@ -13,8 +13,8 @@ namespace staff_qualification_Forms
         public string ProjectName;
         public string ModelName;
         public string OperationName;
-        public DateTime StartTrainingDate;
-        public DateTime EndTrainingDate;
-        public DateTime SelfCheckDate;
+        public string StartTrainingDate;
+        public string EndTrainingDate;
+        public string SelfCheckDate;
     }
 }

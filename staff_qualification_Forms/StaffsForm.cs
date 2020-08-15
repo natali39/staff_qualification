@@ -10,10 +10,10 @@ namespace staff_qualification_Forms
         DataTable table = new DataTable();
         StaffService service = new StaffService(new StaffFileRepository());
         List<Staff> staffs = new List<Staff>();
-        int selectedRowIndex;
+        int selectedStaffID;
         bool isChanged = false;
         string mode = "edit";
-        public Staff staff;
+        public Staff SelectedStaff;
 
         public StaffsForm()
         {
@@ -24,7 +24,7 @@ namespace staff_qualification_Forms
         public StaffsForm(string mode) : this()
         {
             this.mode = mode;
-            this.staff = new Staff();
+            this.SelectedStaff = new Staff();
             addButton.Visible = false;
             deleteButton.Visible = false;
             saveButton.Visible = false;
@@ -106,6 +106,11 @@ namespace staff_qualification_Forms
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
+            DeleteStaff();
+        }
+
+        private void DeleteStaff()
+        {
             if (table.Rows.Count == 0)
             {
                 MessageBox.Show("В таблице нет записей");
@@ -114,18 +119,18 @@ namespace staff_qualification_Forms
             var result = MessageBox.Show("Удалить выбранную строку?", "Подтверждение операции", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
-                DeleteStaff();
+                if (staffDataGridView.SelectedRows.Count == 1)
+                {
+                    staffs.Remove(SelectedStaff);
+                    UpdateTableRows(staffs);
+                    UpdateStaffsData();
+                }
             }
         }
 
-        private void DeleteStaff()
+        private void staffDataGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            if (staffDataGridView.SelectedRows.Count > 0)
-            {
-                staffs.RemoveAt(selectedRowIndex);
-                UpdateTableRows(staffs);
-                UpdateStaffsData();
-            }
+            e.Cancel = true;
         }
 
         private void StaffsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -146,17 +151,13 @@ namespace staff_qualification_Forms
 
         private void staffDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int index = e.RowIndex;
-            if (index >= 0)
+            if (selectedStaffID > 0)
             {
                 if (mode == "select")
-                {
-                    staff = staffs[index];
                     Close();
-                }
                 else
                 {
-                    var staffEditForm = new StaffEditForm(staffs[index]);
+                    var staffEditForm = new StaffEditForm(SelectedStaff);
                     staffEditForm.ShowDialog();
                     UpdateTableRows(staffs);
                     UpdateStaffsData();
@@ -169,17 +170,20 @@ namespace staff_qualification_Forms
             UpdateTableRows(Staff.SearchByLastName(staffs, searchTextBox.Text));
         }
 
-        private void staffDataGridView_KeyDown(object sender, KeyEventArgs e)
-        {
-            //if (e.KeyCode == Keys.Delete)
-            //{
-            //    DeleteStaff();
-            //}
-        }
-
         private void staffDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            selectedRowIndex = e.RowIndex;
+            var selectedRowIndex = e.RowIndex;
+            if (selectedRowIndex >= 0)
+            {
+                var selectedString = staffDataGridView.Rows[selectedRowIndex].Cells[0].Value.ToString();
+                selectedStaffID = int.Parse(selectedString);
+                foreach (var staff in staffs)
+                {
+                    if (staff.ID == selectedStaffID)
+                        SelectedStaff = staff;
+                }
+
+            }
         }
     }
 }

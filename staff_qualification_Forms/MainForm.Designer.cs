@@ -45,12 +45,11 @@
             this.projecstLabel = new System.Windows.Forms.Label();
             this.modelsLabel = new System.Windows.Forms.Label();
             this.QualificationLabel = new System.Windows.Forms.Label();
-            this.noTrainingCheckBox = new System.Windows.Forms.CheckBox();
             this.endTrainingCheckBox = new System.Windows.Forms.CheckBox();
             this.onTrainingCheckBox = new System.Windows.Forms.CheckBox();
-            this.selfChekCheckBox = new System.Windows.Forms.CheckBox();
+            this.IsSelfChekCheckBox = new System.Windows.Forms.CheckBox();
             this.modelsPanel = new System.Windows.Forms.Panel();
-            this.reportButton = new System.Windows.Forms.Button();
+            this.viewOutputButton = new System.Windows.Forms.Button();
             this.selectAllModelsCheckBox = new System.Windows.Forms.CheckBox();
             this.listSectionMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.outputDataGridView)).BeginInit();
@@ -64,7 +63,7 @@
             this.документыToolStripMenuItem});
             this.listSectionMenuStrip1.Location = new System.Drawing.Point(0, 0);
             this.listSectionMenuStrip1.Name = "listSectionMenuStrip1";
-            this.listSectionMenuStrip1.Size = new System.Drawing.Size(868, 24);
+            this.listSectionMenuStrip1.Size = new System.Drawing.Size(844, 24);
             this.listSectionMenuStrip1.TabIndex = 2;
             this.listSectionMenuStrip1.Text = "ListSectionMenuStrip";
             // 
@@ -135,7 +134,7 @@
             this.новыйToolStripMenuItem,
             this.просмотрToolStripMenuItem});
             this.самоконтрольToolStripMenuItem.Name = "самоконтрольToolStripMenuItem";
-            this.самоконтрольToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.самоконтрольToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.самоконтрольToolStripMenuItem.Text = "Самоконтроль";
             // 
             // новыйToolStripMenuItem
@@ -169,10 +168,10 @@
             this.outputDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.outputDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.outputDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.outputDataGridView.Location = new System.Drawing.Point(0, 368);
+            this.outputDataGridView.Location = new System.Drawing.Point(0, 341);
             this.outputDataGridView.Name = "outputDataGridView";
             this.outputDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.outputDataGridView.Size = new System.Drawing.Size(868, 264);
+            this.outputDataGridView.Size = new System.Drawing.Size(844, 291);
             this.outputDataGridView.TabIndex = 7;
             // 
             // projecstLabel
@@ -196,26 +195,16 @@
             // QualificationLabel
             // 
             this.QualificationLabel.AutoSize = true;
-            this.QualificationLabel.Location = new System.Drawing.Point(7, 326);
+            this.QualificationLabel.Location = new System.Drawing.Point(7, 304);
             this.QualificationLabel.Name = "QualificationLabel";
             this.QualificationLabel.Size = new System.Drawing.Size(85, 13);
             this.QualificationLabel.TabIndex = 12;
             this.QualificationLabel.Text = "Квалификация:";
             // 
-            // noTrainingCheckBox
-            // 
-            this.noTrainingCheckBox.AutoSize = true;
-            this.noTrainingCheckBox.Location = new System.Drawing.Point(463, 326);
-            this.noTrainingCheckBox.Name = "noTrainingCheckBox";
-            this.noTrainingCheckBox.Size = new System.Drawing.Size(89, 17);
-            this.noTrainingCheckBox.TabIndex = 13;
-            this.noTrainingCheckBox.Text = "Не обучался";
-            this.noTrainingCheckBox.UseVisualStyleBackColor = true;
-            // 
             // endTrainingCheckBox
             // 
             this.endTrainingCheckBox.AutoSize = true;
-            this.endTrainingCheckBox.Location = new System.Drawing.Point(111, 326);
+            this.endTrainingCheckBox.Location = new System.Drawing.Point(222, 303);
             this.endTrainingCheckBox.Name = "endTrainingCheckBox";
             this.endTrainingCheckBox.Size = new System.Drawing.Size(115, 17);
             this.endTrainingCheckBox.TabIndex = 14;
@@ -225,22 +214,22 @@
             // onTrainingCheckBox
             // 
             this.onTrainingCheckBox.AutoSize = true;
-            this.onTrainingCheckBox.Location = new System.Drawing.Point(357, 326);
+            this.onTrainingCheckBox.Location = new System.Drawing.Point(113, 303);
             this.onTrainingCheckBox.Name = "onTrainingCheckBox";
             this.onTrainingCheckBox.Size = new System.Drawing.Size(89, 17);
             this.onTrainingCheckBox.TabIndex = 15;
             this.onTrainingCheckBox.Text = "На обучении";
             this.onTrainingCheckBox.UseVisualStyleBackColor = true;
             // 
-            // selfChekCheckBox
+            // IsSelfChekCheckBox
             // 
-            this.selfChekCheckBox.AutoSize = true;
-            this.selfChekCheckBox.Location = new System.Drawing.Point(242, 326);
-            this.selfChekCheckBox.Name = "selfChekCheckBox";
-            this.selfChekCheckBox.Size = new System.Drawing.Size(100, 17);
-            this.selfChekCheckBox.TabIndex = 16;
-            this.selfChekCheckBox.Text = "Самоконтроль";
-            this.selfChekCheckBox.UseVisualStyleBackColor = true;
+            this.IsSelfChekCheckBox.AutoSize = true;
+            this.IsSelfChekCheckBox.Location = new System.Drawing.Point(356, 303);
+            this.IsSelfChekCheckBox.Name = "IsSelfChekCheckBox";
+            this.IsSelfChekCheckBox.Size = new System.Drawing.Size(100, 17);
+            this.IsSelfChekCheckBox.TabIndex = 16;
+            this.IsSelfChekCheckBox.Text = "Самоконтроль";
+            this.IsSelfChekCheckBox.UseVisualStyleBackColor = true;
             // 
             // modelsPanel
             // 
@@ -249,18 +238,18 @@
             this.modelsPanel.AutoScroll = true;
             this.modelsPanel.Location = new System.Drawing.Point(0, 100);
             this.modelsPanel.Name = "modelsPanel";
-            this.modelsPanel.Size = new System.Drawing.Size(868, 201);
+            this.modelsPanel.Size = new System.Drawing.Size(844, 182);
             this.modelsPanel.TabIndex = 20;
             // 
-            // reportButton
+            // viewOutputButton
             // 
-            this.reportButton.Location = new System.Drawing.Point(680, 322);
-            this.reportButton.Name = "reportButton";
-            this.reportButton.Size = new System.Drawing.Size(145, 23);
-            this.reportButton.TabIndex = 21;
-            this.reportButton.Text = "Показать результат";
-            this.reportButton.UseVisualStyleBackColor = true;
-            this.reportButton.Click += new System.EventHandler(this.reportButton_Click);
+            this.viewOutputButton.Location = new System.Drawing.Point(687, 297);
+            this.viewOutputButton.Name = "viewOutputButton";
+            this.viewOutputButton.Size = new System.Drawing.Size(145, 23);
+            this.viewOutputButton.TabIndex = 21;
+            this.viewOutputButton.Text = "Показать результат";
+            this.viewOutputButton.UseVisualStyleBackColor = true;
+            this.viewOutputButton.Click += new System.EventHandler(this.viewOutputButton_Click);
             // 
             // selectAllModelsCheckBox
             // 
@@ -277,14 +266,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(868, 632);
+            this.ClientSize = new System.Drawing.Size(844, 632);
             this.Controls.Add(this.selectAllModelsCheckBox);
-            this.Controls.Add(this.reportButton);
+            this.Controls.Add(this.viewOutputButton);
             this.Controls.Add(this.modelsPanel);
-            this.Controls.Add(this.selfChekCheckBox);
+            this.Controls.Add(this.IsSelfChekCheckBox);
             this.Controls.Add(this.onTrainingCheckBox);
             this.Controls.Add(this.endTrainingCheckBox);
-            this.Controls.Add(this.noTrainingCheckBox);
             this.Controls.Add(this.QualificationLabel);
             this.Controls.Add(this.modelsLabel);
             this.Controls.Add(this.projecstLabel);
@@ -320,12 +308,11 @@
         private System.Windows.Forms.Label projecstLabel;
         private System.Windows.Forms.Label modelsLabel;
         private System.Windows.Forms.Label QualificationLabel;
-        private System.Windows.Forms.CheckBox noTrainingCheckBox;
         private System.Windows.Forms.CheckBox endTrainingCheckBox;
         private System.Windows.Forms.CheckBox onTrainingCheckBox;
-        private System.Windows.Forms.CheckBox selfChekCheckBox;
+        private System.Windows.Forms.CheckBox IsSelfChekCheckBox;
         private System.Windows.Forms.Panel modelsPanel;
-        private System.Windows.Forms.Button reportButton;
+        private System.Windows.Forms.Button viewOutputButton;
         private System.Windows.Forms.CheckBox selectAllModelsCheckBox;
     }
 }
