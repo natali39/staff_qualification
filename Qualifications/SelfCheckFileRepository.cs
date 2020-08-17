@@ -12,10 +12,6 @@ namespace staff_qualification_Forms
             return selfChecks;
         }
 
-        public void Add(SelfCheck selfChecks)
-        {
-        }
-
         public void Update(List<SelfCheck> selfChecks)
         {
             var jsonSelfCheck = JsonHelper.Serialize<List<SelfCheck>>(selfChecks);

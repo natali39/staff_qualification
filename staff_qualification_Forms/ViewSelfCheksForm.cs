@@ -28,16 +28,19 @@ namespace staff_qualification_Forms
                 var currentModel = IdHelper.GetEntityByID(currentProject.Models, currentTraining.ModelID);
                 var currentOperation = IdHelper.GetEntityByID(currentModel.Operations, currentTraining.OperationID);
 
-                table.Rows.Add
-                    (currentStaff.GetStaffFullName(),
-                    currentProject.Name,
-                    currentModel.Name,
-                    currentOperation.Name,
-                    currentTrainer.GetStaffFullName(),
-                    currentTraining.StartDate.ToString("d"),
-                    currentTraining.EndDate.ToString("d"),
-                    selfCheck.Date.ToString("d"),
-                    currentResponsiblePerson.GetStaffFullName());
+                if (currentStaff != null && currentTrainer != null && currentResponsiblePerson != null && currentOperation != null)
+                {
+                    table.Rows.Add
+                        (currentStaff.GetStaffFullName(),
+                        currentProject.Name,
+                        currentModel.Name,
+                        currentOperation.Name,
+                        currentTrainer.GetStaffFullName(),
+                        currentTraining.StartDate.ToString("d"),
+                        currentTraining.EndDate.ToString("d"),
+                        selfCheck.Date.ToString("d"),
+                        currentResponsiblePerson.GetStaffFullName());
+                }
             }
             bindingSource.DataSource = table;
             outputDataGridView.DataSource = bindingSource;

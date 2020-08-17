@@ -8,7 +8,7 @@ namespace staff_qualification_Forms
     public partial class StaffsForm : Form
     {
         DataTable table = new DataTable();
-        StaffService service = new StaffService(new StaffFileRepository());
+        StaffService staffService = new StaffService(new StaffFileRepository());
         List<Staff> staffs = new List<Staff>();
         int selectedStaffID;
         bool isChanged = false;
@@ -41,7 +41,7 @@ namespace staff_qualification_Forms
 
         private void GetTable()
         {
-            staffs = service.GetData();
+            staffs = staffService.GetData();
             GetTableHeader();
             UpdateTableRows(staffs);
         }
@@ -79,10 +79,10 @@ namespace staff_qualification_Forms
 
         private void UpdateStaffsData()
         {
-            service.UpdateData(staffs);
+            staffService.UpdateData(staffs);
         }
 
-        private void addButton_Click(object sender, System.EventArgs e)
+        private void addButton_Click(object sender, EventArgs e)
         {
             if (staffs == null)
             {
@@ -121,9 +121,34 @@ namespace staff_qualification_Forms
             {
                 if (staffDataGridView.SelectedRows.Count == 1)
                 {
+                    CheckRelatedDocuments(SelectedStaff);
                     staffs.Remove(SelectedStaff);
                     UpdateTableRows(staffs);
                     UpdateStaffsData();
+                }
+            }
+        }
+
+        private void CheckRelatedDocuments(Staff selectedStaff)
+        {
+            TrainingService trainingService = new TrainingService(new TrainingFileRepository());
+            SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
+            var trainings = trainingService.GetData();
+            var selfChecks = selfCheckService.GetData();
+            foreach (var training in trainings)
+            {
+                if (training.StaffID == SelectedStaff.ID || training.TrainerID == SelectedStaff.ID)
+                {
+                    MessageBox.Show("Сотрудник не может быть удален, так как есть по крайней мере один документ об обучении, при заполнении которого данный сотрудник был выбран!");
+                    return;
+                }
+            }
+            foreach (var selfcheck in selfChecks)
+            {
+                if (selfcheck.ResponsiblePersonID == SelectedStaff.ID)
+                {
+                    MessageBox.Show("Сотрудник не может быть удален, так как есть по крайней мере один документ о присвоении самоконтроля, при заполнении которого данный сотрудник был выбран!");
+                    return;
                 }
             }
         }
@@ -182,7 +207,6 @@ namespace staff_qualification_Forms
                     if (staff.ID == selectedStaffID)
                         SelectedStaff = staff;
                 }
-
             }
         }
     }

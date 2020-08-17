@@ -403,7 +403,8 @@ namespace staff_qualification_Forms
                 result.EndTrainingDate = training.EndDate.ToString("d");
                 result.StaffID = training.StaffID;
                 var staff = Staff.GetStaffByID(training.StaffID, staffs);
-                result.StaffFullName = staff.GetStaffFullName();
+                if (staff != null)
+                    result.StaffFullName = staff.GetStaffFullName();
 
                 foreach (var selfCheck in selfChecks)
                 {

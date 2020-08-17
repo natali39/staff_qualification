@@ -27,18 +27,21 @@ namespace staff_qualification_Forms
                 var currentModel = IdHelper.GetEntityByID(currentProject.Models, training.ModelID);
                 var currentOperation = IdHelper.GetEntityByID(currentModel.Operations, training.OperationID);
 
-                FillSelfCheckColumns(training);
-                
-                table.Rows.Add
-                    (currentStaff.GetStaffFullName(),
-                    currentProject.Name,
-                    currentModel.Name,
-                    currentOperation.Name,
-                    currentTrainer.GetStaffFullName(),
-                    training.StartDate.ToString("d"),
-                    training.EndDate.ToString("d"),
-                    selfCheckDate,
-                    selfCheckResponsiblePerson);
+                if (currentStaff != null && currentTrainer != null && currentOperation != null)
+                {
+                    FillSelfCheckColumns(training);
+
+                    table.Rows.Add
+                        (currentStaff.GetStaffFullName(),
+                        currentProject.Name,
+                        currentModel.Name,
+                        currentOperation.Name,
+                        currentTrainer.GetStaffFullName(),
+                        training.StartDate.ToString("d"),
+                        training.EndDate.ToString("d"),
+                        selfCheckDate,
+                        selfCheckResponsiblePerson);
+                }
             }
 
             bindingSource.DataSource = table;
@@ -53,7 +56,11 @@ namespace staff_qualification_Forms
                 {
                     selfCheckDate = selfCheck.Date.ToString("d");
                     var currentResponsiblePerson = Staff.GetStaffByID(selfCheck.ResponsiblePersonID, staffs);
-                    selfCheckResponsiblePerson = currentResponsiblePerson.GetStaffFullName();
+                    if (currentResponsiblePerson != null)
+                    {
+                        selfCheckResponsiblePerson = currentResponsiblePerson.GetStaffFullName();
+                        break;
+                    }
                     break;
                 }
                 else

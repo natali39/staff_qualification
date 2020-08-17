@@ -41,13 +41,12 @@ namespace staff_qualification_Forms
 
         public static Staff GetStaffByID(int id, List<Staff> staffs)
         {
-            var requiredStaff = new Staff();
             foreach (var staff in staffs)
             {
                 if (staff.ID == id)
-                    requiredStaff = staff;
+                    return staff;
             }
-            return requiredStaff;
+            return null;
         }
    }
 }
