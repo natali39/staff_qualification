@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
+using TemplateEngine.Docx;
 
 namespace staff_qualification_Forms
 {
@@ -142,6 +144,29 @@ namespace staff_qualification_Forms
         private void endTrainingDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             training.EndDate = endTrainingDateTimePicker.Value;
+        }
+
+        private void generateDocumentButton_Click(object sender, EventArgs e)
+        {
+            File.Delete("trainingDocument.docx");
+            File.Copy("trainingTemplate.docx", "trainingDocument.docx");
+
+            var valuesToFill = new Content(
+                new FieldContent("projectDescription", $"{projectComboBox.Text} {modelComboBox.Text}"),
+                new FieldContent("operationDescription", operationComboBox.Text.ToLower()),
+                new FieldContent("trainer", trainerTextBox.Text),
+                new FieldContent("startDate", training.StartDate.ToString("d")),
+                new FieldContent("endDate", training.EndDate.ToString("d")),
+                new FieldContent("staffID", training.StaffID.ToString()),
+                new FieldContent("staffName", staffNameTextBox.Text));
+
+            using (var outputDocument = new TemplateProcessor("trainingDocument.docx")
+                .SetRemoveContentControls(true))
+            {
+                outputDocument.FillContent(valuesToFill);
+                outputDocument.SaveChanges();
+            }
+            System.Diagnostics.Process.Start("trainingDocument.docx");
         }
     }
 }
