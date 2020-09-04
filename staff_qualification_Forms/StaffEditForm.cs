@@ -13,7 +13,6 @@ namespace staff_qualification_Forms
         public StaffEditForm()
         {
             InitializeComponent();
-
             GetFormProperties();
         }
 

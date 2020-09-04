@@ -11,22 +11,28 @@ namespace staff_qualification_Forms
         ProjectService projectService = new ProjectService(new ProjectFileRepository());
         TrainingService trainingService = new TrainingService(new TrainingFileRepository());
         List<Training> trainings;
+        List<Project> projects;
         TrainingReport trainingReport;
 
         public TrainingForm()
         {
             InitializeComponent();
             trainings = trainingService.GetData();
+            projects = projectService.GetData();
             if (trainings == null)
                 trainings = new List<Training>();
             trainingReport = new TrainingReport();
             GetFormProperties();
         }
 
+        public TrainingForm(Training training) : this()
+        {
+            this.training = training;
+            FillFormControls();
+        }
+
         private void GetFormProperties()
         {
-            var projects = projectService.GetData();
-
             projectComboBox.DataSource = projects;
             projectComboBox.DisplayMember = "Name";
             projectComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -41,6 +47,27 @@ namespace staff_qualification_Forms
             startTrainingDateTimePicker.Value = DateTime.Now;
             endTrainingDateTimePicker.Format = DateTimePickerFormat.Short;
             endTrainingDateTimePicker.Value = DateTime.Now.AddDays(defaultTrainingPeriod);
+        }
+
+        private void FillFormControls()
+        {
+            StaffService staffService = new StaffService(new StaffFileRepository());
+            List<Staff> staffs = staffService.GetData();
+
+            var staff = Staff.GetStaffByID(training.StaffID, staffs);
+            staffNameTextBox.Text = staff.GetStaffFullName();
+            var trainer = Staff.GetStaffByID(training.TrainerID, staffs);
+            trainerTextBox.Text = trainer.GetStaffFullName();
+
+            var project = IdHelper.GetEntityByID(projects, training.ProjectID);
+            projectComboBox.SelectedItem = project;
+            var model = IdHelper.GetEntityByID(project.Models, training.ModelID);
+            modelComboBox.SelectedItem = model;
+            var operation = IdHelper.GetEntityByID(model.Operations, training.OperationID);
+            operationComboBox.SelectedItem = operation;
+
+            startTrainingDateTimePicker.Value = training.StartDate;
+            endTrainingDateTimePicker.Value = training.EndDate;
         }
 
         private void selectStaffButton_Click(object sender, EventArgs e)
@@ -154,7 +181,6 @@ namespace staff_qualification_Forms
             trainingReport.Operation = operationComboBox.Text.ToLower();
             trainingReport.Date = training.StartDate.ToString("d");
             trainingReport.EndDate = training.EndDate.ToString("d");
-
             trainingReport.FillTrainingDocument();
         }
     }

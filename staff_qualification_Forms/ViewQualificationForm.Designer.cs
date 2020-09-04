@@ -45,6 +45,7 @@
             this.outputDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.outputDataGridView.Size = new System.Drawing.Size(803, 404);
             this.outputDataGridView.TabIndex = 0;
+            this.outputDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.outputDataGridView_CellClick);
             this.outputDataGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.outputDataGridView_CellMouseDoubleClick);
             // 
             // ViewQualificationForm

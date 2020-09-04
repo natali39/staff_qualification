@@ -30,9 +30,9 @@ namespace staff_qualification_Forms
 
         private void selectTrainingButton_Click(object sender, EventArgs e)
         {
-            ViewTrainingsForm allTrainingsForm = new ViewTrainingsForm();
-            allTrainingsForm.ShowDialog();
-            training = allTrainingsForm.Training;
+            ViewTrainingsForm viewTrainingsForm = new ViewTrainingsForm("select");
+            viewTrainingsForm.ShowDialog();
+            training = viewTrainingsForm.SelectedTraining;
             if (training == null)
                 return;
             selfCheck.TrainingID = training.ID;

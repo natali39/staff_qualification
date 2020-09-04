@@ -1,11 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace staff_qualification_Forms
 {
     public partial class ViewTrainingsForm : ViewQualificationForm
     {
-        public Training Training;
+        public Training SelectedTraining;
         private string selfCheckDate;
         private string selfCheckResponsiblePerson;
 
@@ -15,8 +14,15 @@ namespace staff_qualification_Forms
             FillTrainingsDataGridView();
         }
 
+        public ViewTrainingsForm(string mode) : this()
+        {
+            this.mode = mode;
+            SelectedTraining = new Training();
+        }
+
         private void FillTrainingsDataGridView()
         {
+            table.Rows.Clear();
             if (trainings == null)
                 return;
             foreach (var training in trainings)
@@ -68,7 +74,6 @@ namespace staff_qualification_Forms
                     selfCheckDate = "Не присвоен";
                     selfCheckResponsiblePerson = "-";
                 }
-
             }
         }
 
@@ -76,10 +81,19 @@ namespace staff_qualification_Forms
         {
             var index = e.RowIndex;
             if (index >= 0)
-            {
-                Training = trainings[index];
+                SelectedTraining = trainings[index];
+            if (mode == "select")
                 Close();
+            else
+            {
+                var trainingForm = new TrainingForm(SelectedTraining);
+                trainingForm.ShowDialog();
+                FillTrainingsDataGridView();
             }
+        }
+
+        protected override void outputDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
         }
     }
 }

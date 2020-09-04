@@ -7,12 +7,12 @@ namespace staff_qualification_Forms
 {
     public partial class StaffsForm : Form
     {
-        DataTable table = new DataTable();
-        StaffService staffService = new StaffService(new StaffFileRepository());
-        List<Staff> staffs = new List<Staff>();
-        int selectedStaffID;
-        bool isChanged = false;
-        string mode = "edit";
+        private DataTable table = new DataTable();
+        private StaffService staffService = new StaffService(new StaffFileRepository());
+        private List<Staff> staffs = new List<Staff>();
+        private int selectedStaffID;
+        private bool isChanged = false;
+        private string mode = "edit";
         public Staff SelectedStaff;
 
         public StaffsForm()

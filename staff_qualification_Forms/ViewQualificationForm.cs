@@ -10,12 +10,11 @@ namespace staff_qualification_Forms
         protected ProjectService projectService = new ProjectService(new ProjectFileRepository());
         protected StaffService staffService = new StaffService(new StaffFileRepository());
         protected SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
-
         protected List<SelfCheck> selfChecks = new List<SelfCheck>();
         protected List<Training> trainings = new List<Training>();
         protected List<Project> projects = new List<Project>();
         protected List<Staff> staffs = new List<Staff>();
-
+        protected string mode = "edit";
         public DataTable table = new DataTable();
         public BindingSource bindingSource = new BindingSource();
 
@@ -41,6 +40,7 @@ namespace staff_qualification_Forms
             outputDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells);
             outputDataGridView.AllowUserToAddRows = false;
             outputDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            outputDataGridView.MultiSelect = false;
         }
 
         private void GetTableColumns()
@@ -74,6 +74,11 @@ namespace staff_qualification_Forms
         protected virtual void outputDataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             
+        }
+
+        protected virtual void outputDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

@@ -38,7 +38,6 @@
             this.Name = "ViewTrainingsForm";
             this.Text = "Обучение";
             this.ResumeLayout(false);
-
         }
 
         #endregion
