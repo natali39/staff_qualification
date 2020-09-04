@@ -14,6 +14,7 @@ namespace staff_qualification_Forms
         List<SelfCheck> selfChecks;
         List<Project> projects;
         List<Staff> staffs;
+        SelfCheckReport selfCheckReport;
 
         public SelfCheckForm()
         {
@@ -22,7 +23,7 @@ namespace staff_qualification_Forms
             selfChecks = selfCheckService.GetData();
             projects = projectService.GetData();
             staffs = staffService.GetData();
-            
+            selfCheckReport = new SelfCheckReport();
             selfCheckDateTimePicker.Format = DateTimePickerFormat.Short;
             selfCheckDateTimePicker.Value = DateTime.Now;
         }
@@ -35,11 +36,22 @@ namespace staff_qualification_Forms
             if (training == null)
                 return;
             selfCheck.TrainingID = training.ID;
+            GetTrainingDetails(training);
+        }
+
+        private void GetTrainingDetails(Training training)
+        {
             var project = IdHelper.GetEntityByID(projects, training.ProjectID);
             var model = IdHelper.GetEntityByID(project.Models, training.ModelID);
             var operation = IdHelper.GetEntityByID(model.Operations, training.OperationID);
             var staff = Staff.GetStaffByID(training.StaffID, staffs);
-            trainingTextBox.Text = $"{staff.GetStaffFullName()}; {project.Name}; {model.Name}; {operation.Name}";
+            var staffName = staff.GetStaffFullName();
+            var modelDescription = $"{project.Name} {model.Name}";
+            trainingTextBox.Text = $"{staffName}; {modelDescription}; {operation.Name}";
+            selfCheckReport.StaffID = training.StaffID.ToString();
+            selfCheckReport.StaffName = staffName;
+            selfCheckReport.ModelDescription = modelDescription;
+            selfCheckReport.Operation = operation.Name;
         }
 
         private void responsiblePersonButton_Click(object sender, EventArgs e)
@@ -83,7 +95,6 @@ namespace staff_qualification_Forms
                     return;
                 }
             }
-
         }
 
         private bool IncorrectDate()
@@ -94,6 +105,13 @@ namespace staff_qualification_Forms
         private bool IsEmpty()
         {
             return selfCheck.TrainingID == Guid.Empty || selfCheck.ResponsiblePersonID == 0;
+        }
+
+        private void generateDocumentButton_Click(object sender, EventArgs e)
+        {
+            selfCheckReport.Date = selfCheck.Date.ToString("d");
+            selfCheckReport.ResponsiblePerson = responsiblePersonTextBox.Text;
+            selfCheckReport.FillSelfCheckDocument();
         }
     }
 }

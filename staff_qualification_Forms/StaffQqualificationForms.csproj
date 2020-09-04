@@ -188,6 +188,10 @@
       <Project>{937cc1c9-4ca7-4e59-9052-f766ec1f1f10}</Project>
       <Name>Qualifications</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Reports\Reports.csproj">
+      <Project>{68854dce-845b-4716-a518-d5614e5cc4cd}</Project>
+      <Name>Reports</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StaffQualification.Common\StaffQualification.Common.csproj">
       <Project>{30abfb43-9f0d-4f9c-aa44-357b40dff417}</Project>
       <Name>StaffQualification.Common</Name>

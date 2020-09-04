@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
-using TemplateEngine.Docx;
 
 namespace staff_qualification_Forms
 {
@@ -13,6 +11,7 @@ namespace staff_qualification_Forms
         ProjectService projectService = new ProjectService(new ProjectFileRepository());
         TrainingService trainingService = new TrainingService(new TrainingFileRepository());
         List<Training> trainings;
+        TrainingReport trainingReport;
 
         public TrainingForm()
         {
@@ -20,7 +19,7 @@ namespace staff_qualification_Forms
             trainings = trainingService.GetData();
             if (trainings == null)
                 trainings = new List<Training>();
-
+            trainingReport = new TrainingReport();
             GetFormProperties();
         }
 
@@ -148,25 +147,15 @@ namespace staff_qualification_Forms
 
         private void generateDocumentButton_Click(object sender, EventArgs e)
         {
-            File.Delete("trainingDocument.docx");
-            File.Copy("trainingTemplate.docx", "trainingDocument.docx");
+            trainingReport.StaffID = training.StaffID.ToString();
+            trainingReport.StaffName = staffNameTextBox.Text;
+            trainingReport.Trainer = trainerTextBox.Text;
+            trainingReport.ModelDescription = $"{projectComboBox.Text} {modelComboBox.Text}";
+            trainingReport.Operation = operationComboBox.Text.ToLower();
+            trainingReport.Date = training.StartDate.ToString("d");
+            trainingReport.EndDate = training.EndDate.ToString("d");
 
-            var valuesToFill = new Content(
-                new FieldContent("projectDescription", $"{projectComboBox.Text} {modelComboBox.Text}"),
-                new FieldContent("operationDescription", operationComboBox.Text.ToLower()),
-                new FieldContent("trainer", trainerTextBox.Text),
-                new FieldContent("startDate", training.StartDate.ToString("d")),
-                new FieldContent("endDate", training.EndDate.ToString("d")),
-                new FieldContent("staffID", training.StaffID.ToString()),
-                new FieldContent("staffName", staffNameTextBox.Text));
-
-            using (var outputDocument = new TemplateProcessor("trainingDocument.docx")
-                .SetRemoveContentControls(true))
-            {
-                outputDocument.FillContent(valuesToFill);
-                outputDocument.SaveChanges();
-            }
-            System.Diagnostics.Process.Start("trainingDocument.docx");
+            trainingReport.FillTrainingDocument();
         }
     }
 }

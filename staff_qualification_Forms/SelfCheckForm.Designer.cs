@@ -84,6 +84,7 @@
             this.generateDocumentButton.TabIndex = 20;
             this.generateDocumentButton.Text = "Сформировать документ";
             this.generateDocumentButton.UseVisualStyleBackColor = true;
+            this.generateDocumentButton.Click += new System.EventHandler(this.generateDocumentButton_Click);
             // 
             // saveButton
             // 
