@@ -45,6 +45,7 @@ namespace staff_qualification_Forms
 
         private void GetTableColumns()
         {
+            var trainingIDColumn = new DataColumn("trainingID", typeof(string));
             var staffColumn = new DataColumn("Сотрудник", typeof(string));
             var projectColumn = new DataColumn("Проект", typeof(string));
             var modelColumn = new DataColumn("Модель", typeof(string));
@@ -55,6 +56,7 @@ namespace staff_qualification_Forms
             var selfCheckDateColumn = new DataColumn("Дата присвоения самоконтроля", typeof(string));
             var responsiblePersonColumn = new DataColumn("Ответственный", typeof(string));
 
+            table.Columns.Add(trainingIDColumn);
             table.Columns.Add(staffColumn);
             table.Columns.Add(projectColumn);
             table.Columns.Add(modelColumn);
@@ -69,6 +71,7 @@ namespace staff_qualification_Forms
             {
                 column.ReadOnly = true;
             }
+
         }
 
         protected virtual void outputDataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)

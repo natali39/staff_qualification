@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Data;
+using System.Windows.Forms;
 
 namespace staff_qualification_Forms
 {
@@ -7,6 +8,7 @@ namespace staff_qualification_Forms
         public Training SelectedTraining;
         private string selfCheckDate;
         private string selfCheckResponsiblePerson;
+        private string selectedTrainingID;
 
         public ViewTrainingsForm()
         {
@@ -36,22 +38,23 @@ namespace staff_qualification_Forms
                 if (currentStaff != null && currentTrainer != null && currentOperation != null)
                 {
                     FillSelfCheckColumns(training);
-
-                    table.Rows.Add
-                        (currentStaff.GetStaffFullName(),
-                        currentProject.Name,
-                        currentModel.Name,
-                        currentOperation.Name,
-                        currentTrainer.GetStaffFullName(),
-                        training.StartDate.ToString("d"),
-                        training.EndDate.ToString("d"),
-                        selfCheckDate,
-                        selfCheckResponsiblePerson);
+                    var row = table.NewRow();
+                    row["trainingID"] = training.ID.ToString();
+                    row["Сотрудник"] = currentStaff.GetStaffFullName();
+                    row["Проект"] = currentProject.Name;
+                    row["Модель"] = currentModel.Name;
+                    row["Операция"] = currentOperation.Name;
+                    row["Инструктор"] = currentTrainer.GetStaffFullName();
+                    row["Дата начала"] = training.StartDate.ToString("d");
+                    row["Дата окончания"] = training.EndDate.ToString("d");
+                    row["Дата присвоения самоконтроля"] = selfCheckDate;
+                    row["Ответственный"] = selfCheckResponsiblePerson;
+                    table.Rows.Add(row);
                 }
             }
-
             bindingSource.DataSource = table;
             outputDataGridView.DataSource = bindingSource;
+            outputDataGridView.Columns["trainingID"].Visible = false;
         }
 
         private void FillSelfCheckColumns(Training training)
@@ -79,9 +82,9 @@ namespace staff_qualification_Forms
 
         protected override void outputDataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            var index = e.RowIndex;
-            if (index >= 0)
-                SelectedTraining = trainings[index];
+            //var index = e.RowIndex;
+            //if (index >= 0)
+            //   SelectedTraining = trainings[index];
             if (mode == "select")
                 Close();
             else
@@ -94,6 +97,16 @@ namespace staff_qualification_Forms
 
         protected override void outputDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            var selectedRowIndex = e.RowIndex;
+            if (selectedRowIndex >= 0)
+            {
+                selectedTrainingID = outputDataGridView.Rows[selectedRowIndex].Cells[0].Value.ToString();
+                foreach (var training in trainings)
+                {
+                    if (training.ID.ToString() == selectedTrainingID)
+                        SelectedTraining = training;
+                }
+            }
         }
     }
 }

@@ -64,6 +64,7 @@ namespace staff_qualification_Forms
             var model = IdHelper.GetEntityByID(project.Models, training.ModelID);
             modelComboBox.SelectedItem = model;
             var operation = IdHelper.GetEntityByID(model.Operations, training.OperationID);
+            operationComboBox.DataSource = model.Operations; //????
             operationComboBox.SelectedItem = operation;
 
             startTrainingDateTimePicker.Value = training.StartDate;
