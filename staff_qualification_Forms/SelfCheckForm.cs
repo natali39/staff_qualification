@@ -47,6 +47,7 @@ namespace staff_qualification_Forms
             var staff = Staff.GetStaffByID(training.StaffID, staffs);
             var staffName = staff.GetStaffFullName();
             var modelDescription = $"{project.Name} {model.Name}";
+
             trainingTextBox.Text = $"{staffName}; {modelDescription}; {operation.Name}";
             selfCheckReport.StaffID = training.StaffID.ToString();
             selfCheckReport.StaffName = staffName;

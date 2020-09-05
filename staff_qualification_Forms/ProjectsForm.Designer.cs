@@ -35,13 +35,12 @@ namespace staff_qualification_Forms
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.projectsTreeView = new System.Windows.Forms.TreeView();
-            this.operationsListBox = new System.Windows.Forms.ListBox();
             this.operationsLabel = new System.Windows.Forms.Label();
             this.addProjectButton = new System.Windows.Forms.Button();
             this.deleteProjectButton = new System.Windows.Forms.Button();
             this.modelDetailsGroupBox = new System.Windows.Forms.GroupBox();
+            this.operationsPanel = new System.Windows.Forms.Panel();
             this.addOperationTextBox = new System.Windows.Forms.TextBox();
-            this.deleteOperationButton = new System.Windows.Forms.Button();
             this.addOperationButton = new System.Windows.Forms.Button();
             this.projectDetailsGroupBox = new System.Windows.Forms.GroupBox();
             this.modelNamePanel = new System.Windows.Forms.Panel();
@@ -59,7 +58,7 @@ namespace staff_qualification_Forms
             this.файлToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(596, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(603, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -84,18 +83,9 @@ namespace staff_qualification_Forms
             this.projectsTreeView.HideSelection = false;
             this.projectsTreeView.Location = new System.Drawing.Point(0, 53);
             this.projectsTreeView.Name = "projectsTreeView";
-            this.projectsTreeView.Size = new System.Drawing.Size(221, 415);
+            this.projectsTreeView.Size = new System.Drawing.Size(221, 426);
             this.projectsTreeView.TabIndex = 18;
             this.projectsTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.projectsTreeView_AfterSelect);
-            // 
-            // operationsListBox
-            // 
-            this.operationsListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.operationsListBox.FormattingEnabled = true;
-            this.operationsListBox.Location = new System.Drawing.Point(11, 40);
-            this.operationsListBox.Name = "operationsListBox";
-            this.operationsListBox.Size = new System.Drawing.Size(314, 82);
-            this.operationsListBox.TabIndex = 3;
             // 
             // operationsLabel
             // 
@@ -129,43 +119,39 @@ namespace staff_qualification_Forms
             // 
             // modelDetailsGroupBox
             // 
+            this.modelDetailsGroupBox.Controls.Add(this.operationsPanel);
             this.modelDetailsGroupBox.Controls.Add(this.addOperationTextBox);
-            this.modelDetailsGroupBox.Controls.Add(this.deleteOperationButton);
             this.modelDetailsGroupBox.Controls.Add(this.addOperationButton);
-            this.modelDetailsGroupBox.Controls.Add(this.operationsListBox);
             this.modelDetailsGroupBox.Controls.Add(this.operationsLabel);
             this.modelDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.modelDetailsGroupBox.Location = new System.Drawing.Point(238, 291);
+            this.modelDetailsGroupBox.Location = new System.Drawing.Point(238, 274);
             this.modelDetailsGroupBox.Name = "modelDetailsGroupBox";
-            this.modelDetailsGroupBox.Size = new System.Drawing.Size(342, 177);
+            this.modelDetailsGroupBox.Size = new System.Drawing.Size(342, 205);
             this.modelDetailsGroupBox.TabIndex = 10;
             this.modelDetailsGroupBox.TabStop = false;
             this.modelDetailsGroupBox.Text = "Модель";
             this.modelDetailsGroupBox.Visible = false;
             // 
+            // operationsPanel
+            // 
+            this.operationsPanel.AutoScroll = true;
+            this.operationsPanel.Location = new System.Drawing.Point(6, 41);
+            this.operationsPanel.Name = "operationsPanel";
+            this.operationsPanel.Size = new System.Drawing.Size(330, 108);
+            this.operationsPanel.TabIndex = 27;
+            // 
             // addOperationTextBox
             // 
             this.addOperationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.addOperationTextBox.Location = new System.Drawing.Point(11, 137);
+            this.addOperationTextBox.Location = new System.Drawing.Point(11, 168);
             this.addOperationTextBox.Name = "addOperationTextBox";
             this.addOperationTextBox.Size = new System.Drawing.Size(254, 20);
             this.addOperationTextBox.TabIndex = 26;
             // 
-            // deleteOperationButton
-            // 
-            this.deleteOperationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.deleteOperationButton.Location = new System.Drawing.Point(305, 136);
-            this.deleteOperationButton.Name = "deleteOperationButton";
-            this.deleteOperationButton.Size = new System.Drawing.Size(20, 20);
-            this.deleteOperationButton.TabIndex = 25;
-            this.deleteOperationButton.Text = "-";
-            this.deleteOperationButton.UseVisualStyleBackColor = true;
-            this.deleteOperationButton.Click += new System.EventHandler(this.deleteOperationButton_Click);
-            // 
             // addOperationButton
             // 
             this.addOperationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.addOperationButton.Location = new System.Drawing.Point(271, 136);
+            this.addOperationButton.Location = new System.Drawing.Point(276, 168);
             this.addOperationButton.Name = "addOperationButton";
             this.addOperationButton.Size = new System.Drawing.Size(20, 20);
             this.addOperationButton.TabIndex = 24;
@@ -182,7 +168,7 @@ namespace staff_qualification_Forms
             this.projectDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.projectDetailsGroupBox.Location = new System.Drawing.Point(238, 53);
             this.projectDetailsGroupBox.Name = "projectDetailsGroupBox";
-            this.projectDetailsGroupBox.Size = new System.Drawing.Size(342, 224);
+            this.projectDetailsGroupBox.Size = new System.Drawing.Size(342, 203);
             this.projectDetailsGroupBox.TabIndex = 5;
             this.projectDetailsGroupBox.TabStop = false;
             this.projectDetailsGroupBox.Text = "Проект";
@@ -193,14 +179,14 @@ namespace staff_qualification_Forms
             this.modelNamePanel.AutoScroll = true;
             this.modelNamePanel.Location = new System.Drawing.Point(6, 43);
             this.modelNamePanel.Name = "modelNamePanel";
-            this.modelNamePanel.Size = new System.Drawing.Size(330, 130);
+            this.modelNamePanel.Size = new System.Drawing.Size(330, 108);
             this.modelNamePanel.TabIndex = 4;
             this.modelNamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.modelNamePanel_MouseClick);
             // 
             // addModelNameTextBox
             // 
             this.addModelNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.addModelNameTextBox.Location = new System.Drawing.Point(11, 188);
+            this.addModelNameTextBox.Location = new System.Drawing.Point(11, 168);
             this.addModelNameTextBox.Name = "addModelNameTextBox";
             this.addModelNameTextBox.Size = new System.Drawing.Size(254, 20);
             this.addModelNameTextBox.TabIndex = 3;
@@ -208,7 +194,7 @@ namespace staff_qualification_Forms
             // addModelButton
             // 
             this.addModelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.addModelButton.Location = new System.Drawing.Point(276, 186);
+            this.addModelButton.Location = new System.Drawing.Point(276, 168);
             this.addModelButton.Name = "addModelButton";
             this.addModelButton.Size = new System.Drawing.Size(20, 20);
             this.addModelButton.TabIndex = 1;
@@ -230,7 +216,7 @@ namespace staff_qualification_Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(596, 490);
+            this.ClientSize = new System.Drawing.Size(603, 500);
             this.Controls.Add(this.projectDetailsGroupBox);
             this.Controls.Add(this.modelDetailsGroupBox);
             this.Controls.Add(this.deleteProjectButton);
@@ -257,7 +243,6 @@ namespace staff_qualification_Forms
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.TreeView projectsTreeView;
-        private System.Windows.Forms.ListBox operationsListBox;
         private System.Windows.Forms.Label operationsLabel;
         private System.Windows.Forms.Button addProjectButton;
         private System.Windows.Forms.Button deleteProjectButton;
@@ -266,11 +251,11 @@ namespace staff_qualification_Forms
         private Button addModelButton;
         private Label listModelLabel;
         private TextBox addOperationTextBox;
-        private Button deleteOperationButton;
         private Button addOperationButton;
         private ToolStripMenuItem выходToolStripMenuItem;
         private Panel modelNamePanel;
         private TextBox addModelNameTextBox;
+        private Panel operationsPanel;
     }
 }
 

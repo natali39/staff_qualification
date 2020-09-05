@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace staff_qualification_Forms
 {
@@ -82,9 +81,6 @@ namespace staff_qualification_Forms
 
         protected override void outputDataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            //var index = e.RowIndex;
-            //if (index >= 0)
-            //   SelectedTraining = trainings[index];
             if (mode == "select")
                 Close();
             else
