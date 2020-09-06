@@ -47,9 +47,18 @@ namespace staff_qualification_Forms
             this.addModelNameTextBox = new System.Windows.Forms.TextBox();
             this.addModelButton = new System.Windows.Forms.Button();
             this.listModelLabel = new System.Windows.Forms.Label();
+            this.modelPictureBox = new System.Windows.Forms.PictureBox();
+            this.modelImageLabel = new System.Windows.Forms.Label();
+            this.addModelImageButton = new System.Windows.Forms.Button();
+            this.documentsLabel = new System.Windows.Forms.Label();
+            this.addDocumentLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.documentsPanel = new System.Windows.Forms.Panel();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.modelDetailsGroupBox.SuspendLayout();
             this.projectDetailsGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.modelPictureBox)).BeginInit();
+            this.documentsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -58,7 +67,7 @@ namespace staff_qualification_Forms
             this.файлToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(603, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(895, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -212,11 +221,81 @@ namespace staff_qualification_Forms
             this.listModelLabel.TabIndex = 0;
             this.listModelLabel.Text = "Список моделей:";
             // 
+            // modelPictureBox
+            // 
+            this.modelPictureBox.Location = new System.Drawing.Point(604, 96);
+            this.modelPictureBox.Name = "modelPictureBox";
+            this.modelPictureBox.Size = new System.Drawing.Size(265, 160);
+            this.modelPictureBox.TabIndex = 19;
+            this.modelPictureBox.TabStop = false;
+            this.modelPictureBox.Visible = false;
+            // 
+            // modelImageLabel
+            // 
+            this.modelImageLabel.AutoSize = true;
+            this.modelImageLabel.Location = new System.Drawing.Point(607, 76);
+            this.modelImageLabel.Name = "modelImageLabel";
+            this.modelImageLabel.Size = new System.Drawing.Size(121, 13);
+            this.modelImageLabel.TabIndex = 20;
+            this.modelImageLabel.Text = "Изображение модели:";
+            this.modelImageLabel.Visible = false;
+            // 
+            // addModelImageButton
+            // 
+            this.addModelImageButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.addModelImageButton.Location = new System.Drawing.Point(788, 67);
+            this.addModelImageButton.Name = "addModelImageButton";
+            this.addModelImageButton.Size = new System.Drawing.Size(81, 23);
+            this.addModelImageButton.TabIndex = 21;
+            this.addModelImageButton.Text = "Добавить...";
+            this.addModelImageButton.UseVisualStyleBackColor = true;
+            this.addModelImageButton.Visible = false;
+            // 
+            // documentsLabel
+            // 
+            this.documentsLabel.AutoSize = true;
+            this.documentsLabel.Location = new System.Drawing.Point(604, 295);
+            this.documentsLabel.Name = "documentsLabel";
+            this.documentsLabel.Size = new System.Drawing.Size(69, 13);
+            this.documentsLabel.TabIndex = 22;
+            this.documentsLabel.Text = "Документы:";
+            this.documentsLabel.Visible = false;
+            // 
+            // addDocumentLinkLabel
+            // 
+            this.addDocumentLinkLabel.AutoSize = true;
+            this.addDocumentLinkLabel.LinkColor = System.Drawing.Color.Black;
+            this.addDocumentLinkLabel.Location = new System.Drawing.Point(3, 10);
+            this.addDocumentLinkLabel.Name = "addDocumentLinkLabel";
+            this.addDocumentLinkLabel.Size = new System.Drawing.Size(117, 13);
+            this.addDocumentLinkLabel.TabIndex = 23;
+            this.addDocumentLinkLabel.TabStop = true;
+            this.addDocumentLinkLabel.Text = "+ Добавить документ";
+            this.addDocumentLinkLabel.Visible = false;
+            this.addDocumentLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.addDocumentLinkLabel_LinkClicked);
+            // 
+            // documentsPanel
+            // 
+            this.documentsPanel.Controls.Add(this.addDocumentLinkLabel);
+            this.documentsPanel.Location = new System.Drawing.Point(604, 315);
+            this.documentsPanel.Name = "documentsPanel";
+            this.documentsPanel.Size = new System.Drawing.Size(265, 164);
+            this.documentsPanel.TabIndex = 24;
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog";
+            // 
             // ProjectsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(603, 500);
+            this.ClientSize = new System.Drawing.Size(895, 500);
+            this.Controls.Add(this.documentsPanel);
+            this.Controls.Add(this.documentsLabel);
+            this.Controls.Add(this.addModelImageButton);
+            this.Controls.Add(this.modelImageLabel);
+            this.Controls.Add(this.modelPictureBox);
             this.Controls.Add(this.projectDetailsGroupBox);
             this.Controls.Add(this.modelDetailsGroupBox);
             this.Controls.Add(this.deleteProjectButton);
@@ -234,6 +313,9 @@ namespace staff_qualification_Forms
             this.modelDetailsGroupBox.PerformLayout();
             this.projectDetailsGroupBox.ResumeLayout(false);
             this.projectDetailsGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.modelPictureBox)).EndInit();
+            this.documentsPanel.ResumeLayout(false);
+            this.documentsPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -256,6 +338,13 @@ namespace staff_qualification_Forms
         private Panel modelNamePanel;
         private TextBox addModelNameTextBox;
         private Panel operationsPanel;
+        private PictureBox modelPictureBox;
+        private Label modelImageLabel;
+        private Button addModelImageButton;
+        private Label documentsLabel;
+        private LinkLabel addDocumentLinkLabel;
+        private Panel documentsPanel;
+        private OpenFileDialog openFileDialog;
     }
 }
 

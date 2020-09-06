@@ -46,8 +46,6 @@
             this.projectComboBox = new System.Windows.Forms.ComboBox();
             this.modelComboBox = new System.Windows.Forms.ComboBox();
             this.operationComboBox = new System.Windows.Forms.ComboBox();
-            this.printInstructionButton = new System.Windows.Forms.Button();
-            this.printSpecificationButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // staffNameTextBox
@@ -210,34 +208,11 @@
             this.operationComboBox.TabIndex = 25;
             this.operationComboBox.SelectedIndexChanged += new System.EventHandler(this.operationComboBox_SelectedIndexChanged);
             // 
-            // printInstructionButton
-            // 
-            this.printInstructionButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.printInstructionButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.printInstructionButton.Location = new System.Drawing.Point(27, 331);
-            this.printInstructionButton.Name = "printInstructionButton";
-            this.printInstructionButton.Size = new System.Drawing.Size(45, 20);
-            this.printInstructionButton.TabIndex = 26;
-            this.printInstructionButton.Text = "РУ";
-            this.printInstructionButton.UseVisualStyleBackColor = true;
-            // 
-            // printSpecificationButton
-            // 
-            this.printSpecificationButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.printSpecificationButton.Location = new System.Drawing.Point(94, 331);
-            this.printSpecificationButton.Name = "printSpecificationButton";
-            this.printSpecificationButton.Size = new System.Drawing.Size(45, 20);
-            this.printSpecificationButton.TabIndex = 27;
-            this.printSpecificationButton.Text = "ТУ";
-            this.printSpecificationButton.UseVisualStyleBackColor = true;
-            // 
             // TrainingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(494, 422);
-            this.Controls.Add(this.printSpecificationButton);
-            this.Controls.Add(this.printInstructionButton);
             this.Controls.Add(this.operationComboBox);
             this.Controls.Add(this.modelComboBox);
             this.Controls.Add(this.projectComboBox);
@@ -283,7 +258,5 @@
         private System.Windows.Forms.ComboBox projectComboBox;
         private System.Windows.Forms.ComboBox modelComboBox;
         private System.Windows.Forms.ComboBox operationComboBox;
-        private System.Windows.Forms.Button printInstructionButton;
-        private System.Windows.Forms.Button printSpecificationButton;
     }
 }

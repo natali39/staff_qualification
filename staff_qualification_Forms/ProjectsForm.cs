@@ -11,10 +11,13 @@ namespace staff_qualification_Forms
         List<Project> projects;
         Project project;
         Model model;
+        Operation operation;
         List<LinkLabel> modelsLinkLabels;
         List<LinkLabel> operationsLinkLabels;
         List<Button> modelsDeleteButtons;
         List<Button> operationsDeleteButtons;
+        List<LinkLabel> operationDocumentsLinkLabels;
+        Point startPointAddDocumentLinkLabel = new Point(3, 10);
 
         public ProjectsForm()
         {
@@ -114,6 +117,7 @@ namespace staff_qualification_Forms
             DisposeDeleteButtons(modelsDeleteButtons);
             CreateModelsLinkLabels(project.Models);
         }
+
         private void CreateModelsLinkLabels(List<Model> models)
         {
             if (modelsLinkLabels == null)
@@ -177,7 +181,7 @@ namespace staff_qualification_Forms
             }
             foreach (var model in project.Models)
             {
-                if (addModelNameTextBox.Text == model.Name)
+                if (addModelNameTextBox.Text.ToLower() == model.Name.ToLower())
                 {
                     MessageBox.Show("Такая модель уже существует! Введите другое название!");
                     addModelNameTextBox.Focus();
@@ -218,8 +222,10 @@ namespace staff_qualification_Forms
         {
             modelDetailsGroupBox.Visible = true;
             modelDetailsGroupBox.Text = $"Модель: {model.Name}";
-            //ClearModelDetailsGroupBox();
             CreateOperationsLinkLabels(model.Operations);
+            modelImageLabel.Visible = true;
+            addModelImageButton.Visible = true;
+            modelPictureBox.Visible = true;
         }
 
         private void CreateOperationsLinkLabels(List<Operation> operations)
@@ -236,9 +242,9 @@ namespace staff_qualification_Forms
                     Name = "operationLinkLabel" + i.ToString(),
                     Location = new Point(5, i * 22 + 5),
                     Text = operations[i].Name,
-                    Tag = operations[i]
+                    Tag = operations[i],
+                    AutoSize = true
                 };
-                operationLinkLabel.AutoSize = true;
                 CreateOperationsDeleteButton(operations[i], i);
                 operationLinkLabel.Click += new EventHandler(operationLinkedLabel_Click);
                 operationsLinkLabels.Add(operationLinkLabel);
@@ -264,7 +270,45 @@ namespace staff_qualification_Forms
 
         private void operationLinkedLabel_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            ClearOperationPanel();
+            documentsLabel.Visible = true;
+            documentsPanel.Visible = true;
+            addDocumentLinkLabel.Visible = true;
+            var operationLinkLabel = (LinkLabel)sender;
+            operation = (Operation)operationLinkLabel.Tag;
+            CreateOperationDocumentsLinkLabels(operation.Documents);
+        }
+
+        private void CreateOperationDocumentsLinkLabels(List<string> documents)
+        {
+            operationDocumentsLinkLabels = new List<LinkLabel>();
+            for (int i = 0; i < documents.Count; i++)
+            {
+                var documentLinkLabel = new LinkLabel()
+                {
+                    Name = "operationDocument" + i.ToString(),
+                    Location = new Point
+                        (startPointAddDocumentLinkLabel.X,
+                        startPointAddDocumentLinkLabel.Y + i * 22 + 5),
+                    Text = documents[i],
+                    Tag = documents[i],
+                    AutoSize = true
+                };
+                documentLinkLabel.Click += new EventHandler(documentLinkLabel_Click);
+                operationDocumentsLinkLabels.Add(documentLinkLabel);
+                documentsPanel.Controls.Add(documentLinkLabel);
+            }
+            if (operationDocumentsLinkLabels.Count > 0)
+            {
+                if (operationDocumentsLinkLabels.Count >= 5)
+                {
+                    addDocumentLinkLabel.Visible = false;
+                    return;
+                }
+                addDocumentLinkLabel.Location = new Point
+                    (operationDocumentsLinkLabels[documents.Count - 1].Location.X,
+                    operationDocumentsLinkLabels[documents.Count - 1].Location.Y + 25);
+            }
         }
 
         private void ClearModelDetailsGroupBox()
@@ -273,6 +317,10 @@ namespace staff_qualification_Forms
             modelDetailsGroupBox.Text = String.Empty;
             DisposeLinkLabels(operationsLinkLabels);
             DisposeDeleteButtons(operationsDeleteButtons);
+            modelImageLabel.Visible = false;
+            addModelImageButton.Visible = false;
+            modelPictureBox.Visible = false;
+            ClearOperationPanel();
         }
 
         private void addOperationButton_Click(object sender, EventArgs e)
@@ -289,7 +337,7 @@ namespace staff_qualification_Forms
             }
             foreach (var operation in model.Operations)
             {
-                if (addOperationTextBox.Text == operation.Name)
+                if (addOperationTextBox.Text.ToLower() == operation.Name.ToLower())
                 {
                     MessageBox.Show("Такая операция уже существует! Введите другое название!");
                     addOperationTextBox.Focus();
@@ -321,6 +369,15 @@ namespace staff_qualification_Forms
                     service.UpdateData(projects);
                 }
             }
+        }
+
+        private void ClearOperationPanel()
+        {
+            DisposeLinkLabels(operationDocumentsLinkLabels);
+            addDocumentLinkLabel.Location = startPointAddDocumentLinkLabel;
+            addDocumentLinkLabel.Visible = false;
+            documentsLabel.Visible = false;
+            documentsPanel.Visible = false;
         }
 
         private void DisposeLinkLabels(List<LinkLabel> linkLabels)
@@ -375,6 +432,24 @@ namespace staff_qualification_Forms
                     }
                 }
             }
+        }
+
+        private void addDocumentLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.Cancel)
+                return;
+            string filePath = openFileDialog.FileName;
+            string fileName = openFileDialog.SafeFileName;
+            operation.Documents.Add(filePath);
+            service.UpdateData(projects);
+            CreateOperationDocumentsLinkLabels(operation.Documents);
+        }
+
+        private void documentLinkLabel_Click(object sender, EventArgs e)
+        {
+            var documentLabel = (LinkLabel)sender;
+            var documentPath = documentLabel.Text;
+            System.Diagnostics.Process.Start(documentPath);
         }
     }
 }
