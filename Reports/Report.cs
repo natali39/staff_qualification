@@ -1,4 +1,6 @@
-﻿namespace staff_qualification_Forms
+﻿using System;
+
+namespace staff_qualification_Forms
 {
     public class Report
     {
@@ -6,6 +8,6 @@
         public string StaffName;
         public string ModelDescription;
         public string Operation;
-        public string Date;
+        public DateTime Date;
     }
 }

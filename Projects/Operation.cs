@@ -5,11 +5,11 @@ namespace staff_qualification_Forms
     public class Operation : Id
     {
         public string Name { get; set; }
-        public List<string> Documents { get; set; }
+        public List<Document> Documents { get; set; }
 
         public Operation()
         {
-            Documents = new List<string>();
+            Documents = new List<Document>();
         }
     }
 }

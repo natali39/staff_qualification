@@ -71,7 +71,6 @@ namespace staff_qualification_Forms
             {
                 column.ReadOnly = true;
             }
-
         }
 
         protected virtual void outputDataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)

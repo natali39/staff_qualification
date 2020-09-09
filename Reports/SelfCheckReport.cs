@@ -19,7 +19,7 @@ namespace staff_qualification_Forms
                 new FieldContent("ModelDescription", ModelDescription),
                 new FieldContent("Operation", Operation),
                 new FieldContent("ResponsiblePerson", ResponsiblePerson),
-                new FieldContent("Date", Date),
+                new FieldContent("Date", Date.ToString("d")),
                 new FieldContent("StaffName", StaffName));
 
             using (var outputDocument = new TemplateProcessor("selfCheckDocument.docx")

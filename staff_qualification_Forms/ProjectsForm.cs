@@ -9,15 +9,14 @@ namespace staff_qualification_Forms
     {
         ProjectService service = new ProjectService(new ProjectFileRepository());
         List<Project> projects;
-        Project project;
-        Model model;
-        Operation operation;
+        Project currentProject;
+        Model currentModel;
+        Operation currentOperation;
         List<LinkLabel> modelsLinkLabels;
         List<LinkLabel> operationsLinkLabels;
-        List<Button> modelsDeleteButtons;
+        List<Button> modelDeleteButtons;
         List<Button> operationsDeleteButtons;
         List<LinkLabel> operationDocumentsLinkLabels;
-        Point startPointAddDocumentLinkLabel = new Point(3, 10);
 
         public ProjectsForm()
         {
@@ -63,17 +62,19 @@ namespace staff_qualification_Forms
         {
             if (projectsTreeView.SelectedNode.Level == 0)
             {
-                project = (Project)projectsTreeView.SelectedNode.Tag;
-                ClearModelDetailsGroupBox();
-                FillProjectDetailsGroupBox();
+                currentProject = (Project)projectsTreeView.SelectedNode.Tag;
+                ClearProjectDetails();
+                ClearModelDetails();
+                FillProjectDetails();
             }
             else if (e.Node.Level == 1)
             {
-                project = (Project)projectsTreeView.SelectedNode.Parent.Tag;
-                FillProjectDetailsGroupBox();
-                model = (Model)projectsTreeView.SelectedNode.Tag;
-                ClearModelDetailsGroupBox();
-                FillModelDetailsGroupBox(model);
+                currentProject = (Project)projectsTreeView.SelectedNode.Parent.Tag;
+                ClearProjectDetails();
+                FillProjectDetails();
+                ClearModelDetails();
+                currentModel = (Model)projectsTreeView.SelectedNode.Tag;
+                FillModelDetails(currentModel);
             }
         }
 
@@ -83,12 +84,12 @@ namespace staff_qualification_Forms
             inputNameForm.ShowDialog();
             if (inputNameForm.Name != null)
             {
-                project = new Project();
-                IdHelper.TryUpdateId(project);
-                project.Name = inputNameForm.Name;
-                projects.Add(project);
-                var projectNode = new TreeNode(project.Name);
-                projectNode.Tag = project;
+                currentProject = new Project();
+                IdHelper.TryUpdateId(currentProject);
+                currentProject.Name = inputNameForm.Name;
+                projects.Add(currentProject);
+                var projectNode = new TreeNode(currentProject.Name);
+                projectNode.Tag = currentProject;
                 projectsTreeView.Nodes.Add(projectNode);
                 service.UpdateData(projects);
             }
@@ -101,124 +102,40 @@ namespace staff_qualification_Forms
                 var result = MessageBox.Show($"Вы действительно хотите удалить проект?{Environment.NewLine}Внимание! Будут удалены также все модели и операции!", "Удаление проета", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
-                    project = (Project)projectsTreeView.SelectedNode.Tag;
-                    projects.Remove(project);
+                    currentProject = (Project)projectsTreeView.SelectedNode.Tag;
+                    projects.Remove(currentProject);
                     projectsTreeView.SelectedNode.Remove();
                     service.UpdateData(projects);
                 }
             }
         }
 
-        private void FillProjectDetailsGroupBox()
+        private void ClearProjectDetails()
+        {
+            DisposeLinkLabels(modelsLinkLabels);
+            DisposeDeleteButtons(modelDeleteButtons);
+        }
+
+        private void FillProjectDetails()
         {
             projectDetailsGroupBox.Visible = true;
-            projectDetailsGroupBox.Text = $"Проект: {project.Name}";
-            DisposeLinkLabels(modelsLinkLabels);
-            DisposeDeleteButtons(modelsDeleteButtons);
-            CreateModelsLinkLabels(project.Models);
+            projectDetailsGroupBox.Text = $"Проект: {currentProject.Name}";
+            CreateModelsLinkLabels(currentProject.Models);
         }
 
-        private void CreateModelsLinkLabels(List<Model> models)
+        private void ClearModelDetails()
         {
-            if (modelsLinkLabels == null)
-            {
-                modelsLinkLabels = new List<LinkLabel>();
-                modelsDeleteButtons = new List<Button>();
-            }
-            for (int i = 0; i < models.Count; i++)
-            {
-                var modelLinkLabel = new LinkLabel()
-                {
-                    Name = "modelLabel" + i.ToString(),
-                    Location = new Point(5, i * 22 + 5),
-                    Text = models[i].Name,
-                    Tag = models[i]
-                };
-                modelLinkLabel.AutoSize = true;
-                CreateModelDeleteButton(models[i], i);
-                modelLinkLabel.Click += new EventHandler(modelLinkedLabel_Click);
-                modelsLinkLabels.Add(modelLinkLabel);
-                modelNamePanel.Controls.Add(modelLinkLabel);
-            }
+            DisposeLinkLabels(operationsLinkLabels);
+            DisposeDeleteButtons(operationsDeleteButtons);
+            modelDetailsGroupBox.Visible = false;
+            modelDetailsGroupBox.Text = String.Empty;
+            modelImageLabel.Visible = false;
+            addModelImageButton.Visible = false;
+            modelPictureBox.Visible = false;
+            ClearOperationDetails();
         }
 
-        private void CreateModelDeleteButton(Model model, int i)
-        {
-            var deleteButton = new Button()
-            {
-                Name = "modelDeleteButton" + i.ToString(),
-                Location = new Point(270, i * 21 + 3),
-                Width = 20,
-                Height = 20,
-                Text = "-",
-                Tag = model
-            };
-            deleteButton.Click += new EventHandler(deleteModelButton_Click);
-            modelsDeleteButtons.Add(deleteButton);
-            modelNamePanel.Controls.Add(deleteButton);
-        }
-
-        private void modelLinkedLabel_Click(object sender, EventArgs e)
-        {
-            var modelLinkedLabel = (LinkLabel)sender;
-            model = (Model)modelLinkedLabel.Tag;
-            ClearModelDetailsGroupBox();
-            FillModelDetailsGroupBox(model);
-            FindAndSelectModelNode(projectsTreeView.Nodes, model.Name);
-        }
-
-        private void addModelButton_Click(object sender, EventArgs e)
-        {
-            if (project == null)
-            {
-                MessageBox.Show("Проект не выбран! Сначала выберите проект!");
-                return;
-            }
-            if (addModelNameTextBox.Text == String.Empty)
-            {
-                MessageBox.Show("Нужно ввести название модели!");
-                return;
-            }
-            foreach (var model in project.Models)
-            {
-                if (addModelNameTextBox.Text.ToLower() == model.Name.ToLower())
-                {
-                    MessageBox.Show("Такая модель уже существует! Введите другое название!");
-                    addModelNameTextBox.Focus();
-                    return;
-                }
-            }
-            model = new Model();
-            IdHelper.TryUpdateId(model);
-            model.Name = addModelNameTextBox.Text;
-            project.Models.Add(model);
-            FillTreeView();
-            DisposeLinkLabels(modelsLinkLabels);
-            CreateModelsLinkLabels(project.Models);
-            FillModelDetailsGroupBox(model);
-            addModelNameTextBox.Text = String.Empty;
-            service.UpdateData(projects);
-        }
-
-        private void deleteModelButton_Click(object sender, EventArgs e)
-        {
-            var modelDeleteButton = (Button)sender;
-            model = (Model)modelDeleteButton.Tag;
-
-            var result = MessageBox.Show($"Удалить модель {model.Name}?{Environment.NewLine}Внимание! Удалится также вся информация о модели!", "Удаление модели", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
-            {
-                project.Models.Remove(model);
-                DisposeLinkLabels(modelsLinkLabels);
-                DisposeDeleteButtons(modelsDeleteButtons);
-                CreateModelsLinkLabels(project.Models);
-                FillTreeView();
-                ClearModelDetailsGroupBox();
-                service.UpdateData(projects);
-            }
-        }
-
-        private void FillModelDetailsGroupBox(Model model)
+        private void FillModelDetails(Model model)
         {
             modelDetailsGroupBox.Visible = true;
             modelDetailsGroupBox.Text = $"Модель: {model.Name}";
@@ -228,104 +145,169 @@ namespace staff_qualification_Forms
             modelPictureBox.Visible = true;
         }
 
-        private void CreateOperationsLinkLabels(List<Operation> operations)
+        private void ClearOperationDetails()
         {
-            if (operationsLinkLabels == null)
+            DisposeLinkLabels(operationDocumentsLinkLabels);
+            addDocumentLinkLabel.Visible = false;
+            documentsLabel.Visible = false;
+            documentsPanel.Visible = false;
+        }
+
+        private void FillOperationDetails(Operation operation)
+        {
+            documentsLabel.Visible = true;
+            documentsPanel.Visible = true;
+            addDocumentLinkLabel.Visible = true;
+            CreateOperationDocumentsLinkLabels(operation.Documents);
+        }
+
+        private void CreateModelsLinkLabels(List<Model> models)
+        {
+            modelsLinkLabels = new List<LinkLabel>();
+            modelDeleteButtons = new List<Button>();
+            foreach (var model in models)
             {
-                operationsLinkLabels = new List<LinkLabel>();
-                operationsDeleteButtons = new List<Button>();
-            }
-            for (int i = 0; i < operations.Count; i++)
-            {
-                var operationLinkLabel = new LinkLabel()
+                var modelLinkLabel = new LinkLabel()
                 {
-                    Name = "operationLinkLabel" + i.ToString(),
-                    Location = new Point(5, i * 22 + 5),
-                    Text = operations[i].Name,
-                    Tag = operations[i],
-                    AutoSize = true
+                    Name = model.Name + "LinkLabel",
+                    Text = model.Name,
+                    Tag = model,
+                    Width = modelsNameFlowLayoutPanel.Width,
+                    Height = 20,
+                    Margin = new Padding(0, 5, 0, 0)
                 };
-                CreateOperationsDeleteButton(operations[i], i);
-                operationLinkLabel.Click += new EventHandler(operationLinkedLabel_Click);
-                operationsLinkLabels.Add(operationLinkLabel);
-                operationsPanel.Controls.Add(operationLinkLabel);
+                CreateModelDeleteButton(model);
+                modelLinkLabel.Click += new EventHandler(modelLinkedLabel_Click);
+                modelsLinkLabels.Add(modelLinkLabel);
+                modelsNameFlowLayoutPanel.Controls.Add(modelLinkLabel);
             }
         }
 
-        private void CreateOperationsDeleteButton(Operation operation, int i)
+        private void CreateModelDeleteButton(Model model)
         {
-            var operationDeleteButton = new Button()
+            var deleteButton = new Button()
             {
-                Name = "operationDeleteButton" + i.ToString(),
-                Location = new Point(270, i * 21 + 3),
+                Name = model.Name + "DeleteButton",
                 Width = 20,
                 Height = 20,
                 Text = "-",
-                Tag = operation
+                Tag = model,
+                Margin = new Padding(0, 5, 0, 0)
+            };
+            deleteButton.Click += new EventHandler(deleteModelButton_Click);
+            modelDeleteButtons.Add(deleteButton);
+            modelDeleteButtonsFlowLayoutPanel.Controls.Add(deleteButton);
+        }
+
+        private void modelLinkedLabel_Click(object sender, EventArgs e)
+        {
+            ClearModelDetails();
+            var modelLinkedLabel = (LinkLabel)sender;
+            currentModel = (Model)modelLinkedLabel.Tag;
+            FillModelDetails(currentModel);
+            FindAndSelectModelNode(projectsTreeView.Nodes, currentModel.Name);
+        }
+
+        private void addModelButton_Click(object sender, EventArgs e)
+        {
+            if (currentProject == null)
+            {
+                MessageBox.Show("Проект не выбран! Сначала выберите проект!");
+                return;
+            }
+            if (addModelNameTextBox.Text == String.Empty)
+            {
+                MessageBox.Show("Нужно ввести название модели!");
+                return;
+            }
+            foreach (var model in currentProject.Models)
+            {
+                if (addModelNameTextBox.Text.ToLower() == model.Name.ToLower())
+                {
+                    MessageBox.Show("Такая модель уже существует! Введите другое название!");
+                    addModelNameTextBox.Focus();
+                    return;
+                }
+            }
+            var newModel = new Model();
+            IdHelper.TryUpdateId(newModel);
+            newModel.Name = addModelNameTextBox.Text;
+            currentProject.Models.Add(newModel);
+            FillTreeView();
+            ClearProjectDetails();
+            CreateModelsLinkLabels(currentProject.Models);
+            FillModelDetails(newModel);
+            addModelNameTextBox.Text = String.Empty;
+            service.UpdateData(projects);
+        }
+
+        private void deleteModelButton_Click(object sender, EventArgs e)
+        {
+            var modelDeleteButton = (Button)sender;
+            var model = (Model)modelDeleteButton.Tag;
+
+            var result = MessageBox.Show($"Удалить модель {model.Name}?{Environment.NewLine}Внимание! Удалится также вся информация о модели!", "Удаление модели", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                currentProject.Models.Remove(model);
+                ClearProjectDetails();
+                ClearModelDetails();
+                CreateModelsLinkLabels(currentProject.Models);
+                FillTreeView();
+                service.UpdateData(projects);
+            }
+        }
+
+        private void CreateOperationsLinkLabels(List<Operation> operations)
+        {
+            operationsLinkLabels = new List<LinkLabel>();
+            operationsDeleteButtons = new List<Button>();
+            foreach (var operation in operations)
+            {
+                var operationLinkLabel = new LinkLabel()
+                {
+                    Name = operation.Name + "LinkLabel",
+                    Text = operation.Name,
+                    Tag = operation,
+                    Width = operationsNameFlowLayoutPanel.Width,
+                    Height = 20,
+                    Margin = new Padding(0, 5, 0, 0)
+            };
+                CreateOperationsDeleteButton(operation);
+                operationLinkLabel.Click += new EventHandler(operationLinkedLabel_Click);
+                operationsLinkLabels.Add(operationLinkLabel);
+                operationsNameFlowLayoutPanel.Controls.Add(operationLinkLabel);
+            }
+        }
+
+        private void CreateOperationsDeleteButton(Operation operation)
+        {
+            var operationDeleteButton = new Button()
+            {
+                Name = operation.Name + "DeleteButton",
+                Width = 20,
+                Height = 20,
+                Text = "-",
+                Tag = operation,
+                Margin = new Padding(0, 5, 0, 0)
             };
             operationDeleteButton.Click += new EventHandler(deleteOperationButton_Click);
             operationsDeleteButtons.Add(operationDeleteButton);
-            operationsPanel.Controls.Add(operationDeleteButton);
+            operationDeleteButtonsFlowLayoutPanel.Controls.Add(operationDeleteButton);
         }
 
         private void operationLinkedLabel_Click(object sender, EventArgs e)
         {
-            ClearOperationPanel();
-            documentsLabel.Visible = true;
-            documentsPanel.Visible = true;
-            addDocumentLinkLabel.Visible = true;
+            ClearOperationDetails();
             var operationLinkLabel = (LinkLabel)sender;
-            operation = (Operation)operationLinkLabel.Tag;
-            CreateOperationDocumentsLinkLabels(operation.Documents);
-        }
-
-        private void CreateOperationDocumentsLinkLabels(List<string> documents)
-        {
-            operationDocumentsLinkLabels = new List<LinkLabel>();
-            for (int i = 0; i < documents.Count; i++)
-            {
-                var documentLinkLabel = new LinkLabel()
-                {
-                    Name = "operationDocument" + i.ToString(),
-                    Location = new Point
-                        (startPointAddDocumentLinkLabel.X,
-                        startPointAddDocumentLinkLabel.Y + i * 22 + 5),
-                    Text = documents[i],
-                    Tag = documents[i],
-                    AutoSize = true
-                };
-                documentLinkLabel.Click += new EventHandler(documentLinkLabel_Click);
-                operationDocumentsLinkLabels.Add(documentLinkLabel);
-                documentsPanel.Controls.Add(documentLinkLabel);
-            }
-            if (operationDocumentsLinkLabels.Count > 0)
-            {
-                if (operationDocumentsLinkLabels.Count >= 5)
-                {
-                    addDocumentLinkLabel.Visible = false;
-                    return;
-                }
-                addDocumentLinkLabel.Location = new Point
-                    (operationDocumentsLinkLabels[documents.Count - 1].Location.X,
-                    operationDocumentsLinkLabels[documents.Count - 1].Location.Y + 25);
-            }
-        }
-
-        private void ClearModelDetailsGroupBox()
-        {
-            modelDetailsGroupBox.Visible = false;
-            modelDetailsGroupBox.Text = String.Empty;
-            DisposeLinkLabels(operationsLinkLabels);
-            DisposeDeleteButtons(operationsDeleteButtons);
-            modelImageLabel.Visible = false;
-            addModelImageButton.Visible = false;
-            modelPictureBox.Visible = false;
-            ClearOperationPanel();
+            operationLinkLabel.LinkColor = Color.Black;
+            currentOperation = (Operation)operationLinkLabel.Tag;
+            FillOperationDetails(currentOperation);
         }
 
         private void addOperationButton_Click(object sender, EventArgs e)
         {
-            if (model == null && modelDetailsGroupBox.Text == String.Empty)
+            if (currentModel == null && modelDetailsGroupBox.Text == String.Empty)
             {
                 MessageBox.Show("Модель не выбрана!");
                 return;
@@ -335,7 +317,7 @@ namespace staff_qualification_Forms
                 MessageBox.Show("Нужно ввести название операции!");
                 return;
             }
-            foreach (var operation in model.Operations)
+            foreach (var operation in currentModel.Operations)
             {
                 if (addOperationTextBox.Text.ToLower() == operation.Name.ToLower())
                 {
@@ -347,9 +329,9 @@ namespace staff_qualification_Forms
             var newOperation = new Operation();
             newOperation.Name = addOperationTextBox.Text;
             IdHelper.TryUpdateId(newOperation);
-            model.Operations.Add(newOperation);
-            ClearModelDetailsGroupBox();
-            FillModelDetailsGroupBox(model);
+            currentModel.Operations.Add(newOperation);
+            ClearModelDetails();
+            FillModelDetails(currentModel);
             addOperationTextBox.Text = String.Empty;
             service.UpdateData(projects);
         }
@@ -363,21 +345,73 @@ namespace staff_qualification_Forms
                 var result = MessageBox.Show("Удалить операцию?", "Удаление операции", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    model.Operations.Remove(operation);
-                    ClearModelDetailsGroupBox();
-                    FillModelDetailsGroupBox(model);
+                    currentModel.Operations.Remove(operation);
+                    ClearModelDetails();
+                    FillModelDetails(currentModel);
                     service.UpdateData(projects);
                 }
             }
         }
 
-        private void ClearOperationPanel()
+        private void CreateOperationDocumentsLinkLabels(List<Document> documents)
         {
-            DisposeLinkLabels(operationDocumentsLinkLabels);
-            addDocumentLinkLabel.Location = startPointAddDocumentLinkLabel;
-            addDocumentLinkLabel.Visible = false;
-            documentsLabel.Visible = false;
-            documentsPanel.Visible = false;
+            operationDocumentsLinkLabels = new List<LinkLabel>();
+            foreach (var document in documents)
+            {
+                var documentLinkLabel = new LinkLabel()
+                {
+                    Name = document.Name + "LinkLabel",
+                    Text = document.Name,
+                    Tag = document,
+                    Width = operationDocumentsFlowLayoutPanel.Width,
+                    Margin = new Padding(0, 0, 0, 5),
+                };
+                documentLinkLabel.Click += new EventHandler(documentLinkLabel_Click);
+                operationDocumentsLinkLabels.Add(documentLinkLabel);
+                operationDocumentsFlowLayoutPanel.Controls.Add(documentLinkLabel);
+            }
+            if (operationDocumentsLinkLabels.Count > 0)
+            {
+                if (operationDocumentsLinkLabels.Count >= 5)
+                {
+                    addDocumentLinkLabel.Visible = false;
+                    return;
+                }
+                operationDocumentsFlowLayoutPanel.Controls.Add(addDocumentLinkLabel);
+            }
+        }
+
+        private void addDocumentLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            openFileDialog.FileName = String.Empty;
+            if (openFileDialog.ShowDialog() == DialogResult.Cancel)
+                return;
+            var document = new Document(openFileDialog.SafeFileName, openFileDialog.FileName);
+            currentOperation.Documents.Add(document);
+            service.UpdateData(projects);
+            ClearOperationDetails();
+            FillOperationDetails(currentOperation);
+        }
+
+        private void documentLinkLabel_Click(object sender, EventArgs e)
+        {
+            var documentLabel = (LinkLabel)sender;
+            var document = (Document)documentLabel.Tag;
+            if (FileProvider.IsExist(document.Path))
+            {
+                System.Diagnostics.Process.Start(document.Path);
+            }
+            else
+            {
+                var result = MessageBox.Show("Такой документ отсутствует или был удалён.\nУдалить ссылку на документ?",
+                    "Файл не найден!", MessageBoxButtons.YesNo);
+                if (result == DialogResult.No)
+                    return;
+                currentOperation.Documents.Remove(document);
+                service.UpdateData(projects);
+                ClearOperationDetails();
+                FillOperationDetails(currentOperation);
+            }
         }
 
         private void DisposeLinkLabels(List<LinkLabel> linkLabels)
@@ -386,6 +420,7 @@ namespace staff_qualification_Forms
             {
                 foreach (var label in linkLabels)
                 {
+                    label.LinkColor = Color.FromArgb(0,0,255);
                     label.Dispose();
                 }
             }
@@ -409,7 +444,7 @@ namespace staff_qualification_Forms
 
         private void modelNamePanel_MouseClick(object sender, MouseEventArgs e)
         {
-            modelNamePanel.Focus();
+            modelPanel.Focus();
         }
 
         private void ProjectsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -432,24 +467,6 @@ namespace staff_qualification_Forms
                     }
                 }
             }
-        }
-
-        private void addDocumentLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if (openFileDialog.ShowDialog() == DialogResult.Cancel)
-                return;
-            string filePath = openFileDialog.FileName;
-            string fileName = openFileDialog.SafeFileName;
-            operation.Documents.Add(filePath);
-            service.UpdateData(projects);
-            CreateOperationDocumentsLinkLabels(operation.Documents);
-        }
-
-        private void documentLinkLabel_Click(object sender, EventArgs e)
-        {
-            var documentLabel = (LinkLabel)sender;
-            var documentPath = documentLabel.Text;
-            System.Diagnostics.Process.Start(documentPath);
         }
     }
 }

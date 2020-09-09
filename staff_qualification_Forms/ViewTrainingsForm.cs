@@ -67,16 +67,13 @@ namespace staff_qualification_Forms
                     if (currentResponsiblePerson != null)
                     {
                         selfCheckResponsiblePerson = currentResponsiblePerson.GetStaffFullName();
-                        break;
+                        return;
                     }
-                    break;
-                }
-                else
-                {
-                    selfCheckDate = "Не присвоен";
-                    selfCheckResponsiblePerson = "-";
+                    return;
                 }
             }
+            selfCheckDate = "Не присвоен";
+            selfCheckResponsiblePerson = "-";
         }
 
         protected override void outputDataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)

@@ -26,6 +26,7 @@ namespace staff_qualification_Forms
             selfCheckReport = new SelfCheckReport();
             selfCheckDateTimePicker.Format = DateTimePickerFormat.Short;
             selfCheckDateTimePicker.Value = DateTime.Now;
+            selfCheck.Date = selfCheckDateTimePicker.Value;
         }
 
         private void selectTrainingButton_Click(object sender, EventArgs e)
@@ -110,7 +111,7 @@ namespace staff_qualification_Forms
 
         private void generateDocumentButton_Click(object sender, EventArgs e)
         {
-            selfCheckReport.Date = selfCheck.Date.ToString("d");
+            selfCheckReport.Date = selfCheck.Date;
             selfCheckReport.ResponsiblePerson = responsiblePersonTextBox.Text;
             selfCheckReport.FillSelfCheckDocument();
         }

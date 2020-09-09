@@ -40,10 +40,14 @@ namespace staff_qualification_Forms
             this.deleteProjectButton = new System.Windows.Forms.Button();
             this.modelDetailsGroupBox = new System.Windows.Forms.GroupBox();
             this.operationsPanel = new System.Windows.Forms.Panel();
+            this.operationDeleteButtonsFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.operationsNameFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.addOperationTextBox = new System.Windows.Forms.TextBox();
             this.addOperationButton = new System.Windows.Forms.Button();
             this.projectDetailsGroupBox = new System.Windows.Forms.GroupBox();
-            this.modelNamePanel = new System.Windows.Forms.Panel();
+            this.modelPanel = new System.Windows.Forms.Panel();
+            this.modelDeleteButtonsFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.modelsNameFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.addModelNameTextBox = new System.Windows.Forms.TextBox();
             this.addModelButton = new System.Windows.Forms.Button();
             this.listModelLabel = new System.Windows.Forms.Label();
@@ -52,13 +56,17 @@ namespace staff_qualification_Forms
             this.addModelImageButton = new System.Windows.Forms.Button();
             this.documentsLabel = new System.Windows.Forms.Label();
             this.addDocumentLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.documentsPanel = new System.Windows.Forms.Panel();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.documentsPanel = new System.Windows.Forms.Panel();
+            this.operationDocumentsFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.menuStrip1.SuspendLayout();
             this.modelDetailsGroupBox.SuspendLayout();
+            this.operationsPanel.SuspendLayout();
             this.projectDetailsGroupBox.SuspendLayout();
+            this.modelPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.modelPictureBox)).BeginInit();
             this.documentsPanel.SuspendLayout();
+            this.operationDocumentsFlowLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -135,7 +143,7 @@ namespace staff_qualification_Forms
             this.modelDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.modelDetailsGroupBox.Location = new System.Drawing.Point(238, 274);
             this.modelDetailsGroupBox.Name = "modelDetailsGroupBox";
-            this.modelDetailsGroupBox.Size = new System.Drawing.Size(342, 205);
+            this.modelDetailsGroupBox.Size = new System.Drawing.Size(349, 205);
             this.modelDetailsGroupBox.TabIndex = 10;
             this.modelDetailsGroupBox.TabStop = false;
             this.modelDetailsGroupBox.Text = "Модель";
@@ -144,10 +152,30 @@ namespace staff_qualification_Forms
             // operationsPanel
             // 
             this.operationsPanel.AutoScroll = true;
+            this.operationsPanel.Controls.Add(this.operationDeleteButtonsFlowLayoutPanel);
+            this.operationsPanel.Controls.Add(this.operationsNameFlowLayoutPanel);
             this.operationsPanel.Location = new System.Drawing.Point(6, 41);
             this.operationsPanel.Name = "operationsPanel";
             this.operationsPanel.Size = new System.Drawing.Size(330, 108);
             this.operationsPanel.TabIndex = 27;
+            // 
+            // operationDeleteButtonsFlowLayoutPanel
+            // 
+            this.operationDeleteButtonsFlowLayoutPanel.AutoSize = true;
+            this.operationDeleteButtonsFlowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.operationDeleteButtonsFlowLayoutPanel.Location = new System.Drawing.Point(270, 3);
+            this.operationDeleteButtonsFlowLayoutPanel.Name = "operationDeleteButtonsFlowLayoutPanel";
+            this.operationDeleteButtonsFlowLayoutPanel.Size = new System.Drawing.Size(39, 101);
+            this.operationDeleteButtonsFlowLayoutPanel.TabIndex = 1;
+            // 
+            // operationsNameFlowLayoutPanel
+            // 
+            this.operationsNameFlowLayoutPanel.AutoSize = true;
+            this.operationsNameFlowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.operationsNameFlowLayoutPanel.Location = new System.Drawing.Point(3, 4);
+            this.operationsNameFlowLayoutPanel.Name = "operationsNameFlowLayoutPanel";
+            this.operationsNameFlowLayoutPanel.Size = new System.Drawing.Size(256, 100);
+            this.operationsNameFlowLayoutPanel.TabIndex = 0;
             // 
             // addOperationTextBox
             // 
@@ -170,27 +198,47 @@ namespace staff_qualification_Forms
             // 
             // projectDetailsGroupBox
             // 
-            this.projectDetailsGroupBox.Controls.Add(this.modelNamePanel);
+            this.projectDetailsGroupBox.Controls.Add(this.modelPanel);
             this.projectDetailsGroupBox.Controls.Add(this.addModelNameTextBox);
             this.projectDetailsGroupBox.Controls.Add(this.addModelButton);
             this.projectDetailsGroupBox.Controls.Add(this.listModelLabel);
             this.projectDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.projectDetailsGroupBox.Location = new System.Drawing.Point(238, 53);
             this.projectDetailsGroupBox.Name = "projectDetailsGroupBox";
-            this.projectDetailsGroupBox.Size = new System.Drawing.Size(342, 203);
+            this.projectDetailsGroupBox.Size = new System.Drawing.Size(349, 203);
             this.projectDetailsGroupBox.TabIndex = 5;
             this.projectDetailsGroupBox.TabStop = false;
             this.projectDetailsGroupBox.Text = "Проект";
             this.projectDetailsGroupBox.Visible = false;
             // 
-            // modelNamePanel
+            // modelPanel
             // 
-            this.modelNamePanel.AutoScroll = true;
-            this.modelNamePanel.Location = new System.Drawing.Point(6, 43);
-            this.modelNamePanel.Name = "modelNamePanel";
-            this.modelNamePanel.Size = new System.Drawing.Size(330, 108);
-            this.modelNamePanel.TabIndex = 4;
-            this.modelNamePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.modelNamePanel_MouseClick);
+            this.modelPanel.AutoScroll = true;
+            this.modelPanel.Controls.Add(this.modelDeleteButtonsFlowLayoutPanel);
+            this.modelPanel.Controls.Add(this.modelsNameFlowLayoutPanel);
+            this.modelPanel.Location = new System.Drawing.Point(6, 43);
+            this.modelPanel.Name = "modelPanel";
+            this.modelPanel.Size = new System.Drawing.Size(330, 108);
+            this.modelPanel.TabIndex = 4;
+            this.modelPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.modelNamePanel_MouseClick);
+            // 
+            // modelDeleteButtonsFlowLayoutPanel
+            // 
+            this.modelDeleteButtonsFlowLayoutPanel.AutoSize = true;
+            this.modelDeleteButtonsFlowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.modelDeleteButtonsFlowLayoutPanel.Location = new System.Drawing.Point(270, 3);
+            this.modelDeleteButtonsFlowLayoutPanel.Name = "modelDeleteButtonsFlowLayoutPanel";
+            this.modelDeleteButtonsFlowLayoutPanel.Size = new System.Drawing.Size(39, 102);
+            this.modelDeleteButtonsFlowLayoutPanel.TabIndex = 1;
+            // 
+            // modelsNameFlowLayoutPanel
+            // 
+            this.modelsNameFlowLayoutPanel.AutoSize = true;
+            this.modelsNameFlowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.modelsNameFlowLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.modelsNameFlowLayoutPanel.Name = "modelsNameFlowLayoutPanel";
+            this.modelsNameFlowLayoutPanel.Size = new System.Drawing.Size(256, 102);
+            this.modelsNameFlowLayoutPanel.TabIndex = 0;
             // 
             // addModelNameTextBox
             // 
@@ -225,7 +273,7 @@ namespace staff_qualification_Forms
             // 
             this.modelPictureBox.Location = new System.Drawing.Point(604, 96);
             this.modelPictureBox.Name = "modelPictureBox";
-            this.modelPictureBox.Size = new System.Drawing.Size(265, 160);
+            this.modelPictureBox.Size = new System.Drawing.Size(265, 145);
             this.modelPictureBox.TabIndex = 19;
             this.modelPictureBox.TabStop = false;
             this.modelPictureBox.Visible = false;
@@ -263,9 +311,8 @@ namespace staff_qualification_Forms
             // 
             // addDocumentLinkLabel
             // 
-            this.addDocumentLinkLabel.AutoSize = true;
             this.addDocumentLinkLabel.LinkColor = System.Drawing.Color.Black;
-            this.addDocumentLinkLabel.Location = new System.Drawing.Point(3, 10);
+            this.addDocumentLinkLabel.Location = new System.Drawing.Point(3, 0);
             this.addDocumentLinkLabel.Name = "addDocumentLinkLabel";
             this.addDocumentLinkLabel.Size = new System.Drawing.Size(117, 13);
             this.addDocumentLinkLabel.TabIndex = 23;
@@ -274,17 +321,25 @@ namespace staff_qualification_Forms
             this.addDocumentLinkLabel.Visible = false;
             this.addDocumentLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.addDocumentLinkLabel_LinkClicked);
             // 
+            // openFileDialog
+            // 
+            this.openFileDialog.Filter = "Документы(*.txt;*.docx;*.doc;*pdf;*.xlsx;*.xls)|*.txt;*.docx;*.doc;*pdf;*.xlsx;*.xls";
+            // 
             // documentsPanel
             // 
-            this.documentsPanel.Controls.Add(this.addDocumentLinkLabel);
+            this.documentsPanel.Controls.Add(this.operationDocumentsFlowLayoutPanel);
             this.documentsPanel.Location = new System.Drawing.Point(604, 315);
             this.documentsPanel.Name = "documentsPanel";
             this.documentsPanel.Size = new System.Drawing.Size(265, 164);
             this.documentsPanel.TabIndex = 24;
             // 
-            // openFileDialog
+            // operationDocumentsFlowLayoutPanel
             // 
-            this.openFileDialog.FileName = "openFileDialog";
+            this.operationDocumentsFlowLayoutPanel.Controls.Add(this.addDocumentLinkLabel);
+            this.operationDocumentsFlowLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.operationDocumentsFlowLayoutPanel.Name = "operationDocumentsFlowLayoutPanel";
+            this.operationDocumentsFlowLayoutPanel.Size = new System.Drawing.Size(200, 157);
+            this.operationDocumentsFlowLayoutPanel.TabIndex = 24;
             // 
             // ProjectsForm
             // 
@@ -311,11 +366,15 @@ namespace staff_qualification_Forms
             this.menuStrip1.PerformLayout();
             this.modelDetailsGroupBox.ResumeLayout(false);
             this.modelDetailsGroupBox.PerformLayout();
+            this.operationsPanel.ResumeLayout(false);
+            this.operationsPanel.PerformLayout();
             this.projectDetailsGroupBox.ResumeLayout(false);
             this.projectDetailsGroupBox.PerformLayout();
+            this.modelPanel.ResumeLayout(false);
+            this.modelPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.modelPictureBox)).EndInit();
             this.documentsPanel.ResumeLayout(false);
-            this.documentsPanel.PerformLayout();
+            this.operationDocumentsFlowLayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -335,7 +394,7 @@ namespace staff_qualification_Forms
         private TextBox addOperationTextBox;
         private Button addOperationButton;
         private ToolStripMenuItem выходToolStripMenuItem;
-        private Panel modelNamePanel;
+        private Panel modelPanel;
         private TextBox addModelNameTextBox;
         private Panel operationsPanel;
         private PictureBox modelPictureBox;
@@ -343,8 +402,13 @@ namespace staff_qualification_Forms
         private Button addModelImageButton;
         private Label documentsLabel;
         private LinkLabel addDocumentLinkLabel;
-        private Panel documentsPanel;
         private OpenFileDialog openFileDialog;
+        private FlowLayoutPanel modelsNameFlowLayoutPanel;
+        private FlowLayoutPanel modelDeleteButtonsFlowLayoutPanel;
+        private FlowLayoutPanel operationDeleteButtonsFlowLayoutPanel;
+        private FlowLayoutPanel operationsNameFlowLayoutPanel;
+        private Panel documentsPanel;
+        private FlowLayoutPanel operationDocumentsFlowLayoutPanel;
     }
 }
 

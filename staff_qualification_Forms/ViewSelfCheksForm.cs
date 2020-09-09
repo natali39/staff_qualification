@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Windows.Forms;
-
-namespace staff_qualification_Forms
+﻿namespace staff_qualification_Forms
 {
     public partial class ViewSelfCheksForm : ViewQualificationForm
     {
@@ -30,20 +25,23 @@ namespace staff_qualification_Forms
 
                 if (currentStaff != null && currentTrainer != null && currentResponsiblePerson != null && currentOperation != null)
                 {
-                    table.Rows.Add
-                        (currentStaff.GetStaffFullName(),
-                        currentProject.Name,
-                        currentModel.Name,
-                        currentOperation.Name,
-                        currentTrainer.GetStaffFullName(),
-                        currentTraining.StartDate.ToString("d"),
-                        currentTraining.EndDate.ToString("d"),
-                        selfCheck.Date.ToString("d"),
-                        currentResponsiblePerson.GetStaffFullName());
+                    var row = table.NewRow();
+                    row["trainingID"] = currentTraining.ID.ToString();
+                    row["Сотрудник"] = currentStaff.GetStaffFullName();
+                    row["Проект"] = currentProject.Name;
+                    row["Модель"] = currentModel.Name;
+                    row["Операция"] = currentOperation.Name;
+                    row["Инструктор"] = currentTrainer.GetStaffFullName();
+                    row["Дата начала"] = currentTraining.StartDate.ToString("d");
+                    row["Дата окончания"] = currentTraining.EndDate.ToString("d");
+                    row["Дата присвоения самоконтроля"] = selfCheck.Date.ToString("d");
+                    row["Ответственный"] = currentResponsiblePerson.GetStaffFullName();
+                    table.Rows.Add(row);
                 }
             }
             bindingSource.DataSource = table;
             outputDataGridView.DataSource = bindingSource;
+            outputDataGridView.Columns["trainingID"].Visible = false;
         }
     }
 }

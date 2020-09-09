@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Document.cs" />
     <Compile Include="IProjectRepository.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Operation.cs" />

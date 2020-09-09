@@ -45,8 +45,10 @@ namespace staff_qualification_Forms
 
             startTrainingDateTimePicker.Format = DateTimePickerFormat.Short;
             startTrainingDateTimePicker.Value = DateTime.Now;
+            training.StartDate = startTrainingDateTimePicker.Value;
             endTrainingDateTimePicker.Format = DateTimePickerFormat.Short;
             endTrainingDateTimePicker.Value = DateTime.Now.AddDays(defaultTrainingPeriod);
+            training.EndDate = endTrainingDateTimePicker.Value;
         }
 
         private void FillFormControls()
@@ -166,6 +168,8 @@ namespace staff_qualification_Forms
         private void startTrainingDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             training.StartDate = startTrainingDateTimePicker.Value;
+            endTrainingDateTimePicker.Value = training.StartDate.AddDays(defaultTrainingPeriod);
+            training.EndDate = endTrainingDateTimePicker.Value;
         }
 
         private void endTrainingDateTimePicker_ValueChanged(object sender, EventArgs e)
@@ -180,8 +184,8 @@ namespace staff_qualification_Forms
             trainingReport.Trainer = trainerTextBox.Text;
             trainingReport.ModelDescription = $"{projectComboBox.Text} {modelComboBox.Text}";
             trainingReport.Operation = operationComboBox.Text.ToLower();
-            trainingReport.Date = training.StartDate.ToString("d");
-            trainingReport.EndDate = training.EndDate.ToString("d");
+            trainingReport.Date = training.StartDate;
+            trainingReport.EndDate = training.EndDate;
             trainingReport.FillTrainingDocument();
         }
     }

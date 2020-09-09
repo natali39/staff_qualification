@@ -134,7 +134,7 @@
             // 
             // generateDocumentButton
             // 
-            this.generateDocumentButton.Location = new System.Drawing.Point(26, 372);
+            this.generateDocumentButton.Location = new System.Drawing.Point(26, 346);
             this.generateDocumentButton.Name = "generateDocumentButton";
             this.generateDocumentButton.Size = new System.Drawing.Size(165, 23);
             this.generateDocumentButton.TabIndex = 14;
@@ -144,7 +144,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(363, 372);
+            this.saveButton.Location = new System.Drawing.Point(363, 346);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 15;
@@ -212,7 +212,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(494, 422);
+            this.ClientSize = new System.Drawing.Size(494, 394);
             this.Controls.Add(this.operationComboBox);
             this.Controls.Add(this.modelComboBox);
             this.Controls.Add(this.projectComboBox);
