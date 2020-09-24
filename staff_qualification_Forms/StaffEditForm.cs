@@ -87,7 +87,7 @@ namespace staff_qualification_Forms
 
         private bool IsEmptyData()
         {
-            return idTextBox.Text == String.Empty || lastNameTextBox.Text == String.Empty || firstNameTextBox.Text == String.Empty || positionComboBox.Text == String.Empty;
+            return lastNameTextBox.Text == String.Empty || firstNameTextBox.Text == String.Empty || positionComboBox.Text == String.Empty;
         }
 
         private void SaveStaff()
@@ -96,7 +96,6 @@ namespace staff_qualification_Forms
             {
                 this.staff = new Staff();
             }
-            staff.ID = int.Parse(idTextBox.Text);
             staff.LastName = lastNameTextBox.Text;
             staff.FirstName = firstNameTextBox.Text;
             staff.MiddleName = middleNameTextBox.Text;

@@ -8,10 +8,8 @@ namespace staff_qualification_Forms
     public partial class StaffsForm : Form
     {
         private DataTable table = new DataTable();
-        private StaffService staffService = new StaffService(new StaffFileRepository());
+        private StaffService staffService = new StaffService(new StaffDBRepository());
         private List<Staff> staffs = new List<Staff>();
-        private int selectedStaffID;
-        private bool isChanged = false;
         private string mode = "edit";
         public Staff SelectedStaff;
 
@@ -24,10 +22,10 @@ namespace staff_qualification_Forms
         public StaffsForm(string mode) : this()
         {
             this.mode = mode;
-            this.SelectedStaff = new Staff();
+            SelectedStaff = new Staff();
             addButton.Visible = false;
             deleteButton.Visible = false;
-            saveButton.Visible = false;
+            editButton.Visible = false;
         }
 
         public void SetFormProperties()
@@ -77,59 +75,80 @@ namespace staff_qualification_Forms
                 }
         }
 
-        private void UpdateStaffsData()
-        {
-            staffService.UpdateData(staffs);
-        }
-
         private void addButton_Click(object sender, EventArgs e)
         {
             if (staffs == null)
             {
                 staffs = new List<Staff>();
             }
-            int id = Staff.GetNextId(staffs);
-            StaffEditForm staffEditForm = new StaffEditForm(id);
+            StaffEditForm staffEditForm = new StaffEditForm();
             staffEditForm.ShowDialog();
             if (staffEditForm.staff != null)
             {
                 staffs.Add(staffEditForm.staff);
+                staffService.AddStaff(staffEditForm.staff);
                 UpdateTableRows(staffs);
-                UpdateStaffsData();
             }
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
+        private void editButton_Click(object sender, EventArgs e)
         {
-            UpdateStaffsData();
+            if (TableIsEmpty())
+                return;
+            if (staffDataGridView.SelectedRows.Count == 1)
+            {
+                var index = staffDataGridView.SelectedRows[0].Index;
+                SelectedStaff = SelectStaff(index);
+                EditStaff();
+            }
+        }
+
+        private void EditStaff()
+        {
+            var staffEditForm = new StaffEditForm(SelectedStaff);
+            staffEditForm.ShowDialog();
+            staffService.UpdateStaff(SelectedStaff);
+            UpdateTableRows(staffs);
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            DeleteStaff();
-        }
-
-        private void DeleteStaff()
-        {
-            if (table.Rows.Count == 0)
-            {
-                MessageBox.Show("В таблице нет записей");
+            if (TableIsEmpty())
                 return;
-            }
+
             var result = MessageBox.Show("Удалить выбранную строку?", "Подтверждение операции", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
                 if (staffDataGridView.SelectedRows.Count == 1)
                 {
-                    CheckRelatedDocuments(SelectedStaff);
-                    staffs.Remove(SelectedStaff);
-                    UpdateTableRows(staffs);
-                    UpdateStaffsData();
+                    var index = staffDataGridView.SelectedRows[0].Index;
+                    SelectedStaff = SelectStaff(index);
                 }
             }
+            if (SelectedStaff != null)
+                DeleteStaff();
         }
 
-        private void CheckRelatedDocuments(Staff selectedStaff)
+        private void DeleteStaff()
+        {
+            if (CheckRelatedDocuments(SelectedStaff))
+                return;
+            staffs.Remove(SelectedStaff);
+            staffService.RemoveStaff(SelectedStaff);
+            UpdateTableRows(staffs);
+        }
+
+        private bool TableIsEmpty()
+        {
+            if (table.Rows.Count == 0)
+            {
+                MessageBox.Show("В таблице нет записей");
+                return true;
+            }
+            return false;
+        }
+
+        private bool CheckRelatedDocuments(Staff staff)
         {
             TrainingService trainingService = new TrainingService(new TrainingFileRepository());
             SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
@@ -137,20 +156,21 @@ namespace staff_qualification_Forms
             var selfChecks = selfCheckService.GetData();
             foreach (var training in trainings)
             {
-                if (training.StaffID == SelectedStaff.ID || training.TrainerID == SelectedStaff.ID)
+                if (training.StaffID == staff.ID || training.TrainerID == staff.ID)
                 {
                     MessageBox.Show("Сотрудник не может быть удален, так как есть по крайней мере один документ об обучении, при заполнении которого данный сотрудник был выбран!");
-                    return;
+                    return true;
                 }
             }
             foreach (var selfcheck in selfChecks)
             {
-                if (selfcheck.ResponsiblePersonID == SelectedStaff.ID)
+                if (selfcheck.ResponsiblePersonID == staff.ID)
                 {
                     MessageBox.Show("Сотрудник не может быть удален, так как есть по крайней мере один документ о присвоении самоконтроля, при заполнении которого данный сотрудник был выбран!");
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
 
         private void staffDataGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
@@ -158,34 +178,17 @@ namespace staff_qualification_Forms
             e.Cancel = true;
         }
 
-        private void StaffsForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (isChanged)
-            {
-                var result = MessageBox.Show("Сохранить изменения в списке сотрудников?", "Сотрудники", MessageBoxButtons.YesNoCancel);
-                if (result == DialogResult.Yes)
-                {
-                    UpdateStaffsData();
-                }
-                if (result == DialogResult.Cancel)
-                {
-                    e.Cancel = true;
-                }
-            }
-        }
-
         private void staffDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (selectedStaffID > 0)
+            var index = e.RowIndex;
+            SelectedStaff = SelectStaff(index);
+            if (SelectedStaff.ID > 0)
             {
                 if (mode == "select")
                     Close();
                 else
                 {
-                    var staffEditForm = new StaffEditForm(SelectedStaff);
-                    staffEditForm.ShowDialog();
-                    UpdateTableRows(staffs);
-                    UpdateStaffsData();
+                    EditStaff();
                 }
             }
         }
@@ -200,14 +203,21 @@ namespace staff_qualification_Forms
             var selectedRowIndex = e.RowIndex;
             if (selectedRowIndex >= 0)
             {
-                var selectedString = staffDataGridView.Rows[selectedRowIndex].Cells[0].Value.ToString();
-                selectedStaffID = int.Parse(selectedString);
-                foreach (var staff in staffs)
-                {
-                    if (staff.ID == selectedStaffID)
-                        SelectedStaff = staff;
-                }
+                SelectedStaff = SelectStaff(selectedRowIndex);
             }
         }
+
+        private Staff SelectStaff(int rowIndex)
+        {
+            var selectedStaffID = 0;
+            var convertId = int.TryParse(staffDataGridView.Rows[rowIndex].Cells[0].Value.ToString(), out selectedStaffID);
+            foreach (var staff in staffs)
+            {
+                if (staff.ID == selectedStaffID)
+                    SelectedStaff = staff;
+            }
+            return SelectedStaff;
+        }
+
     }
 }

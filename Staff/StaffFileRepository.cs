@@ -13,11 +13,26 @@ namespace staff_qualification_Forms
             return staffs;
         }
 
-        public void Update(List<Staff> staffs)
+        public void Add(Staff staff)
         {
-            var jsonStaffs = JsonHelper.Serialize<List<Staff>>(staffs);
-            WriteToFile(jsonStaffs);
+
         }
+
+        public void Delete(Staff staff)
+        {
+
+        }
+
+        public void Update(Staff staff)
+        {
+
+        }
+
+        //public void Update(List<Staff> staffs)
+        //{
+        //    var jsonStaffs = JsonHelper.Serialize<List<Staff>>(staffs);
+        //    WriteToFile(jsonStaffs);
+        //}
 
         private string ReadFromFile()
         {

@@ -29,33 +29,23 @@
         private void InitializeComponent()
         {
             this.deleteButton = new System.Windows.Forms.Button();
-            this.saveButton = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
             this.staffDataGridView = new System.Windows.Forms.DataGridView();
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.lastNameSearchLabel = new System.Windows.Forms.Label();
+            this.editButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.staffDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(86, 12);
+            this.deleteButton.Location = new System.Drawing.Point(166, 12);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(74, 25);
             this.deleteButton.TabIndex = 8;
             this.deleteButton.Text = "Удалить";
             this.deleteButton.UseVisualStyleBackColor = true;
             this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
-            // 
-            // saveButton
-            // 
-            this.saveButton.Location = new System.Drawing.Point(166, 12);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(74, 25);
-            this.saveButton.TabIndex = 7;
-            this.saveButton.Text = "Сохранить";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // addButton
             // 
@@ -99,20 +89,29 @@
             this.lastNameSearchLabel.TabIndex = 13;
             this.lastNameSearchLabel.Text = "Начните вводить фамилию сотрудника:";
             // 
+            // editButton
+            // 
+            this.editButton.Location = new System.Drawing.Point(86, 13);
+            this.editButton.Name = "editButton";
+            this.editButton.Size = new System.Drawing.Size(74, 23);
+            this.editButton.TabIndex = 14;
+            this.editButton.Text = "Изменить";
+            this.editButton.UseVisualStyleBackColor = true;
+            this.editButton.Click += new System.EventHandler(this.editButton_Click);
+            // 
             // StaffsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(855, 422);
+            this.Controls.Add(this.editButton);
             this.Controls.Add(this.lastNameSearchLabel);
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.deleteButton);
-            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.staffDataGridView);
             this.Name = "StaffsForm";
             this.Text = "Сотрудники";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StaffsForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.staffDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -121,10 +120,10 @@
 
         #endregion
         private System.Windows.Forms.Button deleteButton;
-        private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.DataGridView staffDataGridView;
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.Label lastNameSearchLabel;
+        private System.Windows.Forms.Button editButton;
     }
 }

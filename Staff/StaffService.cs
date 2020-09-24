@@ -16,9 +16,19 @@ namespace staff_qualification_Forms
             return repository.GetAll();
         }
 
-        public void UpdateData(List<Staff> staffs)
+        public void AddStaff(Staff staff)
         {
-            repository.Update(staffs);
+            repository.Add(staff);
+        }
+
+        public void RemoveStaff(Staff staff)
+        {
+            repository.Delete(staff);
+        }
+
+        public void UpdateStaff(Staff staff)
+        {
+            repository.Update(staff);
         }
     }
 }
