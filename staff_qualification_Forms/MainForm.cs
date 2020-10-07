@@ -9,10 +9,10 @@ namespace staff_qualification_Forms
 {
     public partial class MainForm : Form
     {
-        ProjectService projectService = new ProjectService(new ProjectFileRepository());
-        StaffService staffService = new StaffService(new StaffFileRepository());
-        TrainingService trainingService = new TrainingService(new TrainingFileRepository());
-        SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
+        ProjectService projectService = new ProjectService(new ProjectDbRepository());
+        StaffService staffService = new StaffService(new StaffDbRepository());
+        TrainingService trainingService = new TrainingService(new TrainingDbRepository());
+        SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckDbRepository());
 
         List<CheckBox> modelsCheckBoxes;
         List<CheckBox> modelsSelectAllCheckBoxes;
@@ -43,7 +43,7 @@ namespace staff_qualification_Forms
 
         private void GetListData()
         {
-            projects = projectService.GetData();
+            //projects = projectService.GetData();
             staffs = staffService.GetData();
             trainings = trainingService.GetData();
             selfChecks = selfCheckService.GetData();
@@ -58,9 +58,9 @@ namespace staff_qualification_Forms
 
             selectAllModelsCheckBox.Visible = false;
 
-            projectComboBox.DataSource = projects;
-            projectComboBox.DisplayMember = "Name";
-            projectComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            //projectComboBox.DataSource = projects;
+            //projectComboBox.DisplayMember = "Name";
+            //projectComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void GetTableHeader()

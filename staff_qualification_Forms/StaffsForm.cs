@@ -8,7 +8,7 @@ namespace staff_qualification_Forms
     public partial class StaffsForm : Form
     {
         private DataTable table = new DataTable();
-        private StaffService staffService = new StaffService(new StaffDBRepository());
+        private StaffService staffService = new StaffService(new StaffDbRepository());
         private List<Staff> staffs = new List<Staff>();
         private string mode = "edit";
         public Staff SelectedStaff;
@@ -87,6 +87,7 @@ namespace staff_qualification_Forms
             {
                 staffs.Add(staffEditForm.staff);
                 staffService.AddStaff(staffEditForm.staff);
+                staffs = staffService.GetData();
                 UpdateTableRows(staffs);
             }
         }
@@ -150,8 +151,8 @@ namespace staff_qualification_Forms
 
         private bool CheckRelatedDocuments(Staff staff)
         {
-            TrainingService trainingService = new TrainingService(new TrainingFileRepository());
-            SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
+            TrainingService trainingService = new TrainingService(new TrainingDbRepository());
+            SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckDbRepository());
             var trainings = trainingService.GetData();
             var selfChecks = selfCheckService.GetData();
             foreach (var training in trainings)

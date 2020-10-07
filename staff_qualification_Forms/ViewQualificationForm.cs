@@ -6,10 +6,10 @@ namespace staff_qualification_Forms
 {
     public partial class ViewQualificationForm : Form
     {
-        protected TrainingService trainingService = new TrainingService(new TrainingFileRepository());
-        protected ProjectService projectService = new ProjectService(new ProjectFileRepository());
-        protected StaffService staffService = new StaffService(new StaffFileRepository());
-        protected SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
+        protected TrainingService trainingService = new TrainingService(new TrainingDbRepository());
+        protected ProjectService projectService = new ProjectService(new ProjectDbRepository());
+        protected StaffService staffService = new StaffService(new StaffDbRepository());
+        protected SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckDbRepository());
         protected List<SelfCheck> selfChecks = new List<SelfCheck>();
         protected List<Training> trainings = new List<Training>();
         protected List<Project> projects = new List<Project>();

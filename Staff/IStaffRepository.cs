@@ -4,9 +4,9 @@ namespace staff_qualification_Forms
 {
     public interface IStaffRepository
     {
-        List<Staff> GetAll();
-        void Add(Staff staff);
-        void Delete(Staff staff);
-        void Update(Staff staff);
+        List<StaffDb> GetAll();
+        void Add(StaffDb staffDb);
+        void Delete(StaffDb staffDb);
+        void Update(StaffDb staffDb);
     }
 }

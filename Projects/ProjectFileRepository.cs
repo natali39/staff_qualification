@@ -2,7 +2,7 @@
 
 namespace staff_qualification_Forms
 {
-    public class ProjectFileRepository : IProjectRepository
+    public class ProjectFileRepository
     {
         public List<Project> GetAll()
         {

@@ -2,7 +2,7 @@
 
 namespace staff_qualification_Forms
 {
-    public class OperationDb
+    public class OperationDb : IdDb
     {
         public string Name { get; set; }
         public List<DocumentDb> Documents { get; set; }

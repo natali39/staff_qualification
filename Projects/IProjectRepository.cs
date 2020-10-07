@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace staff_qualification_Forms
 {
     public interface IProjectRepository
     {
-        List<Project> GetAll();
-        void Update(List<Project> projects);
+        List<ProjectDb> GetAll();
+        void Add(ProjectDb projectDb);
+        void Delete(ProjectDb projectDb);
+        void Update(ProjectDb projectDb);
     }
 }

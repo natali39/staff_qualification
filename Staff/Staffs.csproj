@@ -68,7 +68,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Staff.cs" />
     <Compile Include="StaffDBRepository.cs" />
-    <Compile Include="StaffFileRepository.cs" />
     <Compile Include="StaffService.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -94,9 +93,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DB\DB.csproj">
-      <Project>{334dc4df-49cf-4a42-9654-dbb76f8f2406}</Project>
-      <Name>DB</Name>
+    <ProjectReference Include="..\DbModel\DbModel.csproj">
+      <Project>{78e4a876-2542-49a8-9e06-735f360964fc}</Project>
+      <Name>DbModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\StaffQualification.Common\StaffQualification.Common.csproj">
       <Project>{30abfb43-9f0d-4f9c-aa44-357b40dff417}</Project>

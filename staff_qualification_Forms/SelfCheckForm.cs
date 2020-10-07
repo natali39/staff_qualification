@@ -8,9 +8,9 @@ namespace staff_qualification_Forms
     {
         SelfCheck selfCheck = new SelfCheck();
         Training training;
-        SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
-        ProjectService projectService = new ProjectService(new ProjectFileRepository());
-        StaffService staffService = new StaffService(new StaffFileRepository());
+        SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckDbRepository());
+        ProjectService projectService = new ProjectService(new ProjectDbRepository());
+        StaffService staffService = new StaffService(new StaffDbRepository());
         List<SelfCheck> selfChecks;
         List<Project> projects;
         List<Staff> staffs;
@@ -83,7 +83,7 @@ namespace staff_qualification_Forms
                 return;
             }
             selfChecks.Add(selfCheck);
-            selfCheckService.UpdateData(selfChecks);
+            //selfCheckService.UpdateData(selfChecks);
             Close();
         }
 

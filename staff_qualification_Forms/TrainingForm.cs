@@ -8,8 +8,8 @@ namespace staff_qualification_Forms
     {
         Training training = new Training();
         int defaultTrainingPeriod = 3;
-        ProjectService projectService = new ProjectService(new ProjectFileRepository());
-        TrainingService trainingService = new TrainingService(new TrainingFileRepository());
+        ProjectService projectService = new ProjectService(new ProjectDbRepository());
+        TrainingService trainingService = new TrainingService(new TrainingDbRepository());
         List<Training> trainings;
         List<Project> projects;
         TrainingReport trainingReport;
@@ -53,7 +53,7 @@ namespace staff_qualification_Forms
 
         private void FillFormControls()
         {
-            StaffService staffService = new StaffService(new StaffFileRepository());
+            StaffService staffService = new StaffService(new StaffDbRepository());
             List<Staff> staffs = staffService.GetData();
 
             var staff = Staff.GetStaffByID(training.StaffID, staffs);
@@ -124,7 +124,7 @@ namespace staff_qualification_Forms
 
             IdHelper.TryUpdateId(training);
             trainings.Add(training);
-            trainingService.UpdateData(trainings);
+            trainingService.AddTraining(training);
             Close();
         }
 

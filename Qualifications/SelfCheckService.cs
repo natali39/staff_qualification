@@ -13,12 +13,52 @@ namespace staff_qualification_Forms
 
         public List<SelfCheck> GetData()
         {
-            return repository.GetAll();
+            var selfChecksDb = repository.GetAll();
+            var selfChecks = new List<SelfCheck>();
+            foreach (var selfCheckDb in selfChecksDb)
+            {
+                var selfCheck = ToSelfCheck(selfCheckDb);
+                selfChecks.Add(selfCheck);
+            }
+            return selfChecks;
         }
 
-        public void UpdateData(List<SelfCheck> selfChecks)
+        public void AddStaff(SelfCheck selfCheck)
         {
-            repository.Update(selfChecks);
+            var selfCheckDb = ToSelfCheckDb(selfCheck);
+            repository.Add(selfCheckDb);
+        }
+
+        public void RemoveStaff(SelfCheck selfCheck)
+        {
+            var selfCheckDb = ToSelfCheckDb(selfCheck);
+            repository.Delete(selfCheckDb);
+        }
+
+        public void UpdateStaff(SelfCheck selfCheck)
+        {
+            var selfCheckDb = ToSelfCheckDb(selfCheck);
+            repository.Update(selfCheckDb);
+        }
+
+        static SelfCheck ToSelfCheck(SelfCheckDb selfCheckDb)
+        {
+            var selfCheck = new SelfCheck();
+            selfCheck.ID = selfCheckDb.ID;
+            selfCheck.TrainingID = selfCheckDb.TrainingID;
+            selfCheck.ResponsiblePersonID = selfCheckDb.ResponsiblePersonID;
+            selfCheck.Date = selfCheckDb.Date;
+            return selfCheck;
+        }
+
+        static SelfCheckDb ToSelfCheckDb(SelfCheck selfCheck)
+        {
+            var selfCheckDb = new SelfCheckDb();
+            selfCheckDb.ID = selfCheck.ID;
+            selfCheckDb.TrainingID = selfCheck.TrainingID;
+            selfCheckDb.ResponsiblePersonID = selfCheck.ResponsiblePersonID;
+            selfCheckDb.Date = selfCheck.Date;
+            return selfCheckDb;
         }
     }
 }
