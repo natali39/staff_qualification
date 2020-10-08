@@ -6,110 +6,46 @@ namespace staff_qualification_Forms
 {
     public class StaffDBRepository : IStaffRepository
     {
-        public List<Staff> GetAll()
+        public List<StaffDb> GetAll()
         {
             using (var context = new QualificationDbContext())
             {
                 var staffsDb = context.Staffs.ToList();
-                var staffs = new List<Staff>();
-                foreach (var staffDb in staffsDb)
-                {
-                    var staff = ToStaff(staffDb);
-                    staffs.Add(staff);
-                }
-                return staffs;
+                return staffsDb;
             }
         }
 
-        public void Add(Staff staff)
+        public void Add(StaffDb staffDb)
         {
             using (var context = new QualificationDbContext())
             {
-                var staffDb = ToStaffDb(staff);
                 context.Staffs.Add(staffDb);
                 context.SaveChanges();
             }
         }
 
-        public void Delete(Staff staff)
+        public void Delete(StaffDb staffDb)
         {
             using (var context = new QualificationDbContext())
             {
-                var staffDb = ToStaffDb(staff);
                 context.Entry(staffDb).State = EntityState.Deleted;
                 context.SaveChanges();
             }
         }
 
-        public void Update(Staff staff)
+        public void Update(StaffDb staffDbChanged)
         {
             using (var context = new QualificationDbContext())
             {
-                var staffDb = context.Staffs.Find(staff.ID);
-                var staffDbChanged = ToStaffDb(staff);
-                staffDb.LastName = staffDbChanged.LastName;
-                staffDb.FirstName = staffDbChanged.FirstName;
-                staffDb.MiddleName = staffDbChanged.MiddleName;
-                staffDb.Position = staffDbChanged.Position;
-                context.Entry(staffDb).State = EntityState.Modified;
+                var staffDbCurrent = context.Staffs.Find(staffDbChanged.Id);
+                staffDbCurrent.LastName = staffDbChanged.LastName;
+                staffDbCurrent.FirstName = staffDbChanged.FirstName;
+                staffDbCurrent.MiddleName = staffDbChanged.MiddleName;
+                staffDbCurrent.Position = staffDbChanged.Position;
+                context.Entry(staffDbCurrent).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }
 
-        Staff ToStaff(StaffDb staffDb)
-        {
-            var staff = new Staff();
-            staff.ID = staffDb.Id; 
-            staff.LastName = staffDb.LastName;
-            staff.FirstName = staffDb.FirstName;
-            staff.MiddleName = staffDb.MiddleName;
-            staff.Position = ToStaffPosition(staffDb.Position);
-            return staff;
-        }
-
-        StaffDb ToStaffDb(Staff staff)
-        {
-            var staffDb = new StaffDb();
-            staffDb.Id = staff.ID;
-            staffDb.LastName = staff.LastName;
-            staffDb.FirstName = staff.FirstName;
-            staffDb.MiddleName = staff.MiddleName;
-            staffDb.Position = ToStaffDbPosition(staff.Position);
-            return staffDb;
-        }
-
-        private PositionsDb ToStaffDbPosition(Positions position)
-        {
-            switch (position)
-            {
-                case Positions.Seamstress:
-                    return PositionsDb.Seamstress;
-                case Positions.Control:
-                    return PositionsDb.Control;
-                case Positions.Master:
-                    return PositionsDb.Master;
-                case Positions.ProductionManager:
-                    return PositionsDb.ProductionManager;
-                default:
-                    return 0;
-            }
-        }
-
-        Positions ToStaffPosition (PositionsDb positionsDb)
-        {
-            switch (positionsDb)
-            {
-                case PositionsDb.Seamstress:
-                    return Positions.Seamstress;
-                case PositionsDb.Control:
-                    return Positions.Control;
-                case PositionsDb.Master:
-                    return Positions.Master;
-                case PositionsDb.ProductionManager:
-                    return Positions.ProductionManager;
-                default:
-                    return 0;
-            }
-        }
     }
 }

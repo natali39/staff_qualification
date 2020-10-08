@@ -43,7 +43,7 @@
             // 
             // idTextBox
             // 
-            this.idTextBox.Location = new System.Drawing.Point(39, 46);
+            this.idTextBox.Location = new System.Drawing.Point(258, 41);
             this.idTextBox.Name = "idTextBox";
             this.idTextBox.Size = new System.Drawing.Size(96, 20);
             this.idTextBox.TabIndex = 0;
@@ -69,7 +69,7 @@
             // idLabel
             // 
             this.idLabel.AutoSize = true;
-            this.idLabel.Location = new System.Drawing.Point(36, 30);
+            this.idLabel.Location = new System.Drawing.Point(255, 25);
             this.idLabel.Name = "idLabel";
             this.idLabel.Size = new System.Drawing.Size(99, 13);
             this.idLabel.TabIndex = 4;
@@ -87,7 +87,7 @@
             // positionLabel
             // 
             this.positionLabel.AutoSize = true;
-            this.positionLabel.Location = new System.Drawing.Point(161, 30);
+            this.positionLabel.Location = new System.Drawing.Point(36, 25);
             this.positionLabel.Name = "positionLabel";
             this.positionLabel.Size = new System.Drawing.Size(65, 13);
             this.positionLabel.TabIndex = 6;
@@ -130,7 +130,7 @@
             // positionComboBox
             // 
             this.positionComboBox.FormattingEnabled = true;
-            this.positionComboBox.Location = new System.Drawing.Point(164, 46);
+            this.positionComboBox.Location = new System.Drawing.Point(39, 41);
             this.positionComboBox.Name = "positionComboBox";
             this.positionComboBox.Size = new System.Drawing.Size(190, 21);
             this.positionComboBox.TabIndex = 4;

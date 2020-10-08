@@ -10,7 +10,7 @@ namespace staff_qualification_Forms
     public partial class MainForm : Form
     {
         ProjectService projectService = new ProjectService(new ProjectFileRepository());
-        StaffService staffService = new StaffService(new StaffFileRepository());
+        StaffService staffService = new StaffService(new StaffDBRepository());
         TrainingService trainingService = new TrainingService(new TrainingFileRepository());
         SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
 

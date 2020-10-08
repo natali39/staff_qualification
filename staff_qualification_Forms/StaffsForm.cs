@@ -87,6 +87,7 @@ namespace staff_qualification_Forms
             {
                 staffs.Add(staffEditForm.staff);
                 staffService.AddStaff(staffEditForm.staff);
+                staffs = staffService.GetData();
                 UpdateTableRows(staffs);
             }
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace staff_qualification_Forms
@@ -24,6 +23,8 @@ namespace staff_qualification_Forms
         public StaffEditForm(Staff staff) : this()
         {
             this.staff = staff;
+            idTextBox.Visible = true;
+            idLabel.Visible = true;
             FillFormControls();
             isChanged = false;
         }
@@ -35,6 +36,8 @@ namespace staff_qualification_Forms
             positionComboBox.ValueMember = "Position";
             positionComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             idTextBox.ReadOnly = true;
+            idTextBox.Visible = false;
+            idLabel.Visible = false;
         }
 
         private void FillFormControls()
