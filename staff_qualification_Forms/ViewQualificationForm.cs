@@ -8,7 +8,7 @@ namespace staff_qualification_Forms
     {
         protected TrainingService trainingService = new TrainingService(new TrainingFileRepository());
         protected ProjectService projectService = new ProjectService(new ProjectFileRepository());
-        protected StaffService staffService = new StaffService(new StaffFileRepository());
+        protected StaffService staffService = new StaffService(new StaffDbRepository());
         protected SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
         protected List<SelfCheck> selfChecks = new List<SelfCheck>();
         protected List<Training> trainings = new List<Training>();

@@ -10,7 +10,7 @@ namespace staff_qualification_Forms
         Training training;
         SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
         ProjectService projectService = new ProjectService(new ProjectFileRepository());
-        StaffService staffService = new StaffService(new StaffFileRepository());
+        StaffService staffService = new StaffService(new StaffDbRepository());
         List<SelfCheck> selfChecks;
         List<Project> projects;
         List<Staff> staffs;

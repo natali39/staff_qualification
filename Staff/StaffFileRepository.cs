@@ -1,9 +1,8 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace staff_qualification_Forms
 {
-    public class StaffFileRepository : IStaffRepository
+    public class StaffFileRepository
     {
         public List<Staff> GetAll()
         {

@@ -8,7 +8,7 @@ namespace staff_qualification_Forms
     public partial class StaffsForm : Form
     {
         private DataTable table = new DataTable();
-        private StaffService staffService = new StaffService(new StaffFileRepository());
+        private StaffService staffService = new StaffService(new StaffDbRepository());
         private List<Staff> staffs = new List<Staff>();
         private int selectedStaffID;
         private bool isChanged = false;
@@ -77,10 +77,10 @@ namespace staff_qualification_Forms
                 }
         }
 
-        private void UpdateStaffsData()
-        {
-            staffService.UpdateData(staffs);
-        }
+        //private void UpdateStaffsData()
+        //{
+        //    staffService.UpdateData(staffs);
+        //}
 
         private void addButton_Click(object sender, EventArgs e)
         {
@@ -94,14 +94,15 @@ namespace staff_qualification_Forms
             if (staffEditForm.staff != null)
             {
                 staffs.Add(staffEditForm.staff);
+                staffService.AddStaff(staffEditForm.staff);
+                staffs = staffService.GetData();
                 UpdateTableRows(staffs);
-                UpdateStaffsData();
             }
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            UpdateStaffsData();
+            //UpdateStaffsData();
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
@@ -123,8 +124,8 @@ namespace staff_qualification_Forms
                 {
                     CheckRelatedDocuments(SelectedStaff);
                     staffs.Remove(SelectedStaff);
+                    staffService.RemoveStaff(SelectedStaff);
                     UpdateTableRows(staffs);
-                    UpdateStaffsData();
                 }
             }
         }
@@ -160,18 +161,18 @@ namespace staff_qualification_Forms
 
         private void StaffsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (isChanged)
-            {
-                var result = MessageBox.Show("Сохранить изменения в списке сотрудников?", "Сотрудники", MessageBoxButtons.YesNoCancel);
-                if (result == DialogResult.Yes)
-                {
-                    UpdateStaffsData();
-                }
-                if (result == DialogResult.Cancel)
-                {
-                    e.Cancel = true;
-                }
-            }
+            //    if (isChanged)
+            //    {
+            //        var result = MessageBox.Show("Сохранить изменения в списке сотрудников?", "Сотрудники", MessageBoxButtons.YesNoCancel);
+            //        if (result == DialogResult.Yes)
+            //        {
+            //            UpdateStaffsData();
+            //        }
+            //        if (result == DialogResult.Cancel)
+            //        {
+            //            e.Cancel = true;
+            //        }
+            //    }
         }
 
         private void staffDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -184,8 +185,8 @@ namespace staff_qualification_Forms
                 {
                     var staffEditForm = new StaffEditForm(SelectedStaff);
                     staffEditForm.ShowDialog();
+                    staffService.UpdateStaff(SelectedStaff);
                     UpdateTableRows(staffs);
-                    UpdateStaffsData();
                 }
             }
         }

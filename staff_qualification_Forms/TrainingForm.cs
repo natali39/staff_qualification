@@ -53,7 +53,7 @@ namespace staff_qualification_Forms
 
         private void FillFormControls()
         {
-            StaffService staffService = new StaffService(new StaffFileRepository());
+            StaffService staffService = new StaffService(new StaffDbRepository());
             List<Staff> staffs = staffService.GetData();
 
             var staff = Staff.GetStaffByID(training.StaffID, staffs);
