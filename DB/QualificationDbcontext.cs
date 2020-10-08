@@ -4,7 +4,7 @@ namespace staff_qualification_Forms
 {
     public class QualificationDbContext : DbContext
     {
-        public QualificationDbContext() : base("QualificationsDBConnectionString")
+        public QualificationDbContext() : base("DBConnectionString")
         {
         }
         //public DbSet<ProjectDb> Projects { get; set; }
