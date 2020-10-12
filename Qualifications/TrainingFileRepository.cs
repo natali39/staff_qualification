@@ -2,7 +2,7 @@
 
 namespace staff_qualification_Forms
 {
-    public class TrainingFileRepository : ITrainingRepository
+    public class TrainingFileRepository
     {
         public List<Training> GetAll()
         {

@@ -9,7 +9,7 @@ namespace staff_qualification_Forms
         Training training = new Training();
         int defaultTrainingPeriod = 3;
         ProjectService projectService = new ProjectService(new ProjectFileRepository());
-        TrainingService trainingService = new TrainingService(new TrainingFileRepository());
+        TrainingService trainingService = new TrainingService(new TrainingDbRepository());
         List<Training> trainings;
         List<Project> projects;
         TrainingReport trainingReport;
@@ -119,12 +119,10 @@ namespace staff_qualification_Forms
                 MessageBox.Show("Сроки обучения введены неверно!");
                 return;
             }
-
             CheckForUnique();
-
-            IdHelper.TryUpdateId(training);
+            //IdHelper.TryUpdateId(training);
             trainings.Add(training);
-            trainingService.UpdateData(trainings);
+            trainingService.AddTraining(training);
             Close();
         }
 

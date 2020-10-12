@@ -2,11 +2,13 @@
 
 namespace staff_qualification_Forms
 {
-    public class SelfCheckDb
+    public class SelfCheckDb : IdDb
     {
-        public int Id { get; set; }
-        public int TrainingID { get; set; }
-        public int ResponsiblePersonID { get; set; }
+        //public Guid Id { get; set; }
+        public int ResponsiblePersonId { get; set; }
         public DateTime Date { get; set; }
+
+        public Guid TrainingDbId { get; set; }
+        public TrainingDb TrainingDb { get; set; }
     }
 }

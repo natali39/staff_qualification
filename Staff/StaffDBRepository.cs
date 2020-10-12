@@ -10,16 +10,16 @@ namespace staff_qualification_Forms
         {
             using (var context = new QualificationDbContext())
             {
-                var staffsDb = context.Staffs.ToList();
-                return staffsDb;
+                return context.Staffs.ToList();
             }
         }
 
-        public void Add(StaffDb staffDb)
+        public void Add(StaffDb staffDb) // вернуть обновленный staffDb
         {
             using (var context = new QualificationDbContext())
             {
-                context.Staffs.Add(staffDb);
+                var entity = context.Staffs.Add(staffDb);
+
                 context.SaveChanges();
             }
         }

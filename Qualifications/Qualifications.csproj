@@ -62,10 +62,15 @@
     <Compile Include="SelfCheckFileRepository.cs" />
     <Compile Include="SelfCheckService.cs" />
     <Compile Include="Training.cs" />
+    <Compile Include="TrainingDbRepository.cs" />
     <Compile Include="TrainingFileRepository.cs" />
     <Compile Include="TrainingService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DB\DB.csproj">
+      <Project>{334dc4df-49cf-4a42-9654-dbb76f8f2406}</Project>
+      <Name>DB</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Projects\Projects.csproj">
       <Project>{2a9c983e-6335-4942-aa05-aaac91d72ff2}</Project>
       <Name>Projects</Name>

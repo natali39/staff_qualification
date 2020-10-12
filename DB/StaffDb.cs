@@ -10,8 +10,7 @@ namespace staff_qualification_Forms
         public string MiddleName { get; set; }
         public PositionsDb Position { get; set; }
 
-        public List<TrainingDb> Trainings { get; set; }
-        public List<SelfCheckDb> SelfChecks { get; set; }
-
+        public List<TrainingDb> TrainingDbs { get; set; }
+        public List<SelfCheckDb> SelfCheckDbs { get; set; }
     }
 }

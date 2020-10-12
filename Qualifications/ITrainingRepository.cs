@@ -4,7 +4,9 @@ namespace staff_qualification_Forms
 {
     public interface ITrainingRepository
     {
-        List<Training> GetAll();
-        void Update(List<Training> trainings);
+        List<TrainingDb> GetAll();
+        void Add(TrainingDb trainingDb);
+        void Delete(TrainingDb trainingDb);
+        void Update(TrainingDb trainingsDb);
     }
 }

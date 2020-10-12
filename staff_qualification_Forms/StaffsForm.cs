@@ -151,7 +151,7 @@ namespace staff_qualification_Forms
 
         private bool CheckRelatedDocuments(Staff staff)
         {
-            TrainingService trainingService = new TrainingService(new TrainingFileRepository());
+            TrainingService trainingService = new TrainingService(new TrainingDbRepository());
             SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
             var trainings = trainingService.GetData();
             var selfChecks = selfCheckService.GetData();

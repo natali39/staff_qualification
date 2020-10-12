@@ -6,7 +6,7 @@ namespace staff_qualification_Forms
 {
     public partial class ViewQualificationForm : Form
     {
-        protected TrainingService trainingService = new TrainingService(new TrainingFileRepository());
+        protected TrainingService trainingService = new TrainingService(new TrainingDbRepository());
         protected ProjectService projectService = new ProjectService(new ProjectFileRepository());
         protected StaffService staffService = new StaffService(new StaffDBRepository());
         protected SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
