@@ -9,7 +9,7 @@ namespace staff_qualification_Forms
         protected TrainingService trainingService = new TrainingService(new TrainingDbRepository());
         protected ProjectService projectService = new ProjectService(new ProjectFileRepository());
         protected StaffService staffService = new StaffService(new StaffDBRepository());
-        protected SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
+        protected SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckDbRepository());
         protected List<SelfCheck> selfChecks = new List<SelfCheck>();
         protected List<Training> trainings = new List<Training>();
         protected List<Project> projects = new List<Project>();

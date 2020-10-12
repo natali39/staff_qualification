@@ -13,12 +13,53 @@ namespace staff_qualification_Forms
 
         public List<SelfCheck> GetData()
         {
-            return repository.GetAll();
+            var selfChecksDb = repository.GetAll();
+            var selfChecks = new List<SelfCheck>();
+            foreach (var selfCheckDb in selfChecksDb)
+            {
+                var selfCheck = ToSelfCheck(selfCheckDb);
+                selfChecks.Add(selfCheck);
+            }
+            return selfChecks;
         }
 
-        public void UpdateData(List<SelfCheck> selfChecks)
+        public SelfCheck AddSelfCheck(SelfCheck selfCheck)
         {
-            repository.Update(selfChecks);
+            var selfCheckDb = ToSelfCheckDb(selfCheck);
+            var selfCheckDbWithId = repository.Add(selfCheckDb);
+            return ToSelfCheck(selfCheckDbWithId);
+        }
+
+        public void RemoveSelfCheck(SelfCheck selfCheck)
+        {
+            var selfCheckDb = ToSelfCheckDb(selfCheck);
+            repository.Delete(selfCheckDb);
+        }
+
+        public void UpdateSelfCheck(SelfCheck selfCheck)
+        {
+            var selfCheckDb = ToSelfCheckDb(selfCheck);
+            repository.Update(selfCheckDb);
+        }
+
+        static SelfCheck ToSelfCheck(SelfCheckDb selfCheckDb)
+        {
+            var selfCheck = new SelfCheck();
+            selfCheck.ID = selfCheckDb.Id;
+            selfCheck.TrainingID = selfCheckDb.TrainingDbId;
+            selfCheck.ResponsiblePersonID = selfCheckDb.ResponsiblePersonId;
+            selfCheck.Date = selfCheckDb.Date;
+            return selfCheck;
+        }
+
+        static SelfCheckDb ToSelfCheckDb(SelfCheck selfCheck)
+        {
+            var selfCheckDb = new SelfCheckDb();
+            selfCheckDb.Id = selfCheck.ID;
+            selfCheckDb.TrainingDbId = selfCheck.TrainingID;
+            selfCheckDb.ResponsiblePersonId = selfCheck.ResponsiblePersonID;
+            selfCheckDb.Date = selfCheck.Date;
+            return selfCheckDb;
         }
     }
 }

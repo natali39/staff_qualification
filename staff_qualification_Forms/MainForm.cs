@@ -12,7 +12,7 @@ namespace staff_qualification_Forms
         ProjectService projectService = new ProjectService(new ProjectFileRepository());
         StaffService staffService = new StaffService(new StaffDBRepository());
         TrainingService trainingService = new TrainingService(new TrainingDbRepository());
-        SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
+        SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckDbRepository());
 
         List<CheckBox> modelsCheckBoxes;
         List<CheckBox> modelsSelectAllCheckBoxes;

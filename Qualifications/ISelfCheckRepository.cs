@@ -4,7 +4,9 @@ namespace staff_qualification_Forms
 {
     public interface ISelfCheckRepository
     {
-        List<SelfCheck> GetAll();
-        void Update(List<SelfCheck> selfChecks);
+        List<SelfCheckDb> GetAll();
+        SelfCheckDb Add(SelfCheckDb selfCheckDb);
+        void Delete(SelfCheckDb selfCheckDb);
+        void Update(SelfCheckDb selfCheckDb);
     }
 }

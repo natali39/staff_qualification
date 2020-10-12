@@ -4,7 +4,6 @@ namespace staff_qualification_Forms
 {
     public class TrainingDb : IdDb
     {
-        //public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
         public Guid ModelId { get; set; }
         public Guid OperationId { get; set; }

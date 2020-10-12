@@ -59,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result.cs" />
     <Compile Include="SelfCheck.cs" />
+    <Compile Include="SelfCheckDbRepository.cs" />
     <Compile Include="SelfCheckFileRepository.cs" />
     <Compile Include="SelfCheckService.cs" />
     <Compile Include="Training.cs" />

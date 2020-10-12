@@ -8,7 +8,7 @@ namespace staff_qualification_Forms
     {
         SelfCheck selfCheck = new SelfCheck();
         Training training;
-        SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckFileRepository());
+        SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckDbRepository());
         ProjectService projectService = new ProjectService(new ProjectFileRepository());
         StaffService staffService = new StaffService(new StaffDBRepository());
         List<SelfCheck> selfChecks;
@@ -82,8 +82,7 @@ namespace staff_qualification_Forms
                 MessageBox.Show("Дата присвоения самоконтроля не может быть меньше даты окончания обучения и больше текущей даты!");
                 return;
             }
-            selfChecks.Add(selfCheck);
-            selfCheckService.UpdateData(selfChecks);
+            selfChecks.Add(selfCheckService.AddSelfCheck(selfCheck));
             Close();
         }
 

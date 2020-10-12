@@ -2,7 +2,7 @@
 
 namespace staff_qualification_Forms
 {
-    public class SelfCheckFileRepository : ISelfCheckRepository
+    public class SelfCheckFileRepository
     {
         public List<SelfCheck> GetAll()
         {
