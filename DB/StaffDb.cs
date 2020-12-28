@@ -11,6 +11,5 @@ namespace staff_qualification_Forms
         public PositionsDb Position { get; set; }
 
         public List<TrainingDb> TrainingDbs { get; set; }
-        public List<SelfCheckDb> SelfCheckDbs { get; set; }
     }
 }

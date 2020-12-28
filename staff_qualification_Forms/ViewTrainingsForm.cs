@@ -31,8 +31,11 @@ namespace staff_qualification_Forms
                 var currentStaff = Staff.GetStaffByID(training.StaffID, staffs);
                 var currentTrainer = Staff.GetStaffByID(training.TrainerID, staffs);
                 var currentProject = IdHelper.GetEntityByID(projects, training.ProjectID);
+                if (currentProject == null) continue;
                 var currentModel = IdHelper.GetEntityByID(currentProject.Models, training.ModelID);
+                if (currentModel == null) continue;
                 var currentOperation = IdHelper.GetEntityByID(currentModel.Operations, training.OperationID);
+                if (currentOperation == null) continue;
 
                 if (currentStaff != null && currentTrainer != null && currentOperation != null)
                 {

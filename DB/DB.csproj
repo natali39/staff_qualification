@@ -56,6 +56,18 @@
     <Compile Include="Migrations\202010112222135_UpdateIdSetup.designer.cs">
       <DependentUpon>202010112222135_UpdateIdSetup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010121038573_AddProjectsInModel.cs" />
+    <Compile Include="Migrations\202010121038573_AddProjectsInModel.designer.cs">
+      <DependentUpon>202010121038573_AddProjectsInModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010121108442_ChangeRelationTrainingAndProject.cs" />
+    <Compile Include="Migrations\202010121108442_ChangeRelationTrainingAndProject.designer.cs">
+      <DependentUpon>202010121108442_ChangeRelationTrainingAndProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010152058074_FKNull.cs" />
+    <Compile Include="Migrations\202010152058074_FKNull.designer.cs">
+      <DependentUpon>202010152058074_FKNull.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PositionsDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +87,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202010112222135_UpdateIdSetup.resx">
       <DependentUpon>202010112222135_UpdateIdSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010121038573_AddProjectsInModel.resx">
+      <DependentUpon>202010121038573_AddProjectsInModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010121108442_ChangeRelationTrainingAndProject.resx">
+      <DependentUpon>202010121108442_ChangeRelationTrainingAndProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010152058074_FKNull.resx">
+      <DependentUpon>202010152058074_FKNull.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,7 +9,7 @@ namespace staff_qualification_Forms
 {
     public partial class MainForm : Form
     {
-        ProjectService projectService = new ProjectService(new ProjectFileRepository());
+        ProjectService projectService = new ProjectService(new ProjectDbRepository());
         StaffService staffService = new StaffService(new StaffDBRepository());
         TrainingService trainingService = new TrainingService(new TrainingDbRepository());
         SelfCheckService selfCheckService = new SelfCheckService(new SelfCheckDbRepository());
@@ -83,9 +83,9 @@ namespace staff_qualification_Forms
 
         private void проектыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var projectsForm = new ProjectsForm();
+            var projectsForm = new ProjectsForm(projects, projectService);
             projectsForm.ShowDialog();
-            projects = projectService.GetData();
+            //projects = projectService.GetData();
             projectComboBox.DataSource = projects;
             RefreshProjectInfo();
         }

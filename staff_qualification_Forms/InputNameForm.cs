@@ -10,6 +10,7 @@ namespace staff_qualification_Forms
         public InputProjectNameForm()
         {
             InitializeComponent();
+            addProjectNameTextBox.Focus();
         }
 
         private void saveButton_Click(object sender, EventArgs e)

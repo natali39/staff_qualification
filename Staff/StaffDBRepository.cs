@@ -14,13 +14,13 @@ namespace staff_qualification_Forms
             }
         }
 
-        public void Add(StaffDb staffDb) // вернуть обновленный staffDb
+        public StaffDb Add(StaffDb staffDb) // вернуть обновленный staffDb
         {
             using (var context = new QualificationDbContext())
             {
                 var entity = context.Staffs.Add(staffDb);
-
                 context.SaveChanges();
+                return entity;
             }
         }
 

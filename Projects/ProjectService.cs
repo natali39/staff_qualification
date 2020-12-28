@@ -13,12 +13,141 @@ namespace staff_qualification_Forms
 
         public List<Project> GetData()
         {
-            return repository.GetAll();
+            var projectsDb = repository.GetAll();
+            return ConvertToProjects(projectsDb);
         }
 
-        public void UpdateData(List<Project> projects)
+        public Project AddProject(Project project)
         {
-            repository.Update(projects);
+            var projectDb = ToProjectDb(project);
+            var projectDbWithId = repository.Add(projectDb);
+            return ToProject(projectDbWithId);
+        }
+
+        public void DeleteProject(Project project)
+        {
+            var projectDb = ToProjectDb(project);
+            repository.Delete(projectDb);
+        }
+
+        public Project UpdateProject(Project project)
+        {
+            var projectDb = ToProjectDb(project);
+            var updatedProjectDb = repository.Update(projectDb);
+            return ToProject(updatedProjectDb);
+        }
+
+        private List<Project> ConvertToProjects(List<ProjectDb> projectsDb)
+        {
+            var projects = new List<Project>();
+            if (projectsDb == null)
+                return projects;
+            foreach (var projectDb in projectsDb)
+            {
+                var project = ToProject(projectDb);
+                projects.Add(project);
+            }
+            return projects;
+        }
+
+        private Project ToProject(ProjectDb projectDb)
+        {
+            var project = new Project();
+            project.ID = projectDb.Id;
+            project.Name = projectDb.Name;
+            project.Models = new List<Model>();
+            foreach (var modelDb in projectDb.Models)
+            {
+                var model = ToModel(modelDb);
+                project.Models.Add(model);
+            }
+            return project;
+        }
+
+        private Model ToModel(ModelDb modelDb)
+        {
+            var model = new Model();
+            model.ID = modelDb.Id;
+            model.Name = modelDb.Name;
+            model.Operations = new List<Operation>();
+            foreach (var operationDb in modelDb.Operations)
+            {
+                var operation = ToOperation(operationDb);
+                model.Operations.Add(operation);
+            }
+            return model;
+        }
+
+        private Operation ToOperation(OperationDb operationDb)
+        {
+            var operation = new Operation();
+            operation.ID = operationDb.Id;
+            operation.Name = operationDb.Name;
+            operation.Documents = new List<Document>();
+            foreach (var documentDb in operationDb.Documents)
+            {
+                var document = ToDocument(documentDb);
+                operation.Documents.Add(document);
+            }
+            return operation;
+        }
+
+        private Document ToDocument(DocumentDb documentDb)
+        {
+            var document = new Document();
+            document.Name = documentDb.Name;
+            document.Path = documentDb.Path;
+            return document;
+        }
+
+        private ProjectDb ToProjectDb(Project project)
+        {
+            var projectDb = new ProjectDb();
+            projectDb.Id = project.ID;
+            projectDb.Name = project.Name;
+            projectDb.Models = new List<ModelDb>();
+            foreach (var model in project.Models)
+            {
+                var modelDb = ToModelDb(model);
+                projectDb.Models.Add(modelDb);
+            }
+            return projectDb;
+        }
+
+        private ModelDb ToModelDb(Model model)
+        {
+            var modelDb = new ModelDb();
+            modelDb.Id = model.ID;
+            modelDb.Name = model.Name;
+            modelDb.Operations = new List<OperationDb>();
+            foreach (var operation in model.Operations)
+            {
+                var operationDb = ToOperationDb(operation);
+                modelDb.Operations.Add(operationDb);
+            }
+            return modelDb;
+        }
+
+        private OperationDb ToOperationDb(Operation operation)
+        {
+            var operationDb = new OperationDb();
+            operationDb.Id = operation.ID;
+            operationDb.Name = operation.Name;
+            operationDb.Documents = new List<DocumentDb>();
+            foreach (var document in operation.Documents)
+            {
+                var documentDb = ToDocumentDb(document);
+                operationDb.Documents.Add(documentDb);
+            }
+            return operationDb;
+        }
+
+        private DocumentDb ToDocumentDb(Document document)
+        {
+            var documentDb = new DocumentDb();
+            documentDb.Name = document.Name;
+            documentDb.Path = document.Path;
+            return documentDb;
         }
     }
 }

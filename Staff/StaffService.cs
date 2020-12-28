@@ -17,10 +17,12 @@ namespace staff_qualification_Forms
             return ConvertToStaffs(staffsDb);
         }
 
-        public void AddStaff(Staff staff)
+        public Staff AddStaff(Staff staff)
         {
             var staffDb = ToStaffDb(staff);
-            repository.Add(staffDb);
+            var staffDbWithId = repository.Add(staffDb);
+            var staffWithId = ToStaff(staffDbWithId);
+            return staffWithId;
         }
 
         public void RemoveStaff(Staff staff)

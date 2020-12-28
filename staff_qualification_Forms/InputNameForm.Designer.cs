@@ -35,6 +35,7 @@
             // 
             // addProjectNameTextBox
             // 
+            this.addProjectNameTextBox.AcceptsTab = true;
             this.addProjectNameTextBox.Location = new System.Drawing.Point(15, 36);
             this.addProjectNameTextBox.Name = "addProjectNameTextBox";
             this.addProjectNameTextBox.Size = new System.Drawing.Size(221, 20);

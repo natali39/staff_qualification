@@ -85,9 +85,8 @@ namespace staff_qualification_Forms
             staffEditForm.ShowDialog();
             if (staffEditForm.staff != null)
             {
-                staffs.Add(staffEditForm.staff);
-                staffService.AddStaff(staffEditForm.staff);
-                staffs = staffService.GetData();
+                var staff = staffService.AddStaff(staffEditForm.staff);
+                staffs.Add(staff);
                 UpdateTableRows(staffs);
             }
         }

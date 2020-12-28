@@ -20,8 +20,11 @@
                 var currentTrainer = Staff.GetStaffByID(currentTraining.TrainerID, staffs);
                 var currentResponsiblePerson = Staff.GetStaffByID(selfCheck.ResponsiblePersonID, staffs);
                 var currentProject = IdHelper.GetEntityByID(projects, currentTraining.ProjectID);
+                if (currentProject == null) continue;
                 var currentModel = IdHelper.GetEntityByID(currentProject.Models, currentTraining.ModelID);
+                if (currentModel == null) continue;
                 var currentOperation = IdHelper.GetEntityByID(currentModel.Operations, currentTraining.OperationID);
+                if (currentOperation == null) continue;
 
                 if (currentStaff != null && currentTrainer != null && currentResponsiblePerson != null && currentOperation != null)
                 {

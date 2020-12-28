@@ -8,6 +8,6 @@ namespace staff_qualification_Forms
         public DateTime Date { get; set; }
 
         public Guid TrainingDbId { get; set; }
-        public TrainingDb TrainingDb { get; set; }
+        public virtual TrainingDb TrainingDb { get; set; }
     }
 }

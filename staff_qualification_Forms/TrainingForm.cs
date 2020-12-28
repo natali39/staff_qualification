@@ -8,7 +8,7 @@ namespace staff_qualification_Forms
     {
         Training training = new Training();
         int defaultTrainingPeriod = 3;
-        ProjectService projectService = new ProjectService(new ProjectFileRepository());
+        ProjectService projectService = new ProjectService(new ProjectDbRepository());
         TrainingService trainingService = new TrainingService(new TrainingDbRepository());
         List<Training> trainings;
         List<Project> projects;

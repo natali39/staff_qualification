@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.902
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffQqualificationForms", "staff_qualification_Forms\StaffQqualificationForms.csproj", "{40B89C88-BE76-4A0F-907E-82731E9957D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffQualificationForms", "staff_qualification_Forms\StaffQualificationForms.csproj", "{40B89C88-BE76-4A0F-907E-82731E9957D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Staffs", "Staff\Staffs.csproj", "{02F49682-B00D-44DC-BAD4-7E8ACD91CC07}"
 EndProject

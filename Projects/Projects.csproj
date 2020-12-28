@@ -67,6 +67,7 @@
     <Compile Include="Model.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="Project.cs" />
+    <Compile Include="ProjectDbRepository.cs" />
     <Compile Include="ProjectFileRepository.cs" />
     <Compile Include="ProjectService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,6 +95,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DB\DB.csproj">
+      <Project>{334dc4df-49cf-4a42-9654-dbb76f8f2406}</Project>
+      <Name>DB</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StaffQualification.Common\StaffQualification.Common.csproj">
       <Project>{30abfb43-9f0d-4f9c-aa44-357b40dff417}</Project>
       <Name>StaffQualification.Common</Name>
