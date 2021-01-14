@@ -181,6 +181,8 @@ namespace staff_qualification_Forms
         private void staffDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             var index = e.RowIndex;
+            if (index < 0)
+                return;
             SelectedStaff = SelectStaff(index);
             if (SelectedStaff.ID > 0)
             {
@@ -211,6 +213,7 @@ namespace staff_qualification_Forms
         {
             var selectedStaffID = 0;
             var convertId = int.TryParse(staffDataGridView.Rows[rowIndex].Cells[0].Value.ToString(), out selectedStaffID);
+            
             foreach (var staff in staffs)
             {
                 if (staff.ID == selectedStaffID)

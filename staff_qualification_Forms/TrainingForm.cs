@@ -22,7 +22,7 @@ namespace staff_qualification_Forms
             if (trainings == null)
                 trainings = new List<Training>();
             trainingReport = new TrainingReport();
-            GetFormProperties();
+            SetFormProperties();
         }
 
         public TrainingForm(Training training) : this()
@@ -31,7 +31,7 @@ namespace staff_qualification_Forms
             FillFormControls();
         }
 
-        private void GetFormProperties()
+        private void SetFormProperties()
         {
             projectComboBox.DataSource = projects;
             projectComboBox.DisplayMember = "Name";
@@ -66,7 +66,7 @@ namespace staff_qualification_Forms
             var model = IdHelper.GetEntityByID(project.Models, training.ModelID);
             modelComboBox.SelectedItem = model;
             var operation = IdHelper.GetEntityByID(model.Operations, training.OperationID);
-            operationComboBox.DataSource = model.Operations; //????
+            operationComboBox.DataSource = model.Operations; 
             operationComboBox.SelectedItem = operation;
 
             startTrainingDateTimePicker.Value = training.StartDate;
@@ -76,15 +76,21 @@ namespace staff_qualification_Forms
         private void selectStaffButton_Click(object sender, EventArgs e)
         {
             var staff = SelectStaff();
-            training.StaffID = staff.ID;
-            staffNameTextBox.Text = staff.GetStaffFullName();
+            if (staff != null)
+            {
+                training.StaffID = staff.ID;
+                staffNameTextBox.Text = staff.GetStaffFullName();
+            }
         }
 
         private void selectTrainerButton_Click(object sender, EventArgs e)
         {
             var trainer = SelectStaff();
-            training.TrainerID = trainer.ID;
-            trainerTextBox.Text = trainer.GetStaffFullName();
+            if (trainer != null)
+            {
+                training.TrainerID = trainer.ID;
+                trainerTextBox.Text = trainer.GetStaffFullName();
+            }
         }
 
         private void projectComboBox_SelectedIndexChanged(object sender, EventArgs e)
