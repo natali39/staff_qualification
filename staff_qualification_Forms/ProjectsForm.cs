@@ -7,7 +7,7 @@ namespace staff_qualification_Forms
 {
     public partial class ProjectsForm : Form
     {
-        ProjectService projectService; //= new ProjectService(new ProjectDbRepository());
+        ProjectService projectService;
         List<Project> projects;
         Project currentProject;
         Model currentModel;
@@ -21,7 +21,7 @@ namespace staff_qualification_Forms
         public ProjectsForm(List<Project> projects, ProjectService projectService)
         {
             InitializeComponent();
-            this.projects = projects;//projectService.GetData(); 
+            this.projects = projects;
             this.projectService = projectService;
             FillTreeView();
             projectsTreeView.SelectedNode = null;
@@ -85,12 +85,12 @@ namespace staff_qualification_Forms
             inputNameForm.ShowDialog();
             if (inputNameForm.Name != null)
             {
-                currentProject = new Project();
-                currentProject.Name = inputNameForm.Name;
-                currentProject = projectService.AddProject(currentProject);
-                projects.Add(currentProject);
-                var projectNode = new TreeNode(currentProject.Name);
-                projectNode.Tag = currentProject;
+                var project = new Project();
+                project.Name = inputNameForm.Name;
+                project = projectService.AddProject(project);
+                projects.Add(project);
+                var projectNode = new TreeNode(project.Name);
+                projectNode.Tag = project;
                 projectsTreeView.Nodes.Add(projectNode);
             }
         }
@@ -102,9 +102,9 @@ namespace staff_qualification_Forms
                 var result = MessageBox.Show($"Вы действительно хотите удалить проект?{Environment.NewLine}Внимание! Будут удалены также все модели и операции!", "Удаление проета", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
-                    currentProject = (Project)projectsTreeView.SelectedNode.Tag;
-                    projects.Remove(currentProject);
-                    projectService.DeleteProject(currentProject);
+                    var project = (Project)projectsTreeView.SelectedNode.Tag;
+                    projects.Remove(project);
+                    projectService.DeleteProject(project);
                     projectsTreeView.SelectedNode.Remove();
                 }
             }
@@ -231,8 +231,8 @@ namespace staff_qualification_Forms
             }
             var newModel = new Model();
             newModel.Name = addModelNameTextBox.Text;
-            currentProject.Models.Add(newModel);
-            currentProject = projectService.UpdateProject(currentProject);
+            projectService.AddModel(newModel, currentProject.ID);
+            currentProject = projectService.GetProject(currentProject.ID);
             FillTreeView();
             ClearProjectDetails();
             ClearModelDetails();
@@ -250,7 +250,7 @@ namespace staff_qualification_Forms
             if (result == DialogResult.Yes)
             {
                 currentProject.Models.Remove(model);
-                currentProject = projectService.UpdateProject(currentProject);
+                projectService.DeleteModel(model);
                 ClearProjectDetails();
                 ClearModelDetails();
                 CreateModelsLinkLabels(currentProject.Models);
@@ -272,7 +272,7 @@ namespace staff_qualification_Forms
                     Width = operationsNameFlowLayoutPanel.Width,
                     Height = 20,
                     Margin = new Padding(0, 5, 0, 0)
-            };
+                };
                 CreateOperationsDeleteButton(operation);
                 operationLinkLabel.Click += new EventHandler(operationLinkedLabel_Click);
                 operationsLinkLabels.Add(operationLinkLabel);
@@ -328,11 +328,8 @@ namespace staff_qualification_Forms
             }
             var newOperation = new Operation();
             newOperation.Name = addOperationTextBox.Text;
+            newOperation = projectService.AddOperation(newOperation, currentModel.ID);
             currentModel.Operations.Add(newOperation);
-            currentProject = projectService.UpdateProject(currentProject);
-            var changedProject = projects.Find(p => p.ID == currentProject.ID);
-            var changedModel = changedProject.Models.Find(m => m.ID == currentModel.ID);
-            changedModel.Operations = currentModel.Operations;
             ClearModelDetails();
             FillModelDetails(currentModel);
             addOperationTextBox.Text = String.Empty;
@@ -348,7 +345,7 @@ namespace staff_qualification_Forms
                 if (result == DialogResult.Yes)
                 {
                     currentModel.Operations.Remove(operation);
-                    projectService.UpdateProject(currentProject);
+                    projectService.DeleteOperation(operation.ID);
                     ClearModelDetails();
                     FillModelDetails(currentModel);
                 }
@@ -390,7 +387,7 @@ namespace staff_qualification_Forms
                 return;
             var document = new Document(openFileDialog.SafeFileName, openFileDialog.FileName);
             currentOperation.Documents.Add(document);
-            projectService.UpdateProject(currentProject);
+            projectService.UpdateOperation(currentOperation);
             ClearOperationDetails();
             FillOperationDetails(currentOperation);
         }
@@ -410,7 +407,7 @@ namespace staff_qualification_Forms
                 if (result == DialogResult.No)
                     return;
                 currentOperation.Documents.Remove(document);
-                projectService.UpdateProject(currentProject);
+                projectService.UpdateOperation(currentOperation);
                 ClearOperationDetails();
                 FillOperationDetails(currentOperation);
             }

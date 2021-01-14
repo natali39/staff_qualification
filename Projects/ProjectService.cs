@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace staff_qualification_Forms
 {
@@ -17,24 +18,58 @@ namespace staff_qualification_Forms
             return ConvertToProjects(projectsDb);
         }
 
+        public Project GetProject(Guid projectId)
+        {
+            var projectDb = repository.GetProject(projectId);
+            return ToProject(projectDb);
+        }
+
         public Project AddProject(Project project)
         {
             var projectDb = ToProjectDb(project);
-            var projectDbWithId = repository.Add(projectDb);
+            var projectDbWithId = repository.AddProject(projectDb);
             return ToProject(projectDbWithId);
         }
 
         public void DeleteProject(Project project)
         {
             var projectDb = ToProjectDb(project);
-            repository.Delete(projectDb);
+            repository.DeleteProject(projectDb);
         }
 
-        public Project UpdateProject(Project project)
+        public void UpdateProject(Project project)
         {
             var projectDb = ToProjectDb(project);
-            var updatedProjectDb = repository.Update(projectDb);
-            return ToProject(updatedProjectDb);
+            repository.UpdateProject(projectDb);
+        }
+
+        public void AddModel(Model model, Guid projectId)
+        {
+            var modelDb = ToModelDb(model);
+            repository.AddModel(modelDb, projectId);
+        }
+
+        public void DeleteModel(Model model)
+        {
+            var modelDb = ToModelDb(model);
+            repository.DeleteModel(modelDb);
+        }
+
+        public Operation AddOperation(Operation operation, Guid modelId)
+        {
+            var operationDb = ToOperationDb(operation);
+            return ToOperation(repository.AddOperation(operationDb, modelId));
+        }
+
+        public void DeleteOperation(Guid operationId)
+        {
+            repository.DeleteOperation(operationId);
+        }
+
+        public void UpdateOperation(Operation operation)
+        {
+            var operationDb = ToOperationDb(operation);
+            repository.UpdateOperation(operationDb);
         }
 
         private List<Project> ConvertToProjects(List<ProjectDb> projectsDb)
