@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -99,12 +100,17 @@ namespace staff_qualification_Forms
         {
             if (projectsTreeView.SelectedNode != null && projectsTreeView.SelectedNode.Level == 0)
             {
-                var result = MessageBox.Show($"Вы действительно хотите удалить проект?{Environment.NewLine}Внимание! Будут удалены также все модели и операции!", "Удаление проета", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                var result = MessageBox.Show($"Вы действительно хотите удалить проект?", "Удаление проета", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
                     var project = (Project)projectsTreeView.SelectedNode.Tag;
-                    projects.Remove(project);
+                    if (project.Models.Count != 0)
+                    {
+                        MessageBox.Show($"Проект {project.Name} нельзя удалить, т.к. он содержит по крайней мере одну модель.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     projectService.DeleteProject(project);
+                    projects.Remove(project);
                     projectsTreeView.SelectedNode.Remove();
                 }
             }
@@ -233,6 +239,8 @@ namespace staff_qualification_Forms
             newModel.Name = addModelNameTextBox.Text;
             projectService.AddModel(newModel, currentProject.ID);
             currentProject = projectService.GetProject(currentProject.ID);
+            var project = projects.FirstOrDefault(p => p.ID == currentProject.ID);
+            project = currentProject;
             FillTreeView();
             ClearProjectDetails();
             ClearModelDetails();
@@ -245,12 +253,17 @@ namespace staff_qualification_Forms
         {
             var modelDeleteButton = (Button)sender;
             var model = (Model)modelDeleteButton.Tag;
+            if (model.Operations.Count != 0)
+            {
+                MessageBox.Show($"модель {model.Name} нельзя удалить, т.к. оан содержит по крайней мере одну операцию.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            var result = MessageBox.Show($"Удалить модель {model.Name}?{Environment.NewLine}Внимание! Удалится также вся информация о модели!", "Удаление модели", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            var result = MessageBox.Show($"Удалить модель {model.Name}?", "Удаление модели", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
-                currentProject.Models.Remove(model);
                 projectService.DeleteModel(model);
+                currentProject.Models.Remove(model);
                 ClearProjectDetails();
                 ClearModelDetails();
                 CreateModelsLinkLabels(currentProject.Models);
@@ -344,8 +357,8 @@ namespace staff_qualification_Forms
                 var result = MessageBox.Show("Удалить операцию?", "Удаление операции", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    currentModel.Operations.Remove(operation);
                     projectService.DeleteOperation(operation.ID);
+                    currentModel.Operations.Remove(operation);
                     ClearModelDetails();
                     FillModelDetails(currentModel);
                 }
@@ -387,7 +400,7 @@ namespace staff_qualification_Forms
                 return;
             var document = new Document(openFileDialog.SafeFileName, openFileDialog.FileName);
             currentOperation.Documents.Add(document);
-            projectService.UpdateOperation(currentOperation);
+            projectService.AddDocument(document, currentOperation.ID);
             ClearOperationDetails();
             FillOperationDetails(currentOperation);
         }
@@ -406,8 +419,8 @@ namespace staff_qualification_Forms
                     "Файл не найден!", MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
                     return;
+                projectService.DeleteDocument(document);
                 currentOperation.Documents.Remove(document);
-                projectService.UpdateOperation(currentOperation);
                 ClearOperationDetails();
                 FillOperationDetails(currentOperation);
             }

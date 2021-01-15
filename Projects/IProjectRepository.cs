@@ -16,5 +16,7 @@ namespace staff_qualification_Forms
         OperationDb AddOperation(OperationDb operationDb, Guid modelId);
         void DeleteOperation(Guid operationId);
         void UpdateOperation(OperationDb operationDb);
+        DocumentDb AddDocument(DocumentDb documentDb, Guid operationId);
+        void DeleteDocument(DocumentDb documentDb);
     }
 }

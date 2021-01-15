@@ -112,8 +112,27 @@ namespace staff_qualification_Forms
         {
             using (var context = new QualificationDbContext())
             {
-                var operation = context.Operations.Include(o => o.Documents).FirstOrDefault(o => o.Id == operationDb.Id);
-                operation = operationDb;
+                context.Entry(operationDb).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+
+        public DocumentDb AddDocument(DocumentDb documentDb, Guid operationId)
+        {
+            using (var context = new QualificationDbContext())
+            {
+                var operationDb = context.Operations.Include(o => o.Documents).FirstOrDefault(o => o.Id == operationId);
+                operationDb.Documents.Add(documentDb);
+                context.SaveChanges();
+            }
+            return documentDb;
+        }
+
+        public void DeleteDocument(DocumentDb documentDb)
+        {
+            using (var context = new QualificationDbContext())
+            {
+                context.Entry(documentDb).State = EntityState.Deleted;
                 context.SaveChanges();
             }
         }

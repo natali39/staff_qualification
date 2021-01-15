@@ -72,6 +72,19 @@ namespace staff_qualification_Forms
             repository.UpdateOperation(operationDb);
         }
 
+        public Document AddDocument(Document document, Guid operationId)
+        {
+            var documentDb = ToDocumentDb(document);
+            documentDb = repository.AddDocument(documentDb, operationId);
+            return ToDocument(documentDb);
+        }
+
+        public void DeleteDocument(Document document)
+        {
+            var documentDb = ToDocumentDb(document);
+            repository.DeleteDocument(documentDb);
+        }
+
         private List<Project> ConvertToProjects(List<ProjectDb> projectsDb)
         {
             var projects = new List<Project>();
